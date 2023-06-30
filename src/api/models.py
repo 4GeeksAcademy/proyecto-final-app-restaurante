@@ -16,13 +16,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
-    salt = db.Column(db.String(250), nullable=False)
+    salt = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     avatar_url = db.Column(db.String(250))
     role = db.Column(db.Enum(Role), nullable=False)
     status = db.Column(db.Enum(UserStatus), nullable=False, default=UserStatus.VALID)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     restaurant = db.relationship('Restaurant', backref='user')
 
@@ -34,8 +34,8 @@ class User(db.Model):
             'id': self.id,
             'name': self.name,
             'email': self.email,
-            'role': self.role,
-            'status': self.status,
+            'role': self.role.value if self.role is not None else None,
+            'status': self.status.value if self.status is not None else None,
             'avatar_url': self.avatar_url,
             'created_at': self.created_at,
             'updated_at': self.updated_at
@@ -50,7 +50,7 @@ class Restaurant(db.Model):
     description = db.Column(db.Text)
     location = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def __repr__(self):
         return f'<Restaurant {self.rif}>'
