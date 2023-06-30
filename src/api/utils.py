@@ -43,3 +43,6 @@ def generate_sitemap(app):
 
 def password_hash(password, salt):
     return generate_password_hash(f'{password}{salt}')
+
+def is_valid_password(password):
+    return len(password) >= 8 and len(password) <= 20

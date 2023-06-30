@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus
-from api.utils import generate_sitemap, APIException, password_hash
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password
 from base64 import b64encode
 import os
 
@@ -45,6 +45,10 @@ def register_restaurant():
     restaurant_rif = restaurantBody.get('rif')
     if None in [restaurant_name, restaurant_rif]:
         return jsonify({'message': "Restaurant dict has a wrong property"}), 400
+
+    # is a valid password ? 
+    if not is_valid_password(user_password):
+        return jsonify({'message': 'Invalid password'}), 400
 
     # Creating user
     restaurant_user = User()
