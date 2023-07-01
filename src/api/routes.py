@@ -12,7 +12,7 @@ def server_status():
     return jsonify({'message': 'ok'}), 200
 
 
-@api.route('/register/restaurant', methods=['POST'])
+@api.route('/restaurant', methods=['POST'])
 def register_restaurant():
     # is a json item ?
     if not request.is_json:
@@ -35,7 +35,7 @@ def register_restaurant():
         return jsonify({'message': "User and Restaurant should be dict type"}), 400
 
     # each one of them has corrects properties?
-    user_name = userBody.get('name')
+    user_name = restaurantBody.get('rif')
     user_password = userBody.get('password')
     user_email = userBody.get('email')
     if None in [user_name, user_password, user_email]:
@@ -43,7 +43,9 @@ def register_restaurant():
 
     restaurant_name = restaurantBody.get('name')
     restaurant_rif = restaurantBody.get('rif')
-    if None in [restaurant_name, restaurant_rif]:
+    restaurant_location = restaurantBody.get('location')
+    restaurant_phone = restaurantBody.get('phone')
+    if None in [restaurant_name, restaurant_rif, restaurant_location, restaurant_phone]:
         return jsonify({'message': "Restaurant dict has a wrong property"}), 400
 
     # is a valid password ? 
@@ -75,6 +77,8 @@ def register_restaurant():
     restaurant.user_id = restaurant_user.id
     restaurant.name = restaurant_name
     restaurant.rif = restaurant_rif
+    restaurant.phone = restaurant_phone
+    restaurant.location = restaurant_location
 
     db.session.add(restaurant)
     try:
@@ -82,5 +86,25 @@ def register_restaurant():
     except Exception as err:
         db.session.rollback()
         return jsonify({'message': err.args}), 500
+
+    return jsonify({'message': 'ok'}), 200
+
+
+@api.route('/login', methods=['POST'])
+def login():
+    # is a json item ?
+    if not request.is_json:
+        return jsonify({'message': "Request's body should be a valid json item"}), 400
+    
+    body = request.json
+    if type(body) is not dict:
+        return jsonify({'message': "Request's body should be dict type"}), 400
+
+    email = body.get('email', None)
+    password = body.get('password', None)
+
+    if None in [email, password]:
+        return jsonify({'message': "User dict has a wrong property"}), 400
+
 
     return jsonify({'message': 'ok'}), 200
