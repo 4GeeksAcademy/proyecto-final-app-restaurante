@@ -7,13 +7,18 @@ export const Navbar = () => {
 		<>
 			<nav className="navbar">
 				<div className="container">
-					<Link to="/">
+					<h1 className="text-light"> Comecon </h1>
+					{/* <Link to="/">
 						<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 					</Link>
 					<div className="ml-auto">
 						<Link to="/demo">
 							<button className="btn btn-primary">Check the Context in action</button>
 						</Link>
+					</div> */}
+					<div className="d-flex">
+						<button className="btn btn-light m-1">Login</button>
+						<button className="btn btn-light m-1">Signup</button>
 					</div>
 				</div>
 			</nav>
