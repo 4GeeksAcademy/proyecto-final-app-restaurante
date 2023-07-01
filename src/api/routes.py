@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, is_password
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
+from flask_jwt_extended import create_access_token
 from base64 import b64encode
 import os
 
@@ -100,9 +101,9 @@ def login():
     if type(body) is not dict:
         return jsonify({'message': "Request's body should be dict type"}), 400
 
+    # has valid properties ? 
     email = body.get('email', None)
     password = body.get('password', None)
-
     if None in [email, password]:
         return jsonify({'message': "User dict has a wrong property"}), 400
 
@@ -111,8 +112,8 @@ def login():
     user_role = user.role.value
     user_password = user.password
 
-    if is_password(user_password, password, user_salt):
-        token = 'a'
+    if check_password(user_password, password, user_salt):
+        token = create_access_token(identity=user.name, expires_delta=False)
         return jsonify({'role': user_role, 'token': token}), 200
 
     return jsonify({'meesage': 'Wrong credentials'}), 400
