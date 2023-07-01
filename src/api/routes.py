@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, is_password
 from base64 import b64encode
 import os
 
@@ -108,13 +108,11 @@ def login():
 
     user = User.query.filter_by(email=email).one_or_none()
     user_salt = user.salt
-    print(user_salt)
-    user_password = user.password
-    print(user_password)
     user_role = user.role.value
-    print(user_role)
-    token = 'a'
-    user_logged = {
-        "role": user_role
-    }
-    return jsonify({'role': user_role, 'token': token}), 200
+    user_password = user.password
+
+    if is_password(user_password, password, user_salt):
+        token = 'a'
+        return jsonify({'role': user_role, 'token': token}), 200
+
+    return jsonify({'meesage': 'Wrong credentials'}), 400
