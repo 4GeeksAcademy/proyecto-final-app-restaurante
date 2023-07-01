@@ -106,5 +106,15 @@ def login():
     if None in [email, password]:
         return jsonify({'message': "User dict has a wrong property"}), 400
 
-
-    return jsonify({'message': 'ok'}), 200
+    user = User.query.filter_by(email=email).one_or_none()
+    user_salt = user.salt
+    print(user_salt)
+    user_password = user.password
+    print(user_password)
+    user_role = user.role.value
+    print(user_role)
+    token = 'a'
+    user_logged = {
+        "role": user_role
+    }
+    return jsonify({'role': user_role, 'token': token}), 200
