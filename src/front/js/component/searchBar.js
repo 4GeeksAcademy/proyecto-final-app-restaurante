@@ -1,28 +1,52 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
+import { Context } from "../store/appContext";
 
 export const SearchBar = () => {
 
+    const { store, actions } = useContext(Context)
 
+    const [search, setSearch] = useState({})
 
+    const handleOnChange = ({ target }) => {
+        setSearch({
+            ...search,
+            [target.name]: target.value
+        })
+    }
 
+    const handleSubmit = () => {
+        //actions.foodSearch(search)
+    }
 
     return (
         <div className="container">
-            <form className="">
-                <div className="row">
-                    <div className="col">
-                        <h2>Hoy como con:</h2>
-                    </div>
-                    <div className="input-group col">
-                        <input type="text" className="form-control" placeholder="Buscar por tipo de comida o restaurante..." aria-label="Buscar" aria-describedby="button-addon2" />
-                    </div>
+            <form onSubmit={handleSubmit} className="p-5">
+                <div class="form-group text-center mb-2">
+                    <h3 className="d-inline me-2">Hoy como con:</h3>
+                    <input
+                        type="text"
+                        class="form-control d-inline w-25 border border-dark"
+                        placeholder="$$$"
+                        name="budget" /*budget = presupuesto*/
+                        onChange={handleOnChange}
+                        value={search.budget}
+                    />
+                    <h4 className="d-inline ms-2">$</h4>
                 </div>
-
-                <div className="input-group">
-                    <input type="text" className="form-control" placeholder="Buscar por tipo de comida o restaurante..." aria-label="Buscar" aria-describedby="button-addon2" />
-                    <button className="btn btn-primary" type="button" id="button-addon2"><FaSearch /></button>
+                <div className="input-group text-center">
+                    <input
+                        type="text"
+                        className="form-control border border-dark"
+                        placeholder="Buscar por tipo de comida o restaurante..."
+                        aria-label="Buscar"
+                        aria-describedby="button-addon"
+                        name="food"
+                        onChange={handleOnChange}
+                        value={search.food}
+                    />
+                    <button className="btn btn-primary" type="submit" id="button-addon2"><FaSearch /></button>
                 </div>
             </form>
         </div>
