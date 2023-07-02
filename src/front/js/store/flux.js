@@ -4,6 +4,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		},
 		actions: {
+
+			//PARA REGISTRAR UN USUARIO:
+			restaurantRegister: async (data) => {
+				console.log(data);
+			},
+
+
 			// Use getActions to call a function within a fuction
 
 			// foodSearch: async (search) => {
