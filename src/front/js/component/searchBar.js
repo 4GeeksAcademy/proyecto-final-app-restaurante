@@ -5,33 +5,38 @@ import { Context } from "../store/appContext";
 
 export const SearchBar = () => {
 
-    const { store, actions } = useContext(Context)
+    // const { store, actions } = useContext(Context)
 
-    const [search, setSearch] = useState({})
+    // const [search, setSearch] = useState({})
 
-    const handleOnChange = ({ target }) => {
-        setSearch({
-            ...search,
-            [target.name]: target.value
-        })
-    }
+    // const handleOnChange = ({ target }) => {
+    //     setSearch({
+    //         ...search,
+    //         [target.name]: target.value
+    //     })
+    // }
 
-    const handleSubmit = () => {
-        //actions.foodSearch(search)
-    }
+    // const handleSubmit = () => {
+    //     //actions.foodSearch(search)
+    // }
+
+    /*
+        onChange={handleOnChange}
+        value={search.food}
+        value={search.budget}
+    */
 
     return (
         <div className="container">
-            <form onSubmit={handleSubmit} className="p-5">
-                <div class="form-group text-center mb-2">
+            <form className="p-5">
+                <div className="form-group text-center mb-2">
                     <h3 className="d-inline me-2">Hoy como con:</h3>
                     <input
                         type="text"
                         class="form-control d-inline w-25 border border-dark"
                         placeholder="$$$"
                         name="budget" /*budget = presupuesto*/
-                        onChange={handleOnChange}
-                        value={search.budget}
+
                     />
                     <h4 className="d-inline ms-2">$</h4>
                 </div>
@@ -43,8 +48,6 @@ export const SearchBar = () => {
                         aria-label="Buscar"
                         aria-describedby="button-addon"
                         name="food"
-                        onChange={handleOnChange}
-                        value={search.food}
                     />
                     <button className="btn btn-primary" type="submit" id="button-addon2"><FaSearch /></button>
                 </div>
