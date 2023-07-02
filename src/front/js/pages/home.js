@@ -17,7 +17,7 @@ export const Home = () => {
 		<>
 			<div className="container-fluid">
 
-
+				{/* BARRA DE BUSQUEDA: */}
 				<SearchBar />
 
 				{/* FORMULARIO DE REGISTRO*/}
