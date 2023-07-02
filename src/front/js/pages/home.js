@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
 import { Register } from "../component/register.jsx";
+import { SearchBar } from "../component/searchBar.js";
+
 // import { Context } from "../store/appContext.js";
 
 
@@ -16,8 +18,12 @@ export const Home = () => {
 			<div className="container-fluid">
 
 
+				<SearchBar />
+
 				{/* FORMULARIO DE REGISTRO*/}
 				<Register />
+
+
 
 			</div>
 		</>
