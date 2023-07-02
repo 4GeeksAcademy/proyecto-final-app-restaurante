@@ -35,12 +35,31 @@
   padding: 1em;
 }
 
+.restaurant__information {
+  /* box_model */
+  padding: 1em 2em;
+}
+
 .restaurant_avatar {
   background-color: red;
   /* position */
+  padding: 0;
   order: 2;
 }
 
 .restaurant__information {
   background-color: blue;
+}
+
+.restaurant__information p {
+  margin: 0;
+}
+
+.restaurant__label {
+  margin-right: 0.3em;
+  font-weight: 600;
+}
+
+.location__content {
+  cursor: pointer;
 }

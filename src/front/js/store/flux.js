@@ -4,11 +4,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		},
 		actions: {
-			getRestaurant: async (id) => {
+			getRestaurant: (id) => {
 				//fetch to the api
 				const restaurant = {
 					"id": 1,
 					"user_id": "user",
+					"name": "El restaurant de andres",
 					"rif": "a",
 					"description": "this is a restaurant",
 					"location": "www.location.com",
