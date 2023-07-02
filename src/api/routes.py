@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Restaurant, Role, UserStatus
+from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 import os
 
@@ -116,4 +116,28 @@ def login():
         token = create_access_token(identity=user.name, expires_delta=False)
         return jsonify({'role': user_role, 'token': token}), 200
 
-    return jsonify({'meesage': 'Wrong credentials'}), 400
+    return jsonify({'message': 'Wrong credentials'}), 400
+
+# KR
+@api.route('/restaurante', methods=['GET'])
+def get_all_restaurants():
+    all_restaurants = Restaurant.query.all()
+    return jsonify(list(map(lambda item: item.serialize(), all_restaurants))), 200
+
+@api.route('/restaurante/<int:restaurant_id>', methods=['GET'])
+def get_restaurtant(restaurant_id = None):
+    user = User.query.filter_by(id = restaurant_id).all()
+    return jsonify(list(map(lambda item: item.serialize(), user))), 200
+
+@api.route('/restaurante/gallery', methods=['POST'])
+@jwt_required()
+def method_name():
+    #verificar el permiso/ 
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'Access denied'}), 400
+    
+    print(user.role)
+
+    return jsonify({'message': 'Todo ok '}), 400
