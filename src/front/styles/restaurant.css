@@ -31,5 +31,16 @@
 }
 
 .restaurant__content {
+  /* box_model */
   padding: 1em;
+}
+
+.restaurant_avatar {
+  background-color: red;
+  /* position */
+  order: 2;
+}
+
+.restaurant__information {
+  background-color: blue;
 }

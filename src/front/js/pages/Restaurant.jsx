@@ -20,8 +20,14 @@ const Restaurant = () => {
       <h2 className='restaurant__title text-light'>
         Dashboard
       </h2>
-      <div className='restaurant__content'>
-        content
+      <div className='row restaurant__content'>
+        <img
+          src="/"
+          alt="restaurant_avatar"
+          className='restaurant_avatar col-12 col-sm-3 order-sm-0' />
+        <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
+          Contenido
+        </div>
       </div>
     </div>
   );
