@@ -16,11 +16,13 @@ const Restaurant = () => {
 
 
   return (
-    <div className='container restaurant__container'>
+    <div className='container restaurant__containr'>
       <h2 className='restaurant__title text-light'>
         Dashboard
       </h2>
-      <span className='separator'></span>
+      <div className='restaurant__content'>
+        content
+      </div>
     </div>
   );
 };

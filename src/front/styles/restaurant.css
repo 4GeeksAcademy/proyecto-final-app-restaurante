@@ -7,8 +7,8 @@
 
 .restaurant__title {
   /* box_model */
-  width: 50%;
-  padding: 0.3em;
+  width: 90%;
+  padding: 0.5em;
   margin: auto;
   /* position */
   position: relative;
@@ -20,12 +20,16 @@
 .restaurant__title::after {
   content: '';
   /* box_model */
-  width: 120%;
+  width: 110%;
   height: 2.2px;
   /* position */
   position: absolute;
   bottom: 0;
-  left: -10%;
+  left: -5%;
   /* style */
   background-color: black;
+}
+
+.restaurant__content {
+  padding: 1em;
 }
