@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import '../../styles/restaurant.css';
 
 const Restaurant = () => {
   const { restaurantId } = useParams();
@@ -15,8 +16,11 @@ const Restaurant = () => {
 
 
   return (
-    <div>
-      <h2>Dashboard</h2>
+    <div className='container restaurant__container'>
+      <h2 className='restaurant__title text-light'>
+        Dashboard
+      </h2>
+      <span className='separator'></span>
     </div>
   );
 };

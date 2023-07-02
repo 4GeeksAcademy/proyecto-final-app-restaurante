@@ -1,0 +1,31 @@
+.restaurant__container {
+  /* position */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+}
+
+.restaurant__title {
+  /* box_model */
+  width: 50%;
+  padding: 0.3em;
+  margin: auto;
+  /* position */
+  position: relative;
+  /* style */
+  text-align: center;
+  background-color: var(--main_color);
+}
+
+.restaurant__title::after {
+  content: '';
+  /* box_model */
+  width: 120%;
+  height: 2.2px;
+  /* position */
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  /* style */
+  background-color: black;
+}
