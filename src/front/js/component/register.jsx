@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
+import { onValidate } from "../util.js"
 
-const initialState = {
+const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
 
     restaurantName: "",
     restaurantRif: "",
@@ -14,15 +15,27 @@ const initialState = {
 
 }
 
+
 export const Register = () => {
     const { actions } = useContext(Context);
-    const [user, setUser] = useState(initialState);
+    const [user, setUser] = useState(initialState);                 //ESTADO INICIAL DEL FORM REGISTER
+    const [errors, setErrors] = useState({});                       //GUARDA  LOS ERRORES DE VALIDACION
 
-    //EVENTOS
+    const handleChange = (e) => {                                   //MANEJA LOS CAMBIOS EN LOS CAMPOS DEL FORM REGISTER
+        setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
     const handleRegister = (e) => {
-        // e.preventDefault();
+        e.preventDefault()
+        const err = onValidate(user)
+        console.log(err)                               //MANEJA LOS ERRORS DE LAS VALIDACIONES
+        if (err === null) {
+            console.log("Registrando desde onvalidate")
+        } else {
+            setErrors(err)
+        }
 
-        const formData = new FormData();
+        const formData = new FormData();                            //ENVIA LOS VALORES DEL FORMULARIO
 
         formData.append("restaurantName", user.restaurantName);
         formData.append("restaurantRif", user.restaurantRif);
@@ -31,15 +44,11 @@ export const Register = () => {
         formData.append("name", user.location);
         formData.append("password", user.password);
 
-        //AQUI VA LA FUNCION FLUX:
-        const response = actions.restaurantRegister(formData);
+        const response = actions.restaurantRegister(formData);      //FUNCION FLUX
 
-        console.log("Registrando al usuario...");
+        console.log("Registrando desde Register...");
     };
 
-    const handleChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
-    };
 
     return (
         <>
@@ -52,7 +61,7 @@ export const Register = () => {
                         </h2>
 
 
-                        <form className="needs-validation" noValidate>
+                        <form className="needs-validation" noValidate onSubmit={handleRegister}>
 
                             <div className="form-group mt-4">
                                 <label htmlFor="restaurantName">Business Name</label>
@@ -61,11 +70,12 @@ export const Register = () => {
                                     className="form-control"
                                     id="restaurantName"
                                     name="restaurantName"
-                                    placeholder="Enter your business name"
+                                    placeholder="Enter the name of your business here"
                                     onChange={handleChange}
                                     value={user.restaurantName}
                                     required
                                 ></input>
+                                {errors.restaurantName && <div className="alert alert-danger">{errors.restaurantName}</div>}
                             </div>
 
                             <div className="form-group mt-3">
@@ -144,15 +154,15 @@ export const Register = () => {
                                 <button
                                     type="button"
                                     className="btn btn-success text-white w-100 mt-3"
-                                    onClick={(e) => handleRegister()}
+                                    onClick={(e) => handleRegister(e)}
                                 >
                                     Join in
                                 </button>
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     );
 };
