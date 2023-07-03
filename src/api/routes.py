@@ -167,20 +167,3 @@ def method_name():
         return jsonify({'message': err.args}), 500
     
     return jsonify({'message': 'Image upload correctly'}), 200
-
-
-@api.route('/restaurant/gallery/<int:restaurant_id>', methods=['GET'])
-def get_restaurant_images(restaurant_id = None):
-
-    restaurant = Restaurant.query.get(restaurant_id)
-    if restaurant == None:
-        return jsonify({'message': 'Restaurant is not exists'}), 400
-    
-    if restaurant:
-        images = restaurant.image  # Obtener las imágenes asociadas al restaurante
-        for image in images:
-            print(image.image_url)
-            #print(image.image_url)  # Imprimir la URL de cada imagen
-    else:
-        print("No se encontró el restaurante con el ID especificado")
-    return jsonify({'message': 'Restaurant'}), 200
