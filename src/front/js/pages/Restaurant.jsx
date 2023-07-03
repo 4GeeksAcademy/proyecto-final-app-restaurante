@@ -30,6 +30,12 @@ const Restaurant = () => {
               restaurant.name
             }
           </h3>
+          <div className='restaurant_social-media'>
+            <h4>Social Media</h4>
+            <a href={restaurant.facebook_url} target='_blank'><i className="bi bi-facebook"></i></a>
+            <a href={restaurant.twitter_url} target='_blank'><i className="bi bi-twitter"></i></a>
+            <a href={restaurant.instagram_url} target='_blank'><i className="bi bi-instagram"></i></a>
+          </div>
           <p className='restaurant__rif'>
             <span className='restaurant__label'>
               Rif:
