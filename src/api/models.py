@@ -24,7 +24,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    restaurant = db.relationship('Restaurant', backref='user')
+    restaurant = db.relationship('Restaurant', backref='user', uselist = True)
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -70,14 +70,14 @@ class Restaurant(db.Model):
             "location": self.location,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "image": list(map(lambda img: img.serialize(), self.image)),
-            "avatar_url": self.user.serialize().get("email")
+            "image": list(map(lambda img: img.serialize(), self.image))
+            #"avatar_url": self.user.serialize().get("email")
         }
 
 class Restaurant_image(db.Model):
 
     id= db.Column(db.Integer, primary_key=True)
-    restaurante_id= db.Column(db.Integer, db.ForeignKey('restaurant.id'), unique=True, nullable=False)
+    restaurante_id= db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
     image_url= db.Column(db.String(255), unique=True, nullable=False)
 
     def __repr__(self):

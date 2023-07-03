@@ -144,16 +144,23 @@ def method_name():
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
     
+    if user.role.value != 'Restaurant':
+        return jsonify({'message': 'Is not a Restaurant'}), 400
+    
     #subir imagen
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
 
+    print(type(user))
+
     restaurant_image = Restaurant_image()
-    restaurant_image.restaurante_id = user.id
+    restaurant_image.restaurante_id = user.restaurant.id
     restaurant_image.image_url = image_url
 
     db.session.add(restaurant_image)
+
+    
 
     try:
         db.session.commit()
