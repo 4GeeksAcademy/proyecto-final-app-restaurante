@@ -18,37 +18,40 @@ const initialState = {                                              //ESTADO INI
 
 export const Register = () => {
     const { actions } = useContext(Context);
-    const [user, setUser] = useState(initialState);                 //ESTADO INICIAL DEL FORM REGISTER
-    const [errors, setErrors] = useState({});                       //GUARDA  LOS ERRORES DE VALIDACION
+    const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
+    const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
 
     const handleChange = (e) => {                                   //MANEJA LOS CAMBIOS EN LOS CAMPOS DEL FORM REGISTER
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM REGISTER
         e.preventDefault()
-        const err = onValidate(user)
-        console.log(err)                               //MANEJA LOS ERRORS DE LAS VALIDACIONES
-        if (err === null) {
-            console.log("Registrando desde onvalidate")
-        } else {
-            setErrors(err)
+        const err = onValidate(user)                                //MANEJA LOS ERRORS DE LAS VALIDACIONES
+        console.log(err)
+        setErrors(err)
+
+        console.log(Object.keys(err).length);                       //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
+
+
+        if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
+
+            const formData = new FormData()                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
+
+            formData.append("restaurantName", user.restaurantName);
+            formData.append("restaurantRif", user.restaurantRif);
+            formData.append("name", user.phone);
+            formData.append("email", user.email);
+            formData.append("name", user.location);
+            formData.append("password", user.password);
+
+            const response = actions.restaurantRegister(formData);      //FUNCION FLUX
+
+            console.log(response);
+            console.log("Registrando el usuario...");
+
         }
-
-        const formData = new FormData();                            //ENVIA LOS VALORES DEL FORMULARIO
-
-        formData.append("restaurantName", user.restaurantName);
-        formData.append("restaurantRif", user.restaurantRif);
-        formData.append("name", user.phone);
-        formData.append("email", user.email);
-        formData.append("name", user.location);
-        formData.append("password", user.password);
-
-        const response = actions.restaurantRegister(formData);      //FUNCION FLUX
-
-        console.log("Registrando desde Register...");
-    };
-
+    }
 
     return (
         <>
@@ -67,7 +70,7 @@ export const Register = () => {
                                 <label htmlFor="restaurantName">Business Name</label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control border"
                                     id="restaurantName"
                                     name="restaurantName"
                                     placeholder="Enter the name of your business here"
@@ -75,14 +78,14 @@ export const Register = () => {
                                     value={user.restaurantName}
                                     required
                                 ></input>
-                                {errors.restaurantName && <div className="alert alert-danger">{errors.restaurantName}</div>}
+                                {errors.restaurantName && <div className="alert p-0 m-0 bg-none text-danger">{errors.restaurantName}</div>}
                             </div>
 
                             <div className="form-group mt-3">
                                 <label htmlFor="restaurantRif">R.I.F</label>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control border"
                                     id="restaurantRif"
                                     name="restaurantRif"
                                     placeholder="Enter your business RIF"
@@ -90,6 +93,8 @@ export const Register = () => {
                                     value={user.restaurantRif}
                                     required
                                 ></input>
+                                {errors.restaurantRif && <div className="alert p-0 m-0 bg-none text-danger">{errors.restaurantRif}</div>}
+
                             </div>
 
                             <div className="form-group mt-3">
@@ -99,11 +104,12 @@ export const Register = () => {
                                     className="form-control"
                                     id="phone"
                                     name="phone"
-                                    placeholder="Enter your phone number"
+                                    placeholder="Enter business contact number"
                                     onChange={handleChange}
                                     value={user.phone}
                                     required
                                 ></input>
+                                {errors.phone && <div className="alert p-0 m-0 bg-none text-danger">{errors.phone}</div>}
                             </div>
 
                             <div className="form-group mt-3">
@@ -113,11 +119,13 @@ export const Register = () => {
                                     className="form-control"
                                     id="email"
                                     name="email"
-                                    placeholder="Enter an email address"
+                                    placeholder="name@example.com"
                                     onChange={handleChange}
                                     value={user.email}
                                     required
                                 ></input>
+                                {errors.email && <div className="alert p-0 m-0 bg-none text-danger">{errors.email}</div>}
+
                             </div>
 
                             <div className="form-group mt-4">
@@ -127,11 +135,12 @@ export const Register = () => {
                                     className="form-control"
                                     id="location"
                                     name="location"
-                                    placeholder="Enter a valid URL"
+                                    placeholder="https://..."
                                     onChange={handleChange}
                                     value={user.location}
                                     required
                                 ></input>
+                                {errors.location && <div className="alert p-0 m-0 bg-none text-danger">{errors.location}</div>}
                             </div>
 
                             <div className="form-group mt-3">
@@ -146,10 +155,10 @@ export const Register = () => {
                                     value={user.password}
                                     required
                                 ></input>
-
+                                {errors.password && <div className="alert p-0 m-0 bg-none text-danger">{errors.password}</div>}
                             </div>
 
-
+                            {/* BOTON DE ENVIO */}
                             <div>
                                 <button
                                     type="button"
@@ -166,3 +175,7 @@ export const Register = () => {
         </>
     );
 };
+
+
+
+

@@ -6,8 +6,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 
 			//PARA REGISTRAR UN USUARIO:
-			restaurantRegister: async (data) => {
-				console.log(data);
+			restaurantRegister: async (user) => {
+				console.log(user);
+				const store = getStore();
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
+						method: "POST",
+						body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+					})
+
+					console.log(response)
+
+				} catch (error) {
+					console.log(error);
+				}
 			},
 
 
