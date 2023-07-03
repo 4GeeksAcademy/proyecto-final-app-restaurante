@@ -1,0 +1,72 @@
+.restaurant__container {
+  /* position */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+}
+
+.restaurant__title {
+  /* box_model */
+  width: 90%;
+  padding: 0.5em;
+  margin: auto;
+  /* position */
+  position: relative;
+  /* style */
+  text-align: center;
+  background-color: var(--main_color);
+}
+
+.restaurant__title::after {
+  content: '';
+  /* box_model */
+  width: 110%;
+  height: 2.2px;
+  /* position */
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  /* style */
+  background-color: black;
+}
+
+.restaurant__content {
+  /* box_model */
+  padding: 1em;
+}
+
+.restaurant__information {
+  /* box_model */
+  padding: 1em 2em;
+}
+
+.restaurant_avatar {
+  /* position */
+  padding: 0;
+  order: 2;
+}
+
+.restaurant__information p {
+  margin: 0;
+}
+
+.restaurant__label {
+  margin-right: 0.3em;
+  font-weight: 600;
+}
+
+.location__content {
+  cursor: pointer;
+}
+
+.information-group {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+@media (max-width: 768px) { 
+  .restaurant__information {
+    /* box_model */
+    padding: 1em;
+  }
+}
