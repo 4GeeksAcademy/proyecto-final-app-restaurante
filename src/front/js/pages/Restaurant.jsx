@@ -8,10 +8,14 @@ const Restaurant = () => {
   const { actions } = useContext(Context);
   const [restaurant, setRestaurant] = useState({})
 
-  //Haré una consulta a la base de datos para traerme el restaurante.
+  const getCurrentRestaurant = async () => {
+    const { getOneRestaurant } = actions;
+    const response = await getOneRestaurant(restaurantId);
+    setRestaurant(response);
+  }
+
   useEffect(() => {
-    const { getRestaurant } = actions;
-    setRestaurant(getRestaurant(restaurantId));
+    getCurrentRestaurant();
   }, []);
 
   return (
@@ -21,7 +25,7 @@ const Restaurant = () => {
       </h2>
       <div className='row restaurant__content'>
         <img
-          src="https://imagen-ai.com/wp-content/uploads/2022/07/open-graph-default.jpg"
+          src={restaurant.user && restaurant.user.avatar_url}
           alt="restaurant_avatar"
           className='restaurant_avatar col-12 col-sm-3 order-sm-0' />
         <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
