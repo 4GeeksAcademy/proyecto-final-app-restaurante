@@ -4,9 +4,10 @@ from api.utils import generate_sitemap, APIException, password_hash, is_valid_pa
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 import os
+import cloudinary.uploader as uploader
+import cloudinary
 
 api = Blueprint('api', __name__)
-
 
 @api.route('/status', methods=['GET'])
 def server_status():
@@ -119,25 +120,47 @@ def login():
     return jsonify({'message': 'Wrong credentials'}), 400
 
 # KR
+#Trae todos los restaurantes
 @api.route('/restaurante', methods=['GET'])
 def get_all_restaurants():
     all_restaurants = Restaurant.query.all()
     return jsonify(list(map(lambda item: item.serialize(), all_restaurants))), 200
 
+#Trae un restaurante por ID
 @api.route('/restaurante/<int:restaurant_id>', methods=['GET'])
 def get_restaurtant(restaurant_id = None):
-    user = User.query.filter_by(id = restaurant_id).all()
-    return jsonify(list(map(lambda item: item.serialize(), user))), 200
+    users = User.query.filter_by(id = restaurant_id).all()
+    if users == []:
+        return jsonify({'message': 'Restaurant is not exists'}), 400
+    user = list(map(lambda item: item.serialize(), users))
+    return jsonify(user[0]), 200
 
+#Sube una imagen en cloudinary
 @api.route('/restaurante/gallery', methods=['POST'])
 @jwt_required()
 def method_name():
     #verificar el permiso/ 
     user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
-
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
     
-    print(user.role)
+    #subir imagen
+    image = request.files['image']
+    result = cloudinary.uploader.upload(image)
+    image_url = result['secure_url']
 
-    return jsonify({'message': 'Todo ok '}), 400
+    restaurant_image = Restaurant_image()
+    restaurant_image.restaurante_id = user.id
+    restaurant_image.image_url = image_url
+
+    db.session.add(restaurant_image)
+
+    try:
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+
+    print(user.id)
+
+    return jsonify({'message': 'Image upload correctly'}), 200
