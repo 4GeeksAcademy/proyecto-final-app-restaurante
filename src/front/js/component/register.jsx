@@ -47,7 +47,7 @@ export const Register = () => {
 
             const response = actions.restaurantRegister(formData);      //FUNCION FLUX
 
-            console.log(response);
+            console.log(formData.get("restaurantName"));
             console.log("Registrando el usuario...");
 
         }
