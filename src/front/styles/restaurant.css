@@ -41,14 +41,9 @@
 }
 
 .restaurant_avatar {
-  background-color: red;
   /* position */
   padding: 0;
   order: 2;
-}
-
-.restaurant__information {
-  background-color: blue;
 }
 
 .restaurant__information p {
@@ -62,4 +57,16 @@
 
 .location__content {
   cursor: pointer;
+}
+
+.information-group {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+@media (max-width: 768px) { 
+  .restaurant__information {
+    /* box_model */
+    padding: 1em;
+  }
 }

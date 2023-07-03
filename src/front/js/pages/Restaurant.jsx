@@ -30,13 +30,13 @@ const Restaurant = () => {
               restaurant.name
             }
           </h3>
-          <div className='restaurant_social-media'>
+          <div className='information-group'>
             <span className='restaurant__label'>Social Media</span>
             <a href={restaurant.facebook_url} target='_blank'><i className="bi bi-facebook"></i></a>
             <a href={restaurant.twitter_url} target='_blank'><i className="bi bi-twitter"></i></a>
             <a href={restaurant.instagram_url} target='_blank'><i className="bi bi-instagram"></i></a>
           </div>
-          <p className='restaurant__rif'>
+          <p className='information-group'>
             <span className='restaurant__label'>
               Rif:
             </span>
@@ -44,7 +44,7 @@ const Restaurant = () => {
               restaurant.rif
             }
           </p>
-          <p className='restaurant__phone'>
+          <p className='information-group'>
             <span className='restaurant__label'>
               Phone:
             </span>
@@ -52,15 +52,11 @@ const Restaurant = () => {
               restaurant.phone
             }
           </p>
-          <p className='restaurant__location'>
+          <p className='information-group'>
             <span className='restaurant__label'>
               Location link:
             </span>
-            <a href='/' className='location__content' target='_blank'>
-              {
-                restaurant.location
-              }
-            </a>
+            <a href={restaurant.location} target="_blank">Click here!</a>
           </p>
           <p className="restaurant__description">
             {
