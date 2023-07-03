@@ -55,7 +55,6 @@ class Restaurant(db.Model):
     phone = db.Column(db.String(30))
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
     image = db.relationship('Restaurant_image', backref='restaurant', lazy = True)
 
     def __repr__(self):
@@ -70,7 +69,9 @@ class Restaurant(db.Model):
             "description": self.description,
             "location": self.location,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "image": list(map(lambda img: img.serialize(), self.image)),
+            "avatar_url": self.user.serialize().get("email")
         }
 
 class Restaurant_image(db.Model):

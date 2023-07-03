@@ -121,13 +121,13 @@ def login():
 
 # KR
 #Trae todos los restaurantes
-@api.route('/restaurante', methods=['GET'])
+@api.route('/restaurant', methods=['GET'])
 def get_all_restaurants():
     all_restaurants = Restaurant.query.all()
     return jsonify(list(map(lambda item: item.serialize(), all_restaurants))), 200
 
 #Trae un restaurante por ID
-@api.route('/restaurante/<int:restaurant_id>', methods=['GET'])
+@api.route('/restaurant/<int:restaurant_id>', methods=['GET'])
 def get_restaurtant(restaurant_id = None):
     users = User.query.filter_by(id = restaurant_id).all()
     if users == []:
@@ -136,7 +136,7 @@ def get_restaurtant(restaurant_id = None):
     return jsonify(user[0]), 200
 
 #Sube una imagen en cloudinary
-@api.route('/restaurante/gallery', methods=['POST'])
+@api.route('/restaurant/gallery', methods=['POST'])
 @jwt_required()
 def method_name():
     #verificar el permiso/ 
@@ -160,7 +160,22 @@ def method_name():
     except Exception as err:
         db.session.rollback()
         return jsonify({'message': err.args}), 500
-
-    print(user.id)
-
+    
     return jsonify({'message': 'Image upload correctly'}), 200
+
+
+@api.route('/restaurant/gallery/<int:restaurant_id>', methods=['GET'])
+def get_restaurant_images(restaurant_id = None):
+
+    restaurant = Restaurant.query.get(restaurant_id)
+    if restaurant == None:
+        return jsonify({'message': 'Restaurant is not exists'}), 400
+    
+    if restaurant:
+        images = restaurant.image  # Obtener las imágenes asociadas al restaurante
+        for image in images:
+            print(image.image_url)
+            #print(image.image_url)  # Imprimir la URL de cada imagen
+    else:
+        print("No se encontró el restaurante con el ID especificado")
+    return jsonify({'message': 'Restaurant'}), 200
