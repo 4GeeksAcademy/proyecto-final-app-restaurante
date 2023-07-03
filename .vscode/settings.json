@@ -7,12 +7,11 @@
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
-<<<<<<< HEAD
     "[javascriptreact]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
-=======
+
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
->>>>>>> 1a7a0f7f4e36b62d17620d7848cfd9b88e79f338
+
     }
 }
