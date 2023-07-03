@@ -2,6 +2,10 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 
+:root {
+  --main_color: #CC0000;
+}
+
 nav{
     background-color: #CC0000;
     border-bottom: 2px solid #00FFA3;
