@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Restaurant, Role, UserStatus
+from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 import os
+import cloudinary.uploader as uploader
+import cloudinary
 
 api = Blueprint('api', __name__)
-
 
 @api.route('/status', methods=['GET'])
 def server_status():
@@ -116,4 +117,70 @@ def login():
         token = create_access_token(identity=user.name, expires_delta=False)
         return jsonify({'role': user_role, 'token': token}), 200
 
-    return jsonify({'meesage': 'Wrong credentials'}), 400
+    return jsonify({'message': 'Wrong credentials'}), 400
+
+# KR
+#Trae todos los restaurantes
+@api.route('/restaurant', methods=['GET'])
+def get_all_restaurants():
+    all_restaurants = Restaurant.query.all()
+    return jsonify(list(map(lambda item: item.serialize(), all_restaurants))), 200
+
+#Trae un restaurante por ID
+@api.route('/restaurant/<int:restaurant_id>', methods=['GET'])
+def get_restaurtant(restaurant_id = None):
+    restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
+    if restaurant is None:
+        return jsonify({'message': 'Restaurant is not exists'}), 400
+    return jsonify(restaurant.serialize()), 200
+
+#Sube una imagen en cloudinary
+@api.route('/restaurant/gallery', methods=['POST'])
+@jwt_required()
+def method_name():
+    #verificar el permiso/ 
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'Access denied'}), 400
+    
+    if user.role.value != 'Restaurant':
+        return jsonify({'message': 'Is not a Restaurant'}), 400
+    
+    #subir imagen
+    image = request.files['image']
+    result = cloudinary.uploader.upload(image)
+    image_url = result['secure_url']
+
+    print(type(user))
+
+    restaurant_image = Restaurant_image()
+    restaurant_image.restaurante_id = user.restaurant.id
+    restaurant_image.image_url = image_url
+
+    db.session.add(restaurant_image)
+
+    try:
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+    
+    return jsonify({'message': 'Image upload correctly'}), 200
+
+
+@api.route('/restaurant/gallery/<int:restaurant_id>', methods=['GET'])
+def get_restaurant_images(restaurant_id = None):
+
+    restaurant = Restaurant.query.get(restaurant_id)
+    if restaurant == None:
+        return jsonify({'message': 'Restaurant is not exists'}), 400
+    
+    if restaurant:
+        images = restaurant.image  # Obtener las imágenes asociadas al restaurante
+        for image in images:
+            print(image.image_url)
+            #print(image.image_url)  # Imprimir la URL de cada imagen
+    else:
+        print("No se encontró el restaurante con el ID especificado")
+    return jsonify({'message': 'Restaurant'}), 200
