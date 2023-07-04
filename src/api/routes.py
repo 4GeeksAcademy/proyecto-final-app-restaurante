@@ -137,7 +137,7 @@ def get_restaurtant(restaurant_id = None):
 #Sube una imagen en cloudinary
 @api.route('/restaurant/gallery', methods=['POST'])
 @jwt_required()
-def method_name():
+def upload_images():
     #verificar el permiso/ 
     user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
 
@@ -152,14 +152,37 @@ def method_name():
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
 
-    print(type(user))
-
     restaurant_image = Restaurant_image()
     restaurant_image.restaurante_id = user.restaurant.id
     restaurant_image.image_url = image_url
 
     db.session.add(restaurant_image)
 
+    try:
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+    
+    return jsonify({'message': 'Image upload correctly'}), 200
+
+#Subir foto avatar
+@api.route('/user/avatar', methods=['POST'])
+@jwt_required()
+def method_name():
+    #verificar el permiso/ 
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'Access denied'}), 400
+    
+    #subir imagen
+    image = request.files['image']
+    result = cloudinary.uploader.upload(image)
+    image_url = result['secure_url']
+
+    user.avatar_url = image_url
+    
     try:
         db.session.commit()
     except Exception as err:
