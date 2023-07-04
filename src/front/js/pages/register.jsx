@@ -25,14 +25,10 @@ export const Register = () => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM REGISTER
+    const handleRegister = async (e) => {                                 //MANEJA EL ENVIO DEL FORM REGISTER
         e.preventDefault()
         const err = onValidate(user)                                //MANEJA LOS ERRORS DE LAS VALIDACIONES
-        console.log(err)
-        setErrors(err)
-
-        console.log(Object.keys(err).length);                       //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
-
+        setErrors(err)                      //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
 
         if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
 
@@ -45,11 +41,8 @@ export const Register = () => {
             formData.append("name", user.location);
             formData.append("password", user.password);
 
-            const response = actions.restaurantRegister(formData);      //FUNCION FLUX
-
-            console.log(formData.get("restaurantName"));
-            console.log("Registrando el usuario...");
-
+            const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
+            console.log(response);
         }
     }
 
