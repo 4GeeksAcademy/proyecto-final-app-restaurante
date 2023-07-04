@@ -2,10 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
-import { onValidate } from "../util.js";
+import { onValidateDishes } from "../util.js";
 
-const initialState = {
-    //ESTADO INICIAL
+const initialState = {                                              //ESTADO INICIAL
 
     name: "",
     description: "",
@@ -19,40 +18,40 @@ const initialState = {
 
 export const AddDishes = () => {
     const { actions } = useContext(Context);
-    const [user, setUser] = useState(initialState); //GUARDA ESTADO INICIAL
-    const [errors, setErrors] = useState({}); //GUARDA ERRORES DE VALIDACION
+    const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL
+    const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
 
     const handleChange = (e) => {
         //MANEJA LOS CAMBIOS EN LOS FORM FIELDS
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = (e) => {
-        //MANEJA EL ENVIO DEL FORM
-        // e.preventDefault()
-        // const err = onValidate(user)                                //MANEJA LOS ERRORS DE LAS VALIDACIONES
-        // console.log(err)
-        // setErrors(err)
+    const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM
+        e.preventDefault()
+        const err = onValidateDishes(user)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
+        console.log(err)
+        setErrors(err)
 
-        // console.log(Object.keys(err).length);                       //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
+        console.log(Object.keys(err).length);                       //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
 
-        // if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
+        if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
 
-        const formData = new FormData(); //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
+            const formData = new FormData();                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
 
-        formData.append("name", user.name);
-        formData.append("description", user.description);
-        formData.append("price", user.price);
-        formData.append("tag1", user.tag1);
-        formData.append("tag2", user.tag2);
-        formData.append("tag3", user.tag3);
-        formData.append("tag4", user.tag4);
-        formData.append("image_url", user.image_url);
+            formData.append("name", user.name);
+            formData.append("description", user.description);
+            formData.append("price", user.price);
+            formData.append("tag1", user.tag1);
+            formData.append("tag2", user.tag2);
+            formData.append("tag3", user.tag3);
+            formData.append("tag4", user.tag4);
+            formData.append("image_url", user.image_url);
 
-        const response = actions.dishesRegister(formData); //FUNCION FLUX
+            const response = actions.dishesRegister(formData); //FUNCION FLUX
 
-        console.log("Registrando el usuario...");
-    };
+            console.log("Registrando el dish...");
+        };
+    }
 
     return (
         <>
@@ -81,73 +80,132 @@ export const AddDishes = () => {
                                     value={user.name}
                                     required
                                 ></input>
-                                {/* {errors.name && <div className="alert p-0 m-0 bg-none text-danger">{errors.name}</div>} */}
+                                {errors.name && <div className="alert p-0 m-0 bg-none text-danger">{errors.name}</div>}
                             </div>
 
                             <div className="form-group mt-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="A brief description of your dish"></textarea>
+                                <label
+                                    htmlFor="description"
+                                >
+                                    Description
+                                </label>
+                                <textarea
+                                    className="form-control"
+                                    id="description"
+                                    name="description"
+                                    rows="3"
+                                    placeholder="A brief description of your dish"
+                                    onChange={handleChange}
+                                    value={user.description}
+                                    required
+                                ></textarea>
+                                {errors.description && <div className="alert p-0 m-0 bg-none text-danger">{errors.description}</div>}
+
                             </div>
 
                             <div className="form-group mt-3">
                                 <label htmlFor="name">Price</label>
-                                <div class="input-group border rounded-3">
-                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Amount in dollars" />
-                                    <span class="input-group-text">$</span>
+                                <div className="input-group border rounded-3">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="price"
+                                        name="price"
+                                        aria-label="Amount (to the nearest dollar)"
+                                        placeholder="Amount in dollars"
+                                        onChange={handleChange}
+                                        value={user.price}
+                                        required
+                                    />
+                                    <span className="input-group-text">$</span>
                                 </div>
+                                {errors.price && <div className="alert p-0 m-0 bg-none text-danger">{errors.price}</div>}
 
                             </div>
 
                             <div className="d-flex justify-content-between mt-3">
-                                <select
-                                    class="form-select form-select-sm"
-                                    aria-label=".form-select-sm example"
-                                >
-                                    <option selected>Tag 1</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                <div className="d-flex flex-column">
+                                    <div className="p-2">Tag 1</div>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        id="tag1"
+                                        name="tag1"
+                                        aria-label=".form-select-sm example"
+                                        onChange={handleChange}
+                                        value={user.tag1}
+                                        required
+                                    >
+                                        <option selected>select one</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
 
-                                <select
-                                    class="mx-3 form-select form-select-sm"
-                                    aria-label=".form-select-sm example"
-                                >
-                                    <option selected>Tag 2</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                <div className=" mx-2 d-flex flex-column">
+                                    <div className="p-2">Tag 2</div>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        id="tag2"
+                                        name="tag2"
+                                        aria-label=".form-select-sm example"
+                                        onChange={handleChange}
+                                        value={user.tag2}
+                                        required
+                                    >
+                                        <option selected>select one</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
 
-                                <select
-                                    class="me-3 form-select form-select-sm"
-                                    aria-label=".form-select-sm example"
-                                >
-                                    <option selected>Tag 3</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                <div className="me-2 d-flex flex-column">
+                                    <div className="p-2">Tag 3</div>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        id="tag3"
+                                        name="tag3"
+                                        aria-label=".form-select-sm example"
+                                        onChange={handleChange}
+                                        value={user.tag3}
+                                        required
+                                    >
+                                        <option selected>select one</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
 
-                                <select
-                                    class="form-select form-select-sm"
-                                    aria-label=".form-select-sm example"
-                                >
-                                    <option selected>Tag 4</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                                <div className="d-flex flex-column">
+                                    <div className="p-2">Tag 4</div>
+                                    <select
+                                        className="form-select form-select-sm"
+                                        id="tag4"
+                                        name="tag4"
+                                        aria-label=".form-select-sm example"
+                                        onChange={handleChange}
+                                        value={user.tag4}
+                                        required
+                                    >
+                                        <option selected>select one</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <div className="mt-4">
-                                <label htmlFor="image_url">Image</label>
+                                <label htmlFor="image_url" className="form-label">
+                                    Image
+                                </label>
                                 <input
-                                    type="file"
-                                    className="form-control"
+                                    className="form-control form-control-sm"
                                     id="image_url"
                                     name="image_url"
-                                    placeholder="https://..."
+                                    type="file"
                                     onChange={handleChange}
                                     value={user.image_url}
                                     required

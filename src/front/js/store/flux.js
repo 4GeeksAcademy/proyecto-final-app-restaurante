@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(user);
 				const store = getStore();
 				try {
-					let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
+					let response = await fetch(`${process.env.BACKEND_URL}/food/foodId`, {
 						method: "POST",
 						body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
 					})

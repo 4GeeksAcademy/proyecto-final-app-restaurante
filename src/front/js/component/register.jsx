@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
-import { onValidate } from "../util.js"
+import { onValidateRegister } from "../util.js"
 
 const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
 
@@ -27,7 +27,7 @@ export const Register = () => {
 
     const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM REGISTER
         e.preventDefault()
-        const err = onValidate(user)                                //MANEJA LOS ERRORS DE LAS VALIDACIONES
+        const err = onValidateRegister(user)                                //MANEJA LOS ERRORS DE LAS VALIDACIONES
         console.log(err)
         setErrors(err)
 
@@ -58,7 +58,7 @@ export const Register = () => {
             {/* FORMULARIO DE REGISTRO */}
             <div className="container mt-5">
                 <div className="row justify-content-center">
-                    <div className="col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
+                    <div className="bg-white border border-1 p-5 rounded-4 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
                         <h2 className="text-center bg-danger text-white rounded-1">
                             <strong>Create Account</strong>
                         </h2>

@@ -1,5 +1,5 @@
 
-export const onValidate = (user) => {
+export const onValidateRegister = (user) => {
     let errors = {};
     let regexName = /^.{1,150}$/;                                               //LETTERS VALIDATION
     let regexPhone = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;            //PHONE VALIDATION
@@ -51,6 +51,40 @@ export const onValidate = (user) => {
     } else if (!regexPassword.test(user.password)) {
         errors.password = "This field should be between 8 and 20 characters"
     }
+
+
+
+    return errors
+
+
+}
+
+
+export const onValidateDishes = (user) => {
+    let errors = {};
+    let regexName = /^.{1,20}$/;
+    let regexComment = /^.{1,200}$/;                                               //LETTERS VALIDATION
+
+
+    //VALIDACIONES PARA REGISTRO DE DISHES
+
+    if (!user.name.trim()) {
+        errors.name = "This field should not be empty"
+    } else if (!regexName.test(user.name)) {
+        errors.name = "This field should not be more than 20 characters long"
+    }
+
+    if (!user.description.trim()) {
+        errors.description = "This field should not be empty"
+    } else if (!regexComment.test(user.description)) {
+        errors.description = "This field should not be more than 200 characters long"
+    }
+
+    if (!user.price.trim()) {
+        errors.price = "This field should not be empty"
+    }
+
+
 
     return errors
 
