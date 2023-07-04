@@ -4,6 +4,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		},
 		actions: {
+			//PARA REGISTRAR UN USUARIO:
+			restaurantRegister: async (user) => {
+				console.log(user.get("restaurantName"));
+				const store = getStore();
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
+						method: "POST",
+						body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+					})
+
+					console.log(response)
+
+				} catch (error) {
+					console.log(error);
+				}
+			},
 			getOneRestaurant: async (id) => {
 				//fetch to the api
 				const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
@@ -11,7 +27,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const restaurant = await response.json();
 					return restaurant;
 				}
-
 				return null;
 			}
 			// Use getActions to call a function within a fuction
