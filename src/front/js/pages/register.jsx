@@ -36,10 +36,10 @@ export const Register = () => {
 
             formData.append("restaurantName", user.restaurantName);
             formData.append("restaurantRif", user.restaurantRif);
-            formData.append("name", user.phone);
-            formData.append("email", user.email);
-            formData.append("name", user.location);
-            formData.append("password", user.password);
+            formData.append("restaurantPhone", user.phone);
+            formData.append("restaurantLocation", user.location);
+            formData.append("userEmail", user.email);
+            formData.append("userPassword", user.password);
 
             const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
             console.log(response);
