@@ -22,12 +22,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(body),
 					});
 
-					let data = await response.json();
-					setStore({
-						token: data.token
-					});
+					if(response.ok){
+						let data = await response.json();
+						setStore({
+							user: data
+						});
 
-					localStorage.setItem("token", data.token)
+						localStorage.setItem("token", data.token)
+					};
 					return response.status
 				} catch (error) {
 					console.log(error)

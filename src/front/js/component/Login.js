@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
-// import { Link, useParams } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/login.css"
 
 const Login = () => {
-    const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const [user, setUser] = useState({ email: "", password: "" });
 
     // maybe rename this function to "handleChange", that's how Deimian named it in class
@@ -25,7 +25,6 @@ const Login = () => {
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value={user.email} onChange={(event) => handleUser(event)} />
-                        {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
                     </div>
                     <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
