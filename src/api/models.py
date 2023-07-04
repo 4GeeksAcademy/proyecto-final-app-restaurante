@@ -77,7 +77,7 @@ class Restaurant(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "image": list(map(lambda img: img.serialize(), self.image)),
-            "user": {"avatar_url": user.get("avatar_url")}
+            "user": {"avatar_url": user.get("avatar_url"), "name": user.get("name")}
         }
 
 class Restaurant_image(db.Model):
