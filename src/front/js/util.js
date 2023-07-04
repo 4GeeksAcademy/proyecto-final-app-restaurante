@@ -9,6 +9,7 @@ export const onValidate = (user) => {
     let regexPassword = /^[^-\s]{8,20}$/;                                       //PASSWORD VALIDATION
 
 
+    //VALIDACIONES PARA REGISTRO DE RESTAURANT
 
     if (!user.restaurantName.trim()) {
         errors.restaurantName = "This field should not be empty"

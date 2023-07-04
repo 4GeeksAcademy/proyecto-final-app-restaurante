@@ -1,6 +1,9 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+body {
+  background-color: rgb(222, 222, 200);
+}
 
 :root {
   --main_color: #CC0000;
