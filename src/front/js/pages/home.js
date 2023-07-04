@@ -6,6 +6,7 @@ import "../../styles/home.css";
 import { Register } from "./register.jsx";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
+import { AddDishes } from "../component/addDishes.jsx";
 
 // import { Context } from "../store/appContext.js";
 
@@ -21,11 +22,15 @@ export const Home = () => {
 				{/* BARRA DE BUSQUEDA: */}
 				<SearchBar />
 
+				{/* AGREGAR PLATOS*/}
+				<AddDishes />
+
 				{/* FORMULARIO DE REGISTRO*/}
 				{/* <Register /> */}
 
 				{/* TARJETA PLATO*/}
 				<DishCard />
+
 
 
 
