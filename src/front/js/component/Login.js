@@ -6,7 +6,7 @@ const Login = () => {
     const { store, actions } = useContext(Context);
     const [user, setUser] = useState({ email: "", password: "" });
 
-    // maybe rename this function to "handleChange", that's how Deimian named it in the class
+    // maybe rename this function to "handleChange", that's how Deimian named it in class
     const handleUser = (event) => {
         setUser({ ...user, [event.target.name]: event.target.value })
     };
