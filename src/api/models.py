@@ -61,6 +61,8 @@ class Restaurant(db.Model):
         return f'<Restaurant {self.rif}>'
 
     def serialize(self):
+        user = self.user.serialize()
+
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -75,7 +77,7 @@ class Restaurant(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "image": list(map(lambda img: img.serialize(), self.image)),
-            "user": {"avatar_url": self.user.serialize().get("avatar_url")}
+            "user": {"avatar_url": user.get("avatar_url")}
         }
 
 class Restaurant_image(db.Model):

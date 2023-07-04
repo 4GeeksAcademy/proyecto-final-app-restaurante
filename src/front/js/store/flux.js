@@ -12,7 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return restaurant;
 				}
 
-				return {};
+				return null;
 			}
 			// Use getActions to call a function within a fuction
 
