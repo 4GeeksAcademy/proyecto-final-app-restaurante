@@ -43,11 +43,11 @@
 .restaurant_avatar {
   /* position */
   padding: 0;
-  order: 2;
 }
 
-.restaurant__information p {
+.restaurant__information>* {
   margin: 0;
+  margin-bottom: 0.3em;
 }
 
 .restaurant__label {
@@ -62,6 +62,30 @@
 .information-group {
   display: flex;
   flex-flow: row wrap;
+}
+
+.restaurant__social {
+  margin-right: 1em;
+  font-size: 1.4em;
+}
+
+.restaurant__carroussel {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.restaurant__carroussel {
+  min-height: 200px;
+}
+
+.restaurant__add_more_images {
+  /* box_model */
+  min-width: 100px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+  box-shadow: none;
+  /* style */
+  background-color: inherit;
 }
 
 @media (max-width: 768px) { 

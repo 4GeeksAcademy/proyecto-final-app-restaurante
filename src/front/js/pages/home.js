@@ -3,7 +3,7 @@ import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
 
-import { Register } from "../component/register.jsx";
+import { Register } from "./register.jsx";
 import { SearchBar } from "../component/searchBar.js";
 import { AddDishes } from "../component/addDishes.jsx";
 

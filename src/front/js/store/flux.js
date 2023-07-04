@@ -15,12 +15,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
 					})
 
-					console.log(response)
+					let data = await response.json();
+					return data;
 
 				} catch (error) {
 					console.log(error);
 				}
+
+				return { 'message': 'Some error ocurred' };
 			},
+<<<<<<< HEAD
 
 			//PARA REGISTRO DE DISHES:
 			dishesRegister: async (user) => {
@@ -41,24 +45,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			getRestaurant: (id) => {
+			getOneRestaurant: async (id) => {
 				//fetch to the api
-				const restaurant = {
-					"id": 1,
-					"user_id": "user",
-					"name": "El restaurant de andres",
-					"rif": "a",
-					"description": "this is a restaurant",
-					"location": "www.location.com",
-					"facebook_url": "facebook.com",
-					"twitter_url": "twitter.com",
-					"instagram_url": "instagram.com",
-					"phone": "phone",
-					"created_at": "02/07/2023",
-					"updated_at": "02/07/2023"
+				const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
+				if (response.ok) {
+					const restaurant = await response.json();
+					return restaurant;
 				}
-
-				return restaurant;
+				return null;
 			}
 			// Use getActions to call a function within a fuction
 

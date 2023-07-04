@@ -25,7 +25,7 @@ export const Register = () => {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM REGISTER
+    const handleRegister = async (e) => {                                 //MANEJA EL ENVIO DEL FORM REGISTER
         e.preventDefault()
         const err = onValidateRegister(user)                                //MANEJA LOS ERRORS DE LAS VALIDACIONES
         console.log(err)
@@ -40,16 +40,13 @@ export const Register = () => {
 
             formData.append("restaurantName", user.restaurantName);
             formData.append("restaurantRif", user.restaurantRif);
-            formData.append("name", user.phone);
-            formData.append("email", user.email);
-            formData.append("name", user.location);
-            formData.append("password", user.password);
+            formData.append("restaurantPhone", user.phone);
+            formData.append("restaurantLocation", user.location);
+            formData.append("userEmail", user.email);
+            formData.append("userPassword", user.password);
 
-            const response = actions.restaurantRegister(formData);      //FUNCION FLUX
-
-            console.log(formData.get("restaurantName"));
-            console.log("Registrando el usuario...");
-
+            const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
+            console.log(response);
         }
     }
 

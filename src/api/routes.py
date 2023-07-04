@@ -16,39 +16,20 @@ def server_status():
 
 @api.route('/restaurant', methods=['POST'])
 def register_restaurant():
-    # is a json item ?
-    if not request.is_json:
-        return jsonify({'message': "Request's body should be a valid json item"}), 400
-    
-    body = request.json
-    if type(body) is not dict:
-        return jsonify({'message': "Request's body should be dict type"}), 400
-
-    # are there "restaurant" and "user" items ?
-    userBody = body.get('user')
-    if userBody is None:
-        return jsonify({'message': "Request's body should contain a 'user' item"}), 400
-
-    restaurantBody = body.get('restaurant')
-    if restaurantBody is None:
-        return jsonify({'message': "Request's body should contain a 'restaurant' item"}), 400
-
-    if type(userBody) is not dict or type(restaurantBody) is not dict:
-        return jsonify({'message': "User and Restaurant should be dict type"}), 400
-
-    # each one of them has corrects properties?
-    user_name = restaurantBody.get('rif')
-    user_password = userBody.get('password')
-    user_email = userBody.get('email')
-    if None in [user_name, user_password, user_email]:
-        return jsonify({'message': "User dict has a wrong property"}), 400
-
-    restaurant_name = restaurantBody.get('name')
-    restaurant_rif = restaurantBody.get('rif')
-    restaurant_location = restaurantBody.get('location')
-    restaurant_phone = restaurantBody.get('phone')
-    if None in [restaurant_name, restaurant_rif, restaurant_location, restaurant_phone]:
-        return jsonify({'message': "Restaurant dict has a wrong property"}), 400
+    form = request.form
+    if(form is None):
+        return jsonify({'message': "Request must be a form"}), 400
+    print(form)
+    # are there corrects properties?
+    restaurant_name = form.get('restaurantName')
+    restaurant_rif = form.get('restaurantRif')
+    restaurant_location = form.get('restaurantLocation')
+    restaurant_phone = form.get('restaurantPhone')
+    user_password = form.get('userPassword')
+    user_email = form.get('userEmail')
+    if None in [restaurant_name, restaurant_rif, restaurant_location, restaurant_phone, user_password, user_email]:
+        return jsonify({'message': "Form has a wrong property"}), 400
+    user_name = form.get('restaurantRif')
 
     # is a valid password ? 
     if not is_valid_password(user_password):
@@ -89,7 +70,7 @@ def register_restaurant():
         db.session.rollback()
         return jsonify({'message': err.args}), 500
 
-    return jsonify({'message': 'ok'}), 200
+    return jsonify({'message': 'ok'}), 201
 
 
 @api.route('/login', methods=['POST'])
@@ -137,7 +118,7 @@ def get_restaurtant(restaurant_id = None):
 #Sube una imagen en cloudinary
 @api.route('/restaurant/gallery', methods=['POST'])
 @jwt_required()
-def method_name():
+def upload_images():
     #verificar el permiso/ 
     user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
 
@@ -152,14 +133,37 @@ def method_name():
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
 
-    print(type(user))
-
     restaurant_image = Restaurant_image()
     restaurant_image.restaurante_id = user.restaurant.id
     restaurant_image.image_url = image_url
 
     db.session.add(restaurant_image)
 
+    try:
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+    
+    return jsonify({'message': 'Image upload correctly'}), 200
+
+#Subir foto avatar
+@api.route('/user/avatar', methods=['POST'])
+@jwt_required()
+def method_name():
+    #verificar el permiso/ 
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'Access denied'}), 400
+    
+    #subir imagen
+    image = request.files['image']
+    result = cloudinary.uploader.upload(image)
+    image_url = result['secure_url']
+
+    user.avatar_url = image_url
+    
     try:
         db.session.commit()
     except Exception as err:
