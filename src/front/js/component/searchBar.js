@@ -33,7 +33,7 @@ export const SearchBar = () => {
                     <h3 className="d-inline me-2">Hoy como con:</h3>
                     <input
                         type="text"
-                        class="form-control d-inline w-25 border border-dark"
+                        className="form-control d-inline w-25 border border-dark"
                         placeholder="$$$"
                         name="budget" /*budget = presupuesto*/
 
