@@ -116,4 +116,4 @@ def login():
         token = create_access_token(identity=user.name, expires_delta=False)
         return jsonify({'role': user_role, 'token': token}), 200
 
-    return jsonify({'meesage': 'Wrong credentials'}), 400
+    return jsonify({'message': 'Wrong credentials'}), 400

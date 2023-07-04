@@ -68,11 +68,13 @@ nav{
   margin-left: auto;
   flex-direction: column;
   border-radius: 10px;
+  justify-content: center;
 }
 
 .login_submit_button {
   text-align: center;
-  margin-right: auto;
-  margin-left: auto;
+  justify-content: center;
+  /* margin-right: auto;
+  margin-left: auto; */
 }
 /* ------------------------ Login form styling end ------------------------*/
