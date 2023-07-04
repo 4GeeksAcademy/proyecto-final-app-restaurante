@@ -5,9 +5,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 
-			//PARA REGISTRAR UN USUARIO:
+			//PARA REGISTRO:
 			restaurantRegister: async (user) => {
-				console.log(user.get("restaurantName"));
+				console.log(user);
 				const store = getStore();
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
