@@ -68,6 +68,25 @@ const Restaurant = () => {
           </p>
         </div>
       </div>
+      <div className='restaurant__gallery'>
+        <h3>
+          Place
+        </h3>
+        <div className='restaurant__carroussel'>
+          {
+            restaurant.image && restaurant.image.map(
+              image => {
+                return (
+                  <img className='col-4' src={image.image_url} />
+                )
+              }
+            )
+          }
+          <button className='restaurant__add_more_images'>
+            +
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

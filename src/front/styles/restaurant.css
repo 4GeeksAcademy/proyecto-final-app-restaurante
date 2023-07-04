@@ -43,7 +43,6 @@
 .restaurant_avatar {
   /* position */
   padding: 0;
-  order: 2;
 }
 
 .restaurant__information>* {
@@ -68,6 +67,25 @@
 .restaurant__social {
   margin-right: 1em;
   font-size: 1.4em;
+}
+
+.restaurant__carroussel {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.restaurant__carroussel {
+  min-height: 200px;
+}
+
+.restaurant__add_more_images {
+  /* box_model */
+  min-width: 100px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+  box-shadow: none;
+  /* style */
+  background-color: inherit;
 }
 
 @media (max-width: 768px) { 
