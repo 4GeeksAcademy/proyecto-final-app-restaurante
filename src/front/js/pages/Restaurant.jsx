@@ -80,7 +80,7 @@ const Restaurant = () => {
                   restaurant.image && restaurant.image.map(
                     image => {
                       return (
-                        <img className='col-4' src={image.image_url} />
+                        <img className='' src={image.image_url} />
                       )
                     }
                   )
