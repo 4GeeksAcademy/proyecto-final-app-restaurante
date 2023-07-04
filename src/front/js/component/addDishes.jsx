@@ -127,6 +127,7 @@ export const AddDishes = () => {
                                 <div className="d-flex flex-column">
                                     <div className="p-2">Tag 1</div>
                                     <select
+                                        // defaultValue={"DEFAULT"}                    ERROR EN CONSOLA
                                         className="form-select form-select-sm"
                                         id="tag1"
                                         name="tag1"
