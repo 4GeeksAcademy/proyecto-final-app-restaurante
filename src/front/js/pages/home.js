@@ -5,6 +5,7 @@ import "../../styles/home.css";
 
 import { Register } from "./register.jsx";
 import { SearchBar } from "../component/searchBar.js";
+import { DishCard } from "../component/dishCard.js";
 
 // import { Context } from "../store/appContext.js";
 
@@ -21,7 +22,10 @@ export const Home = () => {
 				<SearchBar />
 
 				{/* FORMULARIO DE REGISTRO*/}
-				<Register />
+				{/* <Register /> */}
+
+				{/* TARJETA PLATO*/}
+				<DishCard />
 
 
 

@@ -14,33 +14,3 @@ nav{
 .orange-line{
     border-bottom: 1px solid #FF9900;
 }
-
-.search-bar {
-    display: flex;
-    align-items: center;
-  }
-  
-  input[type="text"] {
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-  }
-  
-  button[type="submit"] {
-    padding: 8px 12px;
-    margin-left: 8px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #0056b3;
-  }
