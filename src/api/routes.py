@@ -270,3 +270,19 @@ def delete_restaurant_image(image_id):
         return jsonify({'message': err.args}), 500
 
     return jsonify({'message': 'ok'}), 200
+
+
+
+#buscar platos
+@api.route('/food', methods=['GET'])
+def search_foods():
+    keyword = request.args.get('keyword')
+    if keyword:
+        results = [food for food in foods if keyword.lower() in food['name'].lower()]
+    else:
+        results = foods
+    return jsonify(results)
+
+if __name__ == '__main__':
+    api.run()
+
