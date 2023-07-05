@@ -10,7 +10,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				// in class, the proffesor added the following code to the registerUser function:
 				// return response.status //also replaced the catch content with this same code
-				console.log(`${process.env.BACKEND_URL}/login`);
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
 						method: "POST",
@@ -22,16 +21,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						let data = await response.json();
+						console.log(data);
 						setStore({
 							user: data
 						});
 
-						localStorage.setItem("token", data.token)
-					};
-					return response.status
+						localStorage.setItem("user", data)
+
+						return true;
+					}
+
+					setStore({
+						user: { token: null, rol: null }
+					});
+					localStorage.setItem("user", null)
+
 				} catch (error) {
 					console.log(error)
 				}
+				return false;
 			},
 			//PARA REGISTRO DE RESTAURANT:
 			restaurantRegister: async (user) => {
@@ -78,28 +86,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return null;
 			},
 			// foodSearch: async (search) => {
-				// 	let store = getStore()
-				// Use getActions to call a function within a fuction
-			
-				// foodSearch: async (search) => {
-				// 	let store = getStore()
-			
-				// 	try {
-				// 		let response = await fetch("URL", {
-				// 			method: "GET",
-				// 			headers: {
-				// 				"Content-Type": "application/json",
-				// 			},
-				// 			body: JSON.stringify(search),
-				// 		})
-				// 		let data = await response.json();
-				// 		//DEBERIA RETORNAR UN ARRAY DE OBJETOS CON LA COINCIDENCIA DE BUDGET Y FOOD
-			
-			
-				// 	} catch (err) {
-			
-				// 	}
-				// }
+			// 	let store = getStore()
+			// Use getActions to call a function within a fuction
+
+			// foodSearch: async (search) => {
+			// 	let store = getStore()
+
+			// 	try {
+			// 		let response = await fetch("URL", {
+			// 			method: "GET",
+			// 			headers: {
+			// 				"Content-Type": "application/json",
+			// 			},
+			// 			body: JSON.stringify(search),
+			// 		})
+			// 		let data = await response.json();
+			// 		//DEBERIA RETORNAR UN ARRAY DE OBJETOS CON LA COINCIDENCIA DE BUDGET Y FOOD
+
+
+			// 	} catch (err) {
+
+			// 	}
+			// }
 		},
 	}
 };
