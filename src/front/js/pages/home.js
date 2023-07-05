@@ -18,10 +18,6 @@ export const Home = () => {
 
 	return (
 		<>
-		<div className="text-center mt-5">
-			<Login />
-		</div>
-
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}
