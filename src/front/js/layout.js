@@ -13,6 +13,10 @@ import { Register } from './pages/register.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
+import { SearchBar } from "./component/searchBar";
+import Login  from "./component/Login";
+
+
 //create your first component
 const Layout = () => {
     //the basename is used when your project is published in a subdirectory and not in the root of the domain

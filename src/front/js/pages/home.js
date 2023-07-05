@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
+import Login from "../component/Login"
 
 import { Register } from "./register.jsx";
 import { SearchBar } from "../component/searchBar.js";
@@ -16,6 +17,11 @@ export const Home = () => {
 	const { actions, store } = useContext(Context)
 
 	return (
+
+		<div className="text-center mt-5">
+			<Login />
+		</div>
+
 		<>
 			<div className="container-fluid">
 
@@ -36,6 +42,7 @@ export const Home = () => {
 
 			</div>
 		</>
+
 	);
 };
 

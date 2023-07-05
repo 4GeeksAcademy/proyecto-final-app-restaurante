@@ -89,6 +89,12 @@ def login():
     if None in [email, password]:
         return jsonify({'message': "User dict has a wrong property"}), 400
 
+    # 7-4-23 2:24
+    # if email is None:
+    #     return jsonify({"message": "Missing email parameter"})
+    # if password is None:
+    #     return jsonify({"message": "Missing password parameter"})
+
     user = User.query.filter_by(email=email).one_or_none()
     user_salt = user.salt
     user_role = user.role.value
@@ -97,6 +103,12 @@ def login():
     if check_password(user_password, password, user_salt):
         token = create_access_token(identity=user.name, expires_delta=False)
         return jsonify({'role': user_role, 'token': token}), 200
+    # 7-4-23 2:24
+    #   else:
+    #     return jsonify({"message": "bad credentials"}), 400
+
+
+    return jsonify({'message': 'Wrong credentials'}), 400
 
     return jsonify({'message': 'Wrong credentials'}), 400
 
@@ -258,3 +270,4 @@ def delete_restaurant_image(image_id):
         return jsonify({'message': err.args}), 500
 
     return jsonify({'message': 'ok'}), 200
+

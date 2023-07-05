@@ -1,0 +1,41 @@
+  /* ------------------------ Login form styling start ------------------------*/
+  .login_page_main_container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .login_form_container {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  
+  .login_title {
+    height: 50px;
+    text-align: center;
+    padding-top: auto;
+    font-size: 30px;
+    color: white;
+  }
+  
+  .login_form {
+    margin-right: auto;
+    margin-left: auto;
+    flex-direction: column;
+    border-radius: 10px;
+    justify-content: center;
+  }
+  
+  .login_submit_button {
+    text-align: center;
+    justify-content: center;
+    /* margin-right: auto;
+    margin-left: auto; */
+  }
+  /* ------------------------ Login form styling end ------------------------*/
