@@ -3,6 +3,7 @@ import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import Login from "../component/Login"
+import EditProfile from "../component/EditProfile"
 
 import { Register } from "./register.jsx";
 import { SearchBar } from "../component/searchBar.js";
@@ -32,7 +33,7 @@ export const Home = () => {
 				{/* TARJETA PLATO*/}
 				<DishCard />
 
-
+				<EditProfile />
 
 
 			</div>
