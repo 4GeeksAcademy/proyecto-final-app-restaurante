@@ -171,3 +171,90 @@ def method_name():
         return jsonify({'message': err.args}), 500
     
     return jsonify({'message': 'Image upload correctly'}), 200
+
+@api.route('/restaurant', methods=['PUT'])
+@jwt_required()
+def edit_restaurant():
+    user_name = get_jwt_identity()
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'user dont have a restaurant.'}), 400
+
+    data = request.form
+
+    user_email = data.get('userEmail')
+    if user_email is not None:
+        user.email = user_email
+    user_password = data.get('userPassword')
+    if user_password is not None:
+        user.salt = b64encode(os.urandom(32)).decode('utf-8')
+        user.password = password_hash(user_password, user.salt)
+    user_avatar = request.files['userAvatar']
+    if user_avatar is not None:
+        result = cloudinary.uploader.upload(user_avatar)
+        image_url = result['secure_url']
+        user.avatar_url = image_url
+    
+    restaurant = user.restaurant
+    restaurant_name = data.get('restaurantName')
+    if restaurant_name is not None:
+        restaurant.name = restaurant_name
+    restaurant_rif = data.get('restaurantRif')
+    if restaurant_rif is not None:
+        restaurant.rif = restaurant_rif
+        user.name = restaurant_rif
+    restaurant_phone = data.get('restaurantPhone')
+    if restaurant_phone is not None:
+        restaurant.phone = restaurant_phone
+    restaurant_location = data.get('restaurantLocation')
+    if restaurant_location is not None:
+        restaurant.location = restaurant_location
+    restaurant_description = data.get('restaurantDescription')
+    if restaurant_description is not None:
+        restaurant.description = restaurant_description
+    restaurant_facebook = data.get('restaurantFacebook')
+    if  restaurant_facebook is not None:
+        restaurant.facebook_url =  restaurant_facebook
+    restaurant_instagram = data.get('restaurantInstagram')
+    if restaurant_instagram is not None:
+        restaurant.instagram_url = restaurant_instagram
+    restaurant_twitter = data.get('restaurantTwitter')
+    if restaurant_twitter is not None:
+        restaurant.twitter_url = restaurant_twitter
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': 'somthing wrong ocurred'})
+
+    return jsonify({'message': 'ok'})
+
+@api.route('/restaurant/gallery/<int:image_id>', methods=['DELETE'])
+@jwt_required()
+def delete_restaurant_image(image_id):
+    user_name = get_jwt_identity()
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'user dont have a restaurant.'}), 400
+
+    restaurant = user.restaurant
+    image_to_delete = Restaurant_image.query.filter_by(restaurante_id=restaurant.id, id=image_id).one_or_none()
+    
+    if image_to_delete is None:
+        return jsonify({'message': 'Image not found'}), 400
+
+    db.session.delete(image_to_delete)
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        print(error)
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+
+    return jsonify({'message': 'ok'}), 200
