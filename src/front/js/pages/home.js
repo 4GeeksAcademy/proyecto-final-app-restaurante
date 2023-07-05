@@ -33,9 +33,6 @@ export const Home = () => {
 				{/* TARJETA PLATO*/}
 				<DishCard />
 
-				<EditProfile />
-
-
 			</div>
 		</>
 
