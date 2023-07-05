@@ -263,4 +263,3 @@ def delete_restaurant_image(image_id):
         return jsonify({'message': err.args}), 500
 
     return jsonify({'message': 'ok'}), 200
-
