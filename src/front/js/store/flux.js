@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				// in class, the proffesor added the following code to the registerUser function:
 				// return response.status //also replaced the catch content with this same code
-
+				console.log(`${process.env.BACKEND_URL}/login`);
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
 						method: "POST",
