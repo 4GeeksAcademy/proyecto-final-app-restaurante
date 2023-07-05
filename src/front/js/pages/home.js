@@ -1,15 +1,49 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext.js";
+import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import Login from "../component/Login"
 
+import { Register } from "./register.jsx";
+import { SearchBar } from "../component/searchBar.js";
+import { DishCard } from "../component/dishCard.js";
+import { AddDishes } from "../component/addDishes.jsx";
+
+// import { Context } from "../store/appContext.js";
+
+
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+
+	const { actions, store } = useContext(Context)
 
 	return (
+
 		<div className="text-center mt-5">
 			<Login />
 		</div>
+
+		<>
+			<div className="container-fluid">
+
+				{/* BARRA DE BUSQUEDA: */}
+				<SearchBar />
+
+				{/* AGREGAR PLATOS*/}
+				<AddDishes />
+
+				{/* FORMULARIO DE REGISTRO*/}
+				{/* <Register /> */}
+
+				{/* TARJETA PLATO*/}
+				<DishCard />
+
+
+
+
+			</div>
+		</>
+
 	);
 };
+
+export default Home;

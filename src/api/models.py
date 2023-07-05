@@ -24,7 +24,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    restaurant = db.relationship('Restaurant', backref='user')
+    restaurant = db.relationship('Restaurant', backref='user', uselist=False)
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -55,11 +55,14 @@ class Restaurant(db.Model):
     phone = db.Column(db.String(30))
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    image = db.relationship('Restaurant_image', backref='restaurant', lazy = True)
 
     def __repr__(self):
         return f'<Restaurant {self.rif}>'
 
     def serialize(self):
+        user = self.user.serialize()
+
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -67,6 +70,28 @@ class Restaurant(db.Model):
             "rif": self.rif,
             "description": self.description,
             "location": self.location,
+            "phone": self.phone,
+            "facebook_url": self.facebook_url,
+            "twitter_url": self.twitter_url,
+            "instagram_url": self.instagram_url,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "image": list(map(lambda img: img.serialize(), self.image)),
+            "user": {"avatar_url": user.get("avatar_url"), "name": user.get("name")}
+        }
+
+class Restaurant_image(db.Model):
+
+    id= db.Column(db.Integer, primary_key=True)
+    restaurante_id= db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
+    image_url= db.Column(db.String(255), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f'<Restaurant_image {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "restaurante_id": self.restaurante_id,
+            "image_url": self.image_url
         }
