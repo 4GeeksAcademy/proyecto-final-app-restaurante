@@ -17,12 +17,11 @@ export const Home = () => {
 	const { actions, store } = useContext(Context)
 
 	return (
-
+		<>
 		<div className="text-center mt-5">
 			<Login />
 		</div>
 
-		<>
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}
