@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css"
 
 const Login = () => {
+    const nav = useNavigate();
     const { actions } = useContext(Context);
-    const [user, setUser] = useState({ email: "", password: "" });
+    const [user, setUser] = useState({ email: "", password: "" }); 
 
     // maybe rename this function to "handleChange", that's how Deimian named it in class
     const handleUser = (event) => {
@@ -13,9 +15,9 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
-        actions.handleLogin(user);
-    }
-
+        actions.handleLogin(user)
+        .then(response => response&&nav('/profile'));
+    } 
 
     return (
         <div className="container-fluid login_page_main_container">
