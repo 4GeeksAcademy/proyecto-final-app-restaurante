@@ -37,14 +37,14 @@ export const SearchBar = () => {
                     <input
                         type="text"
                         id="budget"
-                        className="form-control d-inline w-25 border border-dark"
+                        className="form-control d-inline w-25 border border-dark searchBar--border-bottom "
                         placeholder="$$$"
                         name="budget" /*budget = presupuesto*/
 
                     />
                     <h4 className="d-inline ms-2">$</h4>
                 </div>
-                <div className="input-group text-center">
+                <div className="input-group text-center searchBar--border-bottom ">
                     <input
                         type="text"
                         className="form-control border border-dark"
@@ -53,7 +53,7 @@ export const SearchBar = () => {
                         aria-describedby="button-addon"
                         name="food"
                     />
-                    <button className="btn btn-primary" type="submit" id="button-addon2"><FaSearch /></button>
+                    <button className="searchBar__submit btn btn-primary" type="submit" id="button-addon2"><FaSearch /></button>
                 </div>
             </form>
         </div>

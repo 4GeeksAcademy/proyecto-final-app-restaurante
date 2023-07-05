@@ -1,10 +1,20 @@
 .searchBar input {
     border: none !important;
     border-radius: 0;
+}
+
+.searchBar .searchBar--border-bottom {
+    border: none !important;
+    border-radius: 0;
     border-bottom: 1px solid black !important;
 }
 
 .searchBar__label {
     font-size: 1.5em;
     font-weight: 600;
+}
+
+.searchBar__submit {
+    background-color: inherit !important;
+    color: black !important;
 }
