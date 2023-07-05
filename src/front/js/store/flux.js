@@ -24,7 +24,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				return { 'message': 'Some error ocurred' };
 			},
-<<<<<<< HEAD
 
 			//PARA REGISTRO DE DISHES:
 			dishesRegister: async (user) => {
