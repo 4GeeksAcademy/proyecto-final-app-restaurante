@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
 import { Context } from "../store/appContext";
+import '../../styles/searchBar.css';
 
 export const SearchBar = () => {
 
@@ -27,12 +28,15 @@ export const SearchBar = () => {
     */
 
     return (
-        <div className="container">
+        <div className="container searchBar">
             <form className="p-5">
                 <div className="form-group text-center mb-2">
-                    <h3 className="d-inline me-2">Hoy como con:</h3>
+                    <label htmlFor="budget" className="d-inline me-2 searchBar__label">
+                        Hoy como con:
+                    </label>
                     <input
                         type="text"
+                        id="budget"
                         className="form-control d-inline w-25 border border-dark"
                         placeholder="$$$"
                         name="budget" /*budget = presupuesto*/
