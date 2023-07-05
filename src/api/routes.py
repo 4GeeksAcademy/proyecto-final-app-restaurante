@@ -231,3 +231,30 @@ def edit_restaurant():
         return jsonify({'message': 'somthing wrong ocurred'})
 
     return jsonify({'message': 'ok'})
+
+@api.route('/restaurant/gallery/<int:image_id>', methods=['DELETE'])
+@jwt_required()
+def delete_restaurant_image(image_id):
+    user_name = get_jwt_identity()
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'user dont have a restaurant.'}), 400
+
+    restaurant = user.restaurant
+    image_to_delete = Restaurant_image.query.filter_by(restaurante_id=restaurant.id, id=image_id).one_or_none()
+    
+    if image_to_delete is None:
+        return jsonify({'message': 'Image not found'}), 400
+
+    db.session.delete(image_to_delete)
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        print(error)
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+
+    return jsonify({'message': 'ok'}), 200
