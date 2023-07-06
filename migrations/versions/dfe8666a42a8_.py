@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: bca3aadd9740
+Revision ID: dfe8666a42a8
 Revises: 
-Create Date: 2023-07-06 14:27:54.465594
+Create Date: 2023-07-06 17:49:27.332900
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bca3aadd9740'
+revision = 'dfe8666a42a8'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -53,7 +53,7 @@ def upgrade():
     )
     op.create_table('food',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('restaurante_id', sa.Integer(), nullable=False),
+    sa.Column('restaurant_id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=150), nullable=False),
     sa.Column('price', sa.Float(precision=20), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=False),
@@ -61,14 +61,14 @@ def upgrade():
     sa.Column('image_url', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['restaurante_id'], ['restaurant.id'], ),
+    sa.ForeignKeyConstraint(['restaurant_id'], ['restaurant.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('restaurant_image',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('restaurante_id', sa.Integer(), nullable=False),
+    sa.Column('restaurant_id', sa.Integer(), nullable=False),
     sa.Column('image_url', sa.String(length=255), nullable=False),
-    sa.ForeignKeyConstraint(['restaurante_id'], ['restaurant.id'], ),
+    sa.ForeignKeyConstraint(['restaurant_id'], ['restaurant.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('image_url')
     )

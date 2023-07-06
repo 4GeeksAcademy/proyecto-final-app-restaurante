@@ -26,7 +26,7 @@ class User(db.Model):
 
     restaurant = db.relationship('Restaurant', backref='user', uselist=False)
 
-    def __repr__(self):
+    def repr(self):
         return f'<User {self.name}>'
 
     def serialize(self):
@@ -58,9 +58,9 @@ class Restaurant(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     image = db.relationship('Restaurant_image', backref='restaurant', lazy = True)
-    foods = db.relationship('Food', back_populates='restaurant')
+    foods = db.relationship('Food', backref='restaurant')
 
-    def __repr__(self):
+    def repr(self):
         return f'<Restaurant {self.rif}>'
 
     def serialize(self):
@@ -84,23 +84,23 @@ class Restaurant(db.Model):
 class Restaurant_image(db.Model):
 
     id= db.Column(db.Integer, primary_key=True)
-    restaurante_id= db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
+    restaurant_id= db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
     image_url= db.Column(db.String(255), unique=True, nullable=False)
 
-    def __repr__(self):
+    def repr(self):
         return f'<Restaurant_image {self.id}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "restaurante_id": self.restaurante_id,
+            "restaurant_id": self.restaurant_id,
             "image_url": self.image_url
         }
 
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    restaurante_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
     name = db.Column(db.String(150), nullable=False)
     price = db.Column(db.Float(20), nullable=False)
     description = db.Column(db.String(200), nullable=False)
@@ -109,9 +109,7 @@ class Food(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    restaurant = db.relationship('Restaurant', back_populates='foods')
-
-    def __repr__(self):
+    def repr(self):
         return f'<Food {self.name}>'
 
     def serialize(self):

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image
+from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
@@ -286,6 +286,6 @@ def get_food(food_id = None):
 @api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
 def get_allrest_food(restaurant_id = None):
     restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
-    return jsonify(list(map(lambda item: item.serialize(), restaurant.food))), 200
+    return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
 
 
