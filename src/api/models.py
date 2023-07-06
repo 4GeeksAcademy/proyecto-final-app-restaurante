@@ -56,6 +56,7 @@ class Restaurant(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     image = db.relationship('Restaurant_image', backref='restaurant', lazy = True)
+    foods = db.relationship('Food', back_populates='restaurant')
 
     def __repr__(self):
         return f'<Restaurant {self.rif}>'
@@ -77,6 +78,7 @@ class Restaurant(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "image": list(map(lambda img: img.serialize(), self.image)),
+            "foods": list(map(lambda food: food.serialize(), self.foods)),
             "user": {"avatar_url": user.get("avatar_url"), "name": user.get("name")}
         }
 
@@ -97,58 +99,34 @@ class Restaurant_image(db.Model):
         }
 
 
-# class Food(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     restaurante_id = db.Column(db.Integer, ForeignKey("restaurante.id"), nullable=False)
-#     name = db.Column(db.String(150), nullable=False)
-#     price = db.Column(db.Double(20), nullable=False)
-#     description = db.Column(db.String(200), nullable=False)
-#     image_url = db.Column(db.String(255), nullable=False)
-#     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-#     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    restaurante_id = db.Column(db.Integer, db.ForeignKey("restaurant.id"), nullable=False)
+    name = db.Column(db.String(150), nullable=False)
+    price = db.Column(db.Float(20), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    tags = db.Column(db.String(200), nullable=False)
+    image_url = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-#     foodtags = db.relationship('foodtag', secondary='food_group', back_populates='foods')
+    restaurant = db.relationship('Restaurant', back_populates='foods')
 
-#     def __repr__(self):
-#         return f'<Food {self.name}>'
+    def __repr__(self):
+        return f'<Food {self.name}>'
 
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "restaurant_id": self.restaurant_id,
-#             "name": self.name,
-#             "price": self.price,
-#             "description": self.description,
-#             "image_url": self.image_url,
-#             "created_at": self.created_at,
-#             "updated_at": self.updated_at,
-#         }
-
-
-# class Foodtag(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     title = db.Column(db.String(80), nullable=False)
-#     description = db.Column(db.String(200), nullable=False)
-
-#     food = db.relationship('food', secondary='food_group', back_populates='foodtags')
-
-#     def __repr__(self):
-#         return f'<FoodTag {self.title}>'
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "title": self.title,
-#             "description": self.description,
-#         }
-    
-# #Grupo que relaciona de mucho a muchos entre Food y Foodtag:
-# food_group = db.Table('food_group', db.Base.metadata,
-#     db.Column('food_id', db.Integer, db.ForeignKey('food.id')),
-#     db.Column('foodtag_id', db.Integer, db.ForeignKey('foodtag.id'))
-# )
-
-
+    def serialize(self):
+        return {
+            "id": self.id,
+            "restaurant_id": self.restaurant_id,
+            "name": self.name,
+            "price": self.price,
+            "description": self.description,
+            "tags": self.tags,
+            "image_url": self.image_url,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
+        }
 
 
 
