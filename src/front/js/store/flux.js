@@ -19,7 +19,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						let data = await response.json();
-						console.log(data);
 						setStore({
 							user: data.user,
 							token: data.token
@@ -28,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						sessionStorage.setItem("user", JSON.stringify(data.user));
 						sessionStorage.setItem("token", JSON.stringify(data.token));
 
-						return true;
+						return data;
 					}
 
 					setStore({
@@ -41,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error)
 				}
-				return false;
+				return null;
 			},
 			//PARA REGISTRO DE RESTAURANT:
 			restaurantRegister: async (user) => {
