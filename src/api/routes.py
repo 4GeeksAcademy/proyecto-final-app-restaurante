@@ -92,14 +92,14 @@ def login():
     user = User.query.filter_by(email=email).one_or_none()
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
-        
+    
     user_salt = user.salt
     user_role = user.role.value
     user_password = user.password
 
     if check_password(user_password, password, user_salt):
         token = create_access_token(identity=user.name, expires_delta=False)
-        return jsonify({'role': user_role, 'token': token}), 200
+        return jsonify({'user': user.serialize(), 'token': token}), 200
 
     return jsonify({'message': 'Wrong credentials'}), 400
 

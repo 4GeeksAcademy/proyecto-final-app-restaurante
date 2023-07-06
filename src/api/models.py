@@ -30,6 +30,7 @@ class User(db.Model):
         return f'<User {self.name}>'
 
     def serialize(self):
+
         return {
             'id': self.id,
             'name': self.name,
@@ -38,7 +39,8 @@ class User(db.Model):
             'status': self.status.value if self.status is not None else None,
             'avatar_url': self.avatar_url,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            "restaurant": self.restaurant.serialize()
         }
 
 
@@ -61,8 +63,6 @@ class Restaurant(db.Model):
         return f'<Restaurant {self.rif}>'
 
     def serialize(self):
-        user = self.user.serialize()
-
         return {
             "id": self.id,
             "user_id": self.user_id,
@@ -76,8 +76,7 @@ class Restaurant(db.Model):
             "instagram_url": self.instagram_url,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "image": list(map(lambda img: img.serialize(), self.image)),
-            "user": {"avatar_url": user.get("avatar_url"), "name": user.get("name")}
+            "image": list(map(lambda img: img.serialize(), self.image))
         }
 
 class Restaurant_image(db.Model):
