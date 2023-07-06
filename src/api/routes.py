@@ -78,11 +78,11 @@ def login():
     # is a json item ?
     if not request.is_json:
         return jsonify({'message': "Request's body should be a valid json item"}), 400
-    
+    print('a')
     body = request.json
     if type(body) is not dict:
         return jsonify({'message': "Request's body should be dict type"}), 400
-
+    
     # has valid properties ? 
     email = body.get('email', None)
     password = body.get('password', None)

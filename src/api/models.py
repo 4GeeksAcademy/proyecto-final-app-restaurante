@@ -40,7 +40,7 @@ class User(db.Model):
             'avatar_url': self.avatar_url,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            "restaurant": self.restaurant.serialize()
+            "restaurant": None if self.restaurant is None else self.restaurant.serialize()
         }
 
 
@@ -78,8 +78,7 @@ class Restaurant(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "image": list(map(lambda img: img.serialize(), self.image)),
-            "foods": list(map(lambda food: food.serialize(), self.foods)),
-            "user": {"avatar_url": user.get("avatar_url"), "name": user.get("name")}
+            "foods": list(map(lambda food: food.serialize(), self.foods))
         }
 
 class Restaurant_image(db.Model):
