@@ -263,3 +263,29 @@ def delete_restaurant_image(image_id):
         return jsonify({'message': err.args}), 500
 
     return jsonify({'message': 'ok'}), 200
+
+
+
+#Trae todos los platos
+@api.route('/food', methods=['GET'])
+def get_all_food():
+    all_food = Food.query.all()
+    return jsonify(list(map(lambda item: item.serialize(), all_food))), 200
+
+
+#Trae un plato pot ID
+@api.route('/food/<int:food_id>', methods=['GET'])
+def get_food(food_id = None):
+    food = Food.query.filter_by(id = food_id).one_or_none()
+    if food is None:
+        return jsonify({'message': 'This dish does not exists'}), 400
+    return jsonify(food.serialize()), 200
+
+
+#Trae todos los platos de un restaurant
+@api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
+def get_allrest_food(restaurant_id = None):
+    restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
+    return jsonify(list(map(lambda item: item.serialize(), restaurant.food))), 200
+
+
