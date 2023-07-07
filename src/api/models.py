@@ -122,5 +122,6 @@ class Food(db.Model):
             "tags": self.tags,
             "image_url": self.image_url,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "restaurant_name": self.restaurant.name
         }
