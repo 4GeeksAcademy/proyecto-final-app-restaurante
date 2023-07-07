@@ -3,6 +3,8 @@ from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image,
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
+from sqlalchemy import and_, or_
+import sys
 import os
 import cloudinary.uploader as uploader
 import cloudinary
@@ -408,24 +410,22 @@ def delete_food(food_id = None):
 #Trae todos los platos
 @api.route('/food', methods=['GET'])
 def get_all_food():
-    all_food = Food.query.all()
+    queryDescription = f'%{request.args.get("description")}%' if request.args.get('description') is not None else '%'
+    queryTag = f'%{request.args.get("tag")}%' if request.args.get('tag') is not None else '%'
+    queryPrice = request.args.get('price') if request.args.get('price') is not None else sys.maxsize
+    queryLimit = request.args.get('limit')
+
+    query_filter = and_(
+                        Food.description.like(str.lower(queryDescription)), 
+                        Food.tags.like(str.lower(queryTag)),
+                        Food.price <= queryPrice
+                    )
+
+    all_food = Food.query.filter(query_filter).limit(queryLimit).all()
     return jsonify(list(map(lambda item: item.serialize(), all_food))), 200
-
-
-#Trae un plato pot ID
-@api.route('/food/<int:food_id>', methods=['GET'])
-def get_food(food_id = None):
-    food = Food.query.filter_by(id = food_id).one_or_none()
-    if food is None:
-        return jsonify({'message': 'This dish does not exists'}), 400
-    return jsonify(food.serialize()), 200
-
 
 #Trae todos los platos de un restaurant
 @api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
 def get_allrest_food(restaurant_id = None):
     restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
     return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
-
-
-
