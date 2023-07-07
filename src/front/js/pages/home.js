@@ -7,7 +7,8 @@ import { DishCard } from "../component/dishCard.js";
 
 export const Home = () => {
 
-	const { actions, store } = useContext(Context)
+	const { store } = useContext(Context)
+	const { results } = store;
 
 	return (
 		<>
@@ -16,9 +17,20 @@ export const Home = () => {
 				{/* BARRA DE BUSQUEDA: */}
 				<SearchBar />
 
-				{/* TARJETA PLATO*/}
-				<DishCard restaurant="probando" name="probando" description="probando" price="probando" image="probando" />
-
+				{/* Muestra los platos */}
+				{
+					results.map( food => {
+						return (
+							<DishCard 
+								key={food.id} 
+								restaurant="probando" 
+								name={food.name}
+								description={food.description}
+								price={food.price} 
+								image={food.image_url} />
+						);
+					})
+				}
 			</div>
 		</>
 
