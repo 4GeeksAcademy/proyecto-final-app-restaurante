@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/index.css"
-import ComeconLogo from "../../img/comecon-final-2.jpg"
+import ComeconLogo from "../../img/comecon-logo.png"
 
 export const Navbar = () => {
 	return (
 		<>
 			<nav className="navbar">
 				<div className="container">
-					<img src={ComeconLogo}></img>
+					<img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px" m-0></img>
 					<h1 className="text-light"> Comecon </h1>
 					{/* <Link to="/">
 						<span className="navbar-brand mb-0 h1">React Boilerplate</span>
