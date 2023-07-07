@@ -84,8 +84,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return null;
 			},
 			foodSearch: async (search) => {
-				const { budget, food } = search;
-				const url = `${process.env.BACKEND_URL}/food?description=${food}&tag=${food}&price=${budget}`;
+				const { budget, food, tag } = search; 
+				console.log(tag);
+				const url = `${process.env.BACKEND_URL}/food?description=${food}&tag=${tag}&price=${budget}`;
 				console.log(url);
 
 				// try {

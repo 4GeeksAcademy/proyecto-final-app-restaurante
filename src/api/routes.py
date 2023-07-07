@@ -412,8 +412,8 @@ def delete_food(food_id = None):
 def get_all_food():
     queryDescription = f'%{request.args.get("description")}%' if request.args.get('description') is not None else '%'
     queryTag = f'%{request.args.get("tag")}%' if request.args.get('tag') is not None else '%'
-    queryPrice = request.args.get('price') if request.args.get('price') is not None else sys.maxsize
-    queryLimit = request.args.get('limit')
+    queryPrice = request.args.get('price') if request.args.get('price') is not '' else sys.maxsize
+    queryLimit = request.args.get('limit') if request.args.get('limit') is not '' else None
 
     query_filter = and_(
                         Food.description.like(str.lower(queryDescription)), 
