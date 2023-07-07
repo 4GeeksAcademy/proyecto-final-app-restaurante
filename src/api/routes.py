@@ -129,7 +129,7 @@ def upload_images():
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
     
-    if user.role.value is not 'Restaurant':
+    if user.role.value != 'Restaurant':
         return jsonify({'message': 'Is not a Restaurant'}), 400
     
     #subir imagen
@@ -141,7 +141,7 @@ def upload_images():
     image_url = result['secure_url']    
 
     restaurant_image = Restaurant_image()
-    restaurant_image.restaurante_id = user.restaurant.id
+    restaurant_image.restaurant_id = user.restaurant.id
     restaurant_image.image_url = image_url
 
     db.session.add(restaurant_image)
@@ -181,7 +181,7 @@ def method_name():
         return jsonify({'message': err.args}), 500
     
     return jsonify({'message': 'Image upload correctly'}), 200
-#KR
+#KR END
 
 
 @api.route('/restaurant', methods=['PUT'])
@@ -255,7 +255,7 @@ def delete_restaurant_image(image_id):
         return jsonify({'message': 'user dont have a restaurant.'}), 400
 
     restaurant = user.restaurant
-    image_to_delete = Restaurant_image.query.filter_by(restaurante_id=restaurant.id, id=image_id).one_or_none()
+    image_to_delete = Restaurant_image.query.filter_by(restaurant_id=restaurant.id, id=image_id).one_or_none()
     
     if image_to_delete is None:
         return jsonify({'message': 'Image not found'}), 400
@@ -330,10 +330,11 @@ def edit_dish(food_id = None):
     if user.restaurant is None:
         return jsonify({'message': 'user dont have a restaurant.'}), 400
 
-    food_to_change = Food.query.get(food_id)
+    restaurant = user.restaurant
+    food_to_change = Food.query.filter_by(restaurant_id=restaurant.id, id=food_id).one_or_none()
 
     if food_to_change is None:
-        return jsonify({'message': 'Food is not registered'}), 400
+        return jsonify({'message': 'Food not found'}), 400
 
     form = request.form
 
@@ -372,3 +373,29 @@ def edit_dish(food_id = None):
         return jsonify({'message': 'somthing wrong ocurred'})
 
     return jsonify({'message': 'Food edit correctly'}), 200
+
+#Eliminar un plato
+@api.route('/restaurant/food/<int:food_id>', methods=['DELETE'])
+@jwt_required()
+def delete_food(food_id = None):
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'User dont have a restaurant.'}), 400
+
+    restaurant = user.restaurant
+    food_to_delete = Food.query.filter_by(restaurant_id=restaurant.id, id=food_id).one_or_none()
+    
+    if food_to_delete is None:
+        return jsonify({'message': 'Food not found'}), 400
+
+    db.session.delete(food_to_delete)
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'ok'}), 200   
