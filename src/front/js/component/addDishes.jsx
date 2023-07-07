@@ -13,22 +13,22 @@ const initialState = {                                              //ESTADO INI
     tag2: "",
     tag3: "",
     tag4: "",
-    image_url: "",
+    image: "",
 };
 
 export const AddDishes = () => {
     const { actions } = useContext(Context);
-    const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL
+    const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
 
     const handleChange = (e) => {
         //MANEJA LOS CAMBIOS EN LOS FORM FIELDS
-        setUser({ ...user, [e.target.name]: e.target.value });
+        setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
     const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
-        const err = onValidateDishes(user)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
+        const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
         console.log(err)
         setErrors(err)
 
@@ -38,14 +38,14 @@ export const AddDishes = () => {
 
             const formData = new FormData();                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
 
-            formData.append("name", user.name);
-            formData.append("description", user.description);
-            formData.append("price", user.price);
-            formData.append("tag1", user.tag1);
-            formData.append("tag2", user.tag2);
-            formData.append("tag3", user.tag3);
-            formData.append("tag4", user.tag4);
-            formData.append("image_url", user.image_url);
+            formData.append("name", dish.name);
+            formData.append("description", dish.description);
+            formData.append("price", dish.price);
+            formData.append("tag1", dish.tag1);
+            formData.append("tag2", dish.tag2);
+            formData.append("tag3", dish.tag3);
+            formData.append("tag4", dish.tag4);
+            formData.append("image", dish.image);
 
             const response = actions.dishesRegister(formData); //FUNCION FLUX
 
@@ -77,7 +77,7 @@ export const AddDishes = () => {
                                     name="name"
                                     placeholder="Enter the name of your dish"
                                     onChange={handleChange}
-                                    value={user.name}
+                                    value={dish.name}
                                     required
                                 ></input>
                                 {errors.name && <div className="alert p-0 m-0 bg-none text-danger">{errors.name}</div>}
@@ -96,7 +96,7 @@ export const AddDishes = () => {
                                     rows="3"
                                     placeholder="A brief description of your dish"
                                     onChange={handleChange}
-                                    value={user.description}
+                                    value={dish.description}
                                     required
                                 ></textarea>
                                 {errors.description && <div className="alert p-0 m-0 bg-none text-danger">{errors.description}</div>}
@@ -114,7 +114,7 @@ export const AddDishes = () => {
                                         aria-label="Amount (to the nearest dollar)"
                                         placeholder="Amount in dollars"
                                         onChange={handleChange}
-                                        value={user.price}
+                                        value={dish.price}
                                         required
                                     />
                                     <span className="input-group-text">$</span>
@@ -133,7 +133,7 @@ export const AddDishes = () => {
                                         name="tag1"
                                         aria-label=".form-select-sm example"
                                         onChange={handleChange}
-                                        value={user.tag1}
+                                        value={dish.tag1}
                                         required
                                     >
                                         <option selected>select one</option>
@@ -151,7 +151,7 @@ export const AddDishes = () => {
                                         name="tag2"
                                         aria-label=".form-select-sm example"
                                         onChange={handleChange}
-                                        value={user.tag2}
+                                        value={dish.tag2}
                                         required
                                     >
                                         <option selected>select one</option>
@@ -169,7 +169,7 @@ export const AddDishes = () => {
                                         name="tag3"
                                         aria-label=".form-select-sm example"
                                         onChange={handleChange}
-                                        value={user.tag3}
+                                        value={dish.tag3}
                                         required
                                     >
                                         <option selected>select one</option>
@@ -187,7 +187,7 @@ export const AddDishes = () => {
                                         name="tag4"
                                         aria-label=".form-select-sm example"
                                         onChange={handleChange}
-                                        value={user.tag4}
+                                        value={dish.tag4}
                                         required
                                     >
                                         <option selected>select one</option>
@@ -199,19 +199,19 @@ export const AddDishes = () => {
                             </div>
 
                             <div className="mt-4">
-                                <label htmlFor="image_url" className="form-label">
+                                <label htmlFor="image" className="form-label">
                                     Image
                                 </label>
                                 <input
                                     className="form-control form-control-sm"
-                                    id="image_url"
-                                    name="image_url"
+                                    id="image"
+                                    name="image"
                                     type="file"
                                     onChange={handleChange}
-                                    value={user.image_url}
+                                    value={dish.image}
                                     required
                                 ></input>
-                                {/* {errors.image_url && <div className="alert p-0 m-0 bg-none text-danger">{errors.image_url}</div>} */}
+                                {/* {errors.image && <div className="alert p-0 m-0 bg-none text-danger">{errors.image}</div>} */}
                             </div>
 
                             {/* BOTON DE ENVIO */}

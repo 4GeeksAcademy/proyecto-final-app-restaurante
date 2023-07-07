@@ -62,17 +62,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return { 'message': 'Some error ocurred' };
 			},
 			//PARA REGISTRO DE DISHES:
-			dishesRegister: async (user) => {
-				console.log(user);
+			dishesRegister: async (dish) => {
+				console.log(dish);
 				const store = getStore();
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/food/foodId`, {
 						method: "POST",
-						body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+						body: dish							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
 					})
-
-					console.log(response)
-
 				} catch (error) {
 					console.log(error);
 				}
