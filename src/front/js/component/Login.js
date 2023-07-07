@@ -13,10 +13,17 @@ const Login = () => {
         setUser({ ...user, [event.target.name]: event.target.value })
     };
 
+    const redirect = user => {
+        if(user.role=="Restaurant") {
+            const restaurantId = user.restaurant.id;
+            nav(`/restaurant/${restaurantId}`);
+        }
+    }
+
     const handleLogin = (event) => {
         event.preventDefault();
         actions.handleLogin(user)
-        .then(response => response&&nav('/profile'));
+        .then(response => response&&redirect(response.user));
     } 
 
     return (

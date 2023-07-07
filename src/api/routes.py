@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image
+from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
@@ -19,7 +19,6 @@ def register_restaurant():
     form = request.form
     if(form is None):
         return jsonify({'message': "Request must be a form"}), 400
-    print(form)
     # are there corrects properties?
     restaurant_name = form.get('restaurantName')
     restaurant_rif = form.get('restaurantRif')
@@ -78,11 +77,11 @@ def login():
     # is a json item ?
     if not request.is_json:
         return jsonify({'message': "Request's body should be a valid json item"}), 400
-    
+    print('a')
     body = request.json
     if type(body) is not dict:
         return jsonify({'message': "Request's body should be dict type"}), 400
-
+    
     # has valid properties ? 
     email = body.get('email', None)
     password = body.get('password', None)
@@ -92,14 +91,14 @@ def login():
     user = User.query.filter_by(email=email).one_or_none()
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
-        
+    
     user_salt = user.salt
     user_role = user.role.value
     user_password = user.password
 
     if check_password(user_password, password, user_salt):
         token = create_access_token(identity=user.name, expires_delta=False)
-        return jsonify({'role': user_role, 'token': token}), 200
+        return jsonify({'user': user.serialize(), 'token': token}), 200
 
     return jsonify({'message': 'Wrong credentials'}), 400
 
@@ -134,12 +133,15 @@ def upload_images():
         return jsonify({'message': 'Is not a Restaurant'}), 400
     
     #subir imagen
+    if 'image' not in request.files:
+        return jsonify({'message': 'Is not a image to upload'}), 400
+
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
-    image_url = result['secure_url']
+    image_url = result['secure_url']    
 
     restaurant_image = Restaurant_image()
-    restaurant_image.restaurante_id = user.restaurant.id
+    restaurant_image.restaurant_id = user.restaurant.id
     restaurant_image.image_url = image_url
 
     db.session.add(restaurant_image)
@@ -163,6 +165,9 @@ def method_name():
         return jsonify({'message': 'Access denied'}), 400
     
     #subir imagen
+    if 'image' not in request.files:
+        return jsonify({'message': 'Is not a image to upload'}), 400
+    
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
@@ -176,6 +181,8 @@ def method_name():
         return jsonify({'message': err.args}), 500
     
     return jsonify({'message': 'Image upload correctly'}), 200
+#KR END
+
 
 @api.route('/restaurant', methods=['PUT'])
 @jwt_required()
@@ -195,7 +202,7 @@ def edit_restaurant():
     user_password = data.get('userPassword')
     if user_password is not None:
         user.salt = b64encode(os.urandom(32)).decode('utf-8')
-        user.password = password_hash(user_password, user.salt)
+        user.password = password_hash(user_password, user.salt)  
     user_avatar = request.files['userAvatar']
     if user_avatar is not None:
         result = cloudinary.uploader.upload(user_avatar)
@@ -248,7 +255,7 @@ def delete_restaurant_image(image_id):
         return jsonify({'message': 'user dont have a restaurant.'}), 400
 
     restaurant = user.restaurant
-    image_to_delete = Restaurant_image.query.filter_by(restaurante_id=restaurant.id, id=image_id).one_or_none()
+    image_to_delete = Restaurant_image.query.filter_by(restaurant_id=restaurant.id, id=image_id).one_or_none()
     
     if image_to_delete is None:
         return jsonify({'message': 'Image not found'}), 400
@@ -258,8 +265,167 @@ def delete_restaurant_image(image_id):
     try:
         db.session.commit()
     except Exception as error:
-        print(error)
         db.session.rollback()
-        return jsonify({'message': err.args}), 500
+        return jsonify({'message': error.args}), 500
 
     return jsonify({'message': 'ok'}), 200
+
+#KR
+#Agrega plato al menu
+@api.route('restaurant/food', methods=['POST'])
+@jwt_required()
+def add_dish():
+
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'user dont have a restaurant.'}), 400
+
+    form = request.form
+
+    food_name = form.get('foodName')
+    food_price = form.get('foodPrice')
+    food_description = form.get('foodDescription')
+    food_tags = form.get('foodTags')
+
+    #subir imagen
+    if 'image' not in request.files:
+        return jsonify({'message': 'Is not a image to upload'}), 400
+
+    image = request.files['image']
+    result = cloudinary.uploader.upload(image)
+    image_url = result['secure_url']
+    food_image = image_url
+
+    if None in [food_name, food_price, food_description, food_tags, food_image]:
+        return jsonify({'message': "Form has a wrong property"}), 400
+
+    food = Food()
+    food.restaurant_id = user.restaurant.id
+    food.name = food_name
+    food.price = food_price
+    food.description = food_description
+    food.tags = food_tags
+    food.image_url = food_image
+
+    db.session.add(food)
+    
+    try:
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+    
+    return jsonify({'message': 'Food add correctly'}), 200
+
+# Edita un plato
+@api.route('restaurant/food/<int:food_id>', methods=['PUT'])
+@jwt_required()
+def edit_dish(food_id = None):
+
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'user dont have a restaurant.'}), 400
+
+    restaurant = user.restaurant
+    food_to_change = Food.query.filter_by(restaurant_id=restaurant.id, id=food_id).one_or_none()
+
+    if food_to_change is None:
+        return jsonify({'message': 'Food not found'}), 400
+
+    form = request.form
+
+    food_name = form.get('foodName')
+    if food_name is not None:
+        food_to_change.name = food_name
+
+    food_price = form.get('foodPrice')
+    if food_price is not None:
+        food_to_change.price = food_price
+
+    food_description = form.get('foodDescription')
+    if food_description is not None:
+        food_to_change.description = food_description
+
+    food_tags = form.get('foodTags')
+    if food_tags is not None:
+        food_to_change.tags = food_tags
+
+    #subir imagen
+    if 'image' in request.files:
+        image = request.files['image']
+        result = cloudinary.uploader.upload(image)
+        image_url = result['secure_url']
+        food_image = image_url
+    else: 
+        food_image = None
+
+    if food_image is not None:
+        food_to_change.image_url = food_image
+    
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': 'somthing wrong ocurred'})
+
+    return jsonify({'message': 'Food edit correctly'}), 200
+
+#Eliminar un plato
+@api.route('/restaurant/food/<int:food_id>', methods=['DELETE'])
+@jwt_required()
+def delete_food(food_id = None):
+    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'There isnt user'}), 400
+    if user.restaurant is None:
+        return jsonify({'message': 'User dont have a restaurant.'}), 400
+
+    restaurant = user.restaurant
+    food_to_delete = Food.query.filter_by(restaurant_id=restaurant.id, id=food_id).one_or_none()
+    
+    if food_to_delete is None:
+        return jsonify({'message': 'Food not found'}), 400
+
+    db.session.delete(food_to_delete)
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': error.args}), 500
+
+
+    return jsonify({'message': 'ok'}), 200   
+
+    return jsonify({'message': 'ok'}), 200
+
+
+
+#Trae todos los platos
+@api.route('/food', methods=['GET'])
+def get_all_food():
+    all_food = Food.query.all()
+    return jsonify(list(map(lambda item: item.serialize(), all_food))), 200
+
+
+#Trae un plato pot ID
+@api.route('/food/<int:food_id>', methods=['GET'])
+def get_food(food_id = None):
+    food = Food.query.filter_by(id = food_id).one_or_none()
+    if food is None:
+        return jsonify({'message': 'This dish does not exists'}), 400
+    return jsonify(food.serialize()), 200
+
+
+#Trae todos los platos de un restaurant
+@api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
+def get_allrest_food(restaurant_id = None):
+    restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
+    return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
+
+
+
