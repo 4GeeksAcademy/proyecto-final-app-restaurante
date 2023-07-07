@@ -83,29 +83,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				return null;
 			},
-			// foodSearch: async (search) => {
-			// 	let store = getStore()
-			// Use getActions to call a function within a fuction
+			foodSearch: async (search) => {
+				const { budget, food } = search;
+				const url = `${process.env.BACKEND_URL}/food?description=${food}&tag=${food}&price=${budget}`;
+				console.log(url);
 
-			// foodSearch: async (search) => {
-			// 	let store = getStore()
-
-			// 	try {
-			// 		let response = await fetch("URL", {
-			// 			method: "GET",
-			// 			headers: {
-			// 				"Content-Type": "application/json",
-			// 			},
-			// 			body: JSON.stringify(search),
-			// 		})
-			// 		let data = await response.json();
-			// 		//DEBERIA RETORNAR UN ARRAY DE OBJETOS CON LA COINCIDENCIA DE BUDGET Y FOOD
-
-
-			// 	} catch (err) {
-
-			// 	}
-			// }
+				// try {
+				// 	let response = await fetch(`${process.env.BACKEND_URL}/food/`, {
+				// 		method: "GET",
+				// 		headers: {
+				// 			"Content-Type": "application/json",
+				// 		},
+				// 		body: JSON.stringify(search),
+				// 	})
+				// 	let data = await response.json();
+				// 	//DEBERIA RETORNAR UN ARRAY DE OBJETOS CON LA COINCIDENCIA DE BUDGET Y FOOD
+				// 	console.log(data);
+				// } catch (err) {
+				// 	console.log(err);
+				// }
+			}
 		},
 	}
 };

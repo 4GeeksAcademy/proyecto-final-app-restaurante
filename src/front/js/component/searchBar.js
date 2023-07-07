@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
 import { Context } from "../store/appContext";
 import '../../styles/searchBar.css';
 
 const initialValue = {
-    budget: 0,
+    budget: '',
     food: ''
 }
 
 export const SearchBar = () => {
+    const {store, actions} = useContext(Context);
     const [search, setSearch] = useState(initialValue)
 
     const handleOnChange = ({ target }) => {
@@ -17,6 +17,9 @@ export const SearchBar = () => {
             ...search,
             [target.name]: target.value
         })
+        // query to api
+        const { foodSearch } = actions;
+        foodSearch(search);
     }
 
     return (
