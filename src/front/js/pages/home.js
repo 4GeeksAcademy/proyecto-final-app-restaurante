@@ -17,7 +17,7 @@ export const Home = () => {
 				<SearchBar />
 
 				{/* TARJETA PLATO*/}
-				<DishCard />
+				<DishCard restaurant="probando" name="probando" description="probando" price="probando" image="probando" />
 
 			</div>
 		</>
