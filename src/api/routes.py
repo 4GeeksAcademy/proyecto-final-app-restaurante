@@ -77,11 +77,11 @@ def login():
     # is a json item ?
     if not request.is_json:
         return jsonify({'message': "Request's body should be a valid json item"}), 400
-    
+    print('a')
     body = request.json
     if type(body) is not dict:
         return jsonify({'message': "Request's body should be dict type"}), 400
-
+    
     # has valid properties ? 
     email = body.get('email', None)
     password = body.get('password', None)
@@ -91,14 +91,14 @@ def login():
     user = User.query.filter_by(email=email).one_or_none()
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
-        
+    
     user_salt = user.salt
     user_role = user.role.value
     user_password = user.password
 
     if check_password(user_password, password, user_salt):
         token = create_access_token(identity=user.name, expires_delta=False)
-        return jsonify({'role': user_role, 'token': token}), 200
+        return jsonify({'user': user.serialize(), 'token': token}), 200
 
     return jsonify({'message': 'Wrong credentials'}), 400
 
@@ -398,4 +398,34 @@ def delete_food(food_id = None):
         db.session.rollback()
         return jsonify({'message': error.args}), 500
 
+
     return jsonify({'message': 'ok'}), 200   
+
+    return jsonify({'message': 'ok'}), 200
+
+
+
+#Trae todos los platos
+@api.route('/food', methods=['GET'])
+def get_all_food():
+    all_food = Food.query.all()
+    return jsonify(list(map(lambda item: item.serialize(), all_food))), 200
+
+
+#Trae un plato pot ID
+@api.route('/food/<int:food_id>', methods=['GET'])
+def get_food(food_id = None):
+    food = Food.query.filter_by(id = food_id).one_or_none()
+    if food is None:
+        return jsonify({'message': 'This dish does not exists'}), 400
+    return jsonify(food.serialize()), 200
+
+
+#Trae todos los platos de un restaurant
+@api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
+def get_allrest_food(restaurant_id = None):
+    restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
+    return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
+
+
+

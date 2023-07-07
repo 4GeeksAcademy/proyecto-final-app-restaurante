@@ -1,15 +1,13 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			user: { token: null, rol: null },
+			user: JSON.parse(sessionStorage.getItem("user")) || null,
+			token: JSON.parse(sessionStorage.getItem("token")) || null,
 			BASEURL: process.env.BACKEND_URL
 		},
 		actions: {
 
-			handleLogin: async (body /* previously "data" */) => {
-				const store = getStore();
-				// in class, the proffesor added the following code to the registerUser function:
-				// return response.status //also replaced the catch content with this same code
+			handleLogin: async (body) => {
 				try {
 					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
 						method: "POST",
@@ -21,25 +19,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					if (response.ok) {
 						let data = await response.json();
-						console.log(data);
 						setStore({
-							user: data
+							user: data.user,
+							token: data.token
 						});
 
-						localStorage.setItem("user", data)
+						sessionStorage.setItem("user", JSON.stringify(data.user));
+						sessionStorage.setItem("token", JSON.stringify(data.token));
 
-						return true;
+						return data;
 					}
 
 					setStore({
-						user: { token: null, rol: null }
+						user: null,
+						token: null
 					});
-					localStorage.setItem("user", null)
+					sessionStorage.setItem("user", null);
+					sessionStorage.setItem("token", null);
 
 				} catch (error) {
 					console.log(error)
 				}
-				return false;
+				return null;
 			},
 			//PARA REGISTRO DE RESTAURANT:
 			restaurantRegister: async (user) => {

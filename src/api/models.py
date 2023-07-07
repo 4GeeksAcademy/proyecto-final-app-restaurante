@@ -26,7 +26,11 @@ class User(db.Model):
 
     restaurant = db.relationship('Restaurant', backref='user', uselist=False)
 
+
     def _repr_(self):
+
+    def repr(self):
+
         return f'<User {self.name}>'
 
     def serialize(self):
@@ -61,6 +65,8 @@ class Restaurant(db.Model):
     foods = db.relationship('Food', backref='restaurant')
 
     def _repr_(self):
+      
+    def repr(self):
         return f'<Restaurant {self.rif}>'
 
     def serialize(self):
@@ -88,6 +94,9 @@ class Restaurant_image(db.Model):
     image_url= db.Column(db.String(255), unique=True, nullable=False)
 
     def _repr_(self):
+
+    def repr(self):
+
         return f'<Restaurant_image {self.id}>'
 
     def serialize(self):
@@ -110,6 +119,8 @@ class Food(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def _repr_(self):
+      
+    def repr(self):
         return f'<Food {self.name}>'
 
     def serialize(self):
