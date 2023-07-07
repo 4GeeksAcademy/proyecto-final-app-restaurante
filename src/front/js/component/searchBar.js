@@ -19,7 +19,7 @@ export const SearchBar = () => {
         })
         // query to api
         const { foodSearch } = actions;
-        foodSearch({...search, tag:search.food});
+        foodSearch(search);
     }
 
     return (

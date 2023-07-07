@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			user: JSON.parse(sessionStorage.getItem("user")) || null,
 			token: JSON.parse(sessionStorage.getItem("token")) || null,
+			results: {},
 			BASEURL: process.env.BACKEND_URL
 		},
 		actions: {
@@ -88,21 +89,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const priceParameter = budget == '' ?  "price" : `price=${budget}`; 
 				const descriptionParameter = food == '' ? "description" : `description=${food}`;
 				const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
+				console.log(url);
 
-				// try {
-				// 	let response = await fetch(`${process.env.BACKEND_URL}/food/`, {
-				// 		method: "GET",
-				// 		headers: {
-				// 			"Content-Type": "application/json",
-				// 		},
-				// 		body: JSON.stringify(search),
-				// 	})
-				// 	let data = await response.json();
-				// 	//DEBERIA RETORNAR UN ARRAY DE OBJETOS CON LA COINCIDENCIA DE BUDGET Y FOOD
-				// 	console.log(data);
-				// } catch (err) {
-				// 	console.log(err);
-				// }
+				try {
+					let response = await fetch(url, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						}
+					})
+					let data = await response.json();
+					if (response.ok) {
+						// Guardar en el contexto los platos
+						setStore(
+							{
+								"results": data
+							}
+						);
+					}
+					else {
+						setStore(
+							{
+								"results": {}
+							}
+						);
+					}
+				} catch (err) {
+					console.log(err);
+				}
 			}
 		},
 	}
