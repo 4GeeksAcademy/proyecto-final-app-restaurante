@@ -23,7 +23,7 @@ export const Home = () => {
 						return (
 							<DishCard 
 								key={food.id} 
-								restaurant="probando" 
+								restaurant={food.restaurant_name} 
 								name={food.name}
 								description={food.description}
 								price={food.price} 
