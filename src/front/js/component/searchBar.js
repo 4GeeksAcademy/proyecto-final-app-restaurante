@@ -41,7 +41,6 @@ export const SearchBar = () => {
                         id="budget"
                         onChange={handleOnChange}
                         value={search.budget}
-
                     />
                     <h4 className="d-inline ms-2">$</h4>
                 </div>
