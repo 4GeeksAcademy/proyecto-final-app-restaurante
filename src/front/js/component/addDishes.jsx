@@ -9,10 +9,7 @@ const initialState = {                                              //ESTADO INI
     name: "",
     description: "",
     price: "",
-    tag1: "",
-    tag2: "",
-    tag3: "",
-    tag4: "",
+    tags: "",
     image: "",
 };
 
@@ -30,26 +27,19 @@ export const AddDishes = () => {
         e.preventDefault()
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
         console.log(err)
-        setErrors(err)
-
-        console.log(Object.keys(err).length);                       //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
+        setErrors(err)                     //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
 
         if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
 
             const formData = new FormData();                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
 
-            formData.append("name", dish.name);
-            formData.append("description", dish.description);
-            formData.append("price", dish.price);
-            formData.append("tag1", dish.tag1);
-            formData.append("tag2", dish.tag2);
-            formData.append("tag3", dish.tag3);
-            formData.append("tag4", dish.tag4);
+            formData.append("foodName", dish.name);
+            formData.append("foodDescription", dish.description);
+            formData.append("foodPrice", dish.price);
+            formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            const response = actions.dishesRegister(formData); //FUNCION FLUX
-
-            console.log("Registrando el dish...");
+            actions.dishesRegister(formData); //FUNCION FLUX
         };
     }
 
@@ -123,79 +113,19 @@ export const AddDishes = () => {
 
                             </div>
 
-                            <div className="d-flex justify-content-between mt-3">
-                                <div className="d-flex flex-column">
-                                    <div className="p-2">Tag 1</div>
-                                    <select
-                                        // defaultValue={"DEFAULT"}                    ERROR EN CONSOLA
-                                        className="form-select form-select-sm"
-                                        id="tag1"
-                                        name="tag1"
-                                        aria-label=".form-select-sm example"
-                                        onChange={handleChange}
-                                        value={dish.tag1}
-                                        required
-                                    >
-                                        <option selected>select one</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div className=" mx-2 d-flex flex-column">
-                                    <div className="p-2">Tag 2</div>
-                                    <select
-                                        className="form-select form-select-sm"
-                                        id="tag2"
-                                        name="tag2"
-                                        aria-label=".form-select-sm example"
-                                        onChange={handleChange}
-                                        value={dish.tag2}
-                                        required
-                                    >
-                                        <option selected>select one</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div className="me-2 d-flex flex-column">
-                                    <div className="p-2">Tag 3</div>
-                                    <select
-                                        className="form-select form-select-sm"
-                                        id="tag3"
-                                        name="tag3"
-                                        aria-label=".form-select-sm example"
-                                        onChange={handleChange}
-                                        value={dish.tag3}
-                                        required
-                                    >
-                                        <option selected>select one</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div className="d-flex flex-column">
-                                    <div className="p-2">Tag 4</div>
-                                    <select
-                                        className="form-select form-select-sm"
-                                        id="tag4"
-                                        name="tag4"
-                                        aria-label=".form-select-sm example"
-                                        onChange={handleChange}
-                                        value={dish.tag4}
-                                        required
-                                    >
-                                        <option selected>select one</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
+                            <div className="form-group mt-4">
+                                <label htmlFor="name">Tags</label>
+                                <input
+                                    type="text"
+                                    className="form-control border"
+                                    id="tags"
+                                    name="tags"
+                                    placeholder="Enter some tags"
+                                    onChange={handleChange}
+                                    value={dish.tags}
+                                    required
+                                ></input>
+                                {errors.tags && <div className="alert p-0 m-0 bg-none text-danger">{errors.tags}</div>}
                             </div>
 
                             <div className="mt-4">
