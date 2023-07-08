@@ -71,7 +71,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
 						method: "POST",
 						headers: {
-							'Content-Type': 'application/json',
 							Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
 						  },
 						body: dish							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA

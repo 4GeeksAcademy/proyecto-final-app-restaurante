@@ -1,0 +1,24 @@
+.title {
+    /* box_model */
+    width: 90%;
+    padding: 0.5em;
+    margin: auto;
+    /* position */
+    position: relative;
+    /* style */
+    text-align: center;
+    background-color: var(--main_color);
+  }
+
+.title::after {
+    content: '';
+    /* box_model */
+    width: 110%;
+    height: 2.2px;
+    /* position */
+    position: absolute;
+    bottom: 0;
+    left: -5%;
+    /* style */
+    background-color: black;
+  }  

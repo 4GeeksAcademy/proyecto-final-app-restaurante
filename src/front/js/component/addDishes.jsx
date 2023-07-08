@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
 import "../../styles/home.css";
+import "../../styles/title.css";
 import { onValidateDishes } from "../util.js";
 
 const initialState = {                                              //ESTADO INICIAL
-
     name: "",
     description: "",
     price: "",
@@ -26,7 +26,6 @@ export const AddDishes = () => {
     const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
-        console.log(err)
         setErrors(err)                     //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
 
         if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
@@ -46,13 +45,12 @@ export const AddDishes = () => {
     return (
         <>
             {/* AGREGAR PLATOS */}
-            <div className="container mt-5">
+            <div className="container">
                 <div className="row justify-content-center">
-                    <div className="bg-white border border-1 rounded-4 p-5 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
-                        <h2 className="text-center bg-danger text-white rounded-1">
-                            <strong>Add Dishes</strong>
-                        </h2>
-
+                    <h2 className="text-center text-white rounded-1 title">
+                        Add Dishes
+                    </h2>
+                    <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
                         <form
                             className="needs-validation"
                             noValidate
@@ -62,7 +60,7 @@ export const AddDishes = () => {
                                 <label htmlFor="name">Dish Name</label>
                                 <input
                                     type="text"
-                                    className="form-control border"
+                                    className="form-control border border-dark"
                                     id="name"
                                     name="name"
                                     placeholder="Enter the name of your dish"
@@ -80,7 +78,7 @@ export const AddDishes = () => {
                                     Description
                                 </label>
                                 <textarea
-                                    className="form-control"
+                                    className="form-control border border-dark"
                                     id="description"
                                     name="description"
                                     rows="3"
@@ -98,7 +96,7 @@ export const AddDishes = () => {
                                 <div className="input-group border rounded-3">
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control border border-dark"
                                         id="price"
                                         name="price"
                                         aria-label="Amount (to the nearest dollar)"
@@ -117,7 +115,7 @@ export const AddDishes = () => {
                                 <label htmlFor="name">Tags</label>
                                 <input
                                     type="text"
-                                    className="form-control border"
+                                    className="form-control border border-dark"
                                     id="tags"
                                     name="tags"
                                     placeholder="Enter some tags"
@@ -133,12 +131,11 @@ export const AddDishes = () => {
                                     Image
                                 </label>
                                 <input
-                                    className="form-control form-control-sm"
+                                    className="form-control form-control-sm border border-dark" 
                                     id="image"
                                     name="image"
                                     type="file"
-                                    onChange={handleChange}
-                                    value={dish.image}
+                                    onChange={({ target }) => setDish({ ...dish, image: target.files[0] })}
                                     required
                                 ></input>
                                 {/* {errors.image && <div className="alert p-0 m-0 bg-none text-danger">{errors.image}</div>} */}
@@ -148,7 +145,7 @@ export const AddDishes = () => {
                             <div>
                                 <button
                                     type="button"
-                                    className="btn btn-success text-white w-100 mt-3"
+                                    className="btn w-100 mt-3 button-green"
                                     onClick={(e) => handleRegister(e)}
                                 >
                                     Save Dish

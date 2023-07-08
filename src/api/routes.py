@@ -292,7 +292,7 @@ def add_dish():
     #subir imagen
     if 'image' not in request.files:
         return jsonify({'message': 'Is not a image to upload'}), 400
-    print("AAAAAAAAAAAAAAAAAAAAA")
+    
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
