@@ -6,9 +6,9 @@ import ComeconLogo from "../../img/comecon-logo.png"
 export const Navbar = () => {
 	return (
 		<>
-			<nav className="navbar">
+			<nav className="navbar p-0">
 				<div className="container">
-					<img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px" m-0></img>
+					<Link to = "/"><img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px"></img></Link>
 					<h1 className="text-light"> Comecon </h1>
 					{/* <Link to="/">
 						<span className="navbar-brand mb-0 h1">React Boilerplate</span>
