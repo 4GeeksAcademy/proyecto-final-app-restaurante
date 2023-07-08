@@ -3,6 +3,8 @@ from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image,
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
+from sqlalchemy import and_, or_
+import sys
 import os
 import cloudinary.uploader as uploader
 import cloudinary
@@ -77,7 +79,7 @@ def login():
     # is a json item ?
     if not request.is_json:
         return jsonify({'message': "Request's body should be a valid json item"}), 400
-    print('a')
+
     body = request.json
     if type(body) is not dict:
         return jsonify({'message': "Request's body should be dict type"}), 400
@@ -97,7 +99,7 @@ def login():
     user_password = user.password
 
     if check_password(user_password, password, user_salt):
-        token = create_access_token(identity=user.name, expires_delta=False)
+        token = create_access_token(identity=user.id, expires_delta=False)
         return jsonify({'user': user.serialize(), 'token': token}), 200
 
     return jsonify({'message': 'Wrong credentials'}), 400
@@ -124,7 +126,7 @@ def get_restaurtant(restaurant_id = None):
 @jwt_required()
 def upload_images():
     #verificar el permiso/ 
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
 
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
@@ -159,7 +161,7 @@ def upload_images():
 @jwt_required()
 def method_name():
     #verificar el permiso/ 
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
 
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
@@ -188,7 +190,7 @@ def method_name():
 @jwt_required()
 def edit_restaurant():
     user_name = get_jwt_identity()
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'There isnt user'}), 400
     if user.restaurant is None:
@@ -248,7 +250,7 @@ def edit_restaurant():
 @jwt_required()
 def delete_restaurant_image(image_id):
     user_name = get_jwt_identity()
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'There isnt user'}), 400
     if user.restaurant is None:
@@ -276,7 +278,7 @@ def delete_restaurant_image(image_id):
 @jwt_required()
 def add_dish():
 
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'There isnt user'}), 400
     if user.restaurant is None:
@@ -324,7 +326,7 @@ def add_dish():
 @jwt_required()
 def edit_dish(food_id = None):
 
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'There isnt user'}), 400
     if user.restaurant is None:
@@ -378,7 +380,7 @@ def edit_dish(food_id = None):
 @api.route('/restaurant/food/<int:food_id>', methods=['DELETE'])
 @jwt_required()
 def delete_food(food_id = None):
-    user = User.query.filter_by(name=get_jwt_identity()).one_or_none()
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'There isnt user'}), 400
     if user.restaurant is None:
@@ -408,24 +410,22 @@ def delete_food(food_id = None):
 #Trae todos los platos
 @api.route('/food', methods=['GET'])
 def get_all_food():
-    all_food = Food.query.all()
+    queryDescription = f'%{request.args.get("description")}%' if request.args.get('description') != '' else '%'
+    queryTag = f'%{request.args.get("tag")}%' if request.args.get('tag') != '' else '%'
+    queryPrice = request.args.get('price') if request.args.get('price') != '' else sys.maxsize
+    queryLimit = request.args.get('limit') if request.args.get('limit') != '' else None
+
+    query_filter = and_(
+                        Food.description.like(str.lower(queryDescription)), 
+                        Food.tags.like(str.lower(queryTag)),
+                        Food.price <= queryPrice
+                    )
+
+    all_food = Food.query.filter(query_filter).limit(queryLimit).all()
     return jsonify(list(map(lambda item: item.serialize(), all_food))), 200
-
-
-#Trae un plato pot ID
-@api.route('/food/<int:food_id>', methods=['GET'])
-def get_food(food_id = None):
-    food = Food.query.filter_by(id = food_id).one_or_none()
-    if food is None:
-        return jsonify({'message': 'This dish does not exists'}), 400
-    return jsonify(food.serialize()), 200
-
 
 #Trae todos los platos de un restaurant
 @api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
 def get_allrest_food(restaurant_id = None):
     restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
     return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
-
-
-
