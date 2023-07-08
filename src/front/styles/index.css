@@ -1,25 +1,26 @@
 
-nav{
-    background-color: #CC0000;
-    border-bottom: 2px solid #00FFA3;
-}
-
 /* body {
   background-color: rgb(222, 222, 200);
 } */
 
 :root {
   --main_color: #cc0000;
+}
 
+.button-green{
+  background-color: #00FFA3;
+  border: 1px solid black;
 }
 
 nav {
   background-color: #cc0000;
-  border-bottom: 2px solid #00ffa3;
+  border-bottom: 4px solid #00FFA3;
+  border-top: 3px solid #00FFA3
 }
 
 .orange-line {
-  border-bottom: 1px solid #ff9900;
+  /* border-bottom: 1px solid #ff9900; */
+    
 }
 
 .search-bar {

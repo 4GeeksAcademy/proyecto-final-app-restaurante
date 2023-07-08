@@ -4,6 +4,8 @@ import "../../styles/home.css";
 
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
+import { AddDishes } from "../component/addDishes.jsx";
+import Login from "../component/Login.js";
 
 export const Home = () => {
 
@@ -16,6 +18,10 @@ export const Home = () => {
 
 				{/* BARRA DE BUSQUEDA: */}
 				<SearchBar />
+
+				<AddDishes/>
+
+				<Login />
 
 				{/* Muestra los platos */}
 				{

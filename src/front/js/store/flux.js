@@ -29,6 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						sessionStorage.setItem("token", JSON.stringify(data.token));
 
 						return data;
+
 					}
 
 					setStore({
@@ -64,13 +65,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			//PARA REGISTRO DE DISHES:
 			dishesRegister: async (dish) => {
-				console.log(dish);
 				const store = getStore();
+				console.log(store.token)
 				try {
-					let response = await fetch(`${process.env.BACKEND_URL}/food/foodId`, {
+					let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
 						method: "POST",
+						headers: {
+							Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
+						  },
 						body: dish							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
 					})
+			
 				} catch (error) {
 					console.log(error);
 				}

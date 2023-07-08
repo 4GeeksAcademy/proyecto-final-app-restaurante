@@ -7,6 +7,7 @@ const Restaurant = () => {
   const { restaurantId } = useParams();
   const { actions } = useContext(Context);
   const [restaurant, setRestaurant] = useState({})
+  const { store } = useContext(Context)
 
   const getCurrentRestaurant = async () => {
     const { getOneRestaurant } = actions;

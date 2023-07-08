@@ -104,8 +104,6 @@ def login():
 
     return jsonify({'message': 'Wrong credentials'}), 400
 
-    return jsonify({'message': 'Wrong credentials'}), 400
-
 # KR
 #Trae todos los restaurantes
 @api.route('/restaurant', methods=['GET'])
@@ -281,20 +279,20 @@ def add_dish():
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'There isnt user'}), 400
+    
     if user.restaurant is None:
-        return jsonify({'message': 'user dont have a restaurant.'}), 400
+        return jsonify({'message': 'User dont have a restaurant.'}), 400
 
     form = request.form
-
     food_name = form.get('foodName')
     food_price = form.get('foodPrice')
     food_description = form.get('foodDescription')
     food_tags = form.get('foodTags')
-
+    
     #subir imagen
     if 'image' not in request.files:
         return jsonify({'message': 'Is not a image to upload'}), 400
-
+    
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
@@ -401,9 +399,7 @@ def delete_food(food_id = None):
         return jsonify({'message': error.args}), 500
 
 
-    return jsonify({'message': 'ok'}), 200   
-
-    return jsonify({'message': 'ok'}), 200
+    return jsonify({'message': 'ok'}), 200  
 
 
 
