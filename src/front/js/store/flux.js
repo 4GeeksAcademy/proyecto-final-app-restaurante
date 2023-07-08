@@ -85,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//fetch to the api
 				const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
 				if (response.ok) {
-					const restaurant = await response.json();
+					const restaurant = await response.json(); 
 					return restaurant;
 				}
 				return null;

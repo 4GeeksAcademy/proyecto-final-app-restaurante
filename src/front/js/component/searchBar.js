@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FaSearch } from 'react-icons/fa';
 import { Context } from "../store/appContext";
 import '../../styles/searchBar.css';
@@ -10,6 +10,7 @@ const initialValue = {
 
 export const SearchBar = () => {
     const {store, actions} = useContext(Context);
+    const { foodSearch } = actions;
     const [search, setSearch] = useState(initialValue)
 
     const handleOnChange = ({ target }) => {
@@ -17,10 +18,13 @@ export const SearchBar = () => {
             ...search,
             [target.name]: target.value
         })
-        // query to api
-        const { foodSearch } = actions;
-        foodSearch(search);
     }
+
+    useEffect( () => {
+        if(search.budget!='' || search.food!='') {
+            foodSearch(search);
+        }
+    }, [search])
 
     return (
         <div className="container searchBar">

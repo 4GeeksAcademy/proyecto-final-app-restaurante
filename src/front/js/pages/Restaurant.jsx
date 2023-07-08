@@ -13,6 +13,7 @@ const Restaurant = () => {
     const { getOneRestaurant } = actions;
     const response = await getOneRestaurant(restaurantId);
     setRestaurant(response);
+    console.log(response);
   }
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const Restaurant = () => {
             </h2>
             <div className='row restaurant__content'>
               <img
-                src={restaurant.user && restaurant.user.avatar_url}
+                src={restaurant.user_avatar}
                 alt="restaurant_avatar"
                 className='restaurant_avatar col-12 col-sm-3 order-sm-0' />
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
