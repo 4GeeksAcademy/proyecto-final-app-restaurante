@@ -77,6 +77,7 @@ class Restaurant(db.Model):
             "instagram_url": self.instagram_url,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
+            "user_avatar": self.user.avatar_url,
             "image": list(map(lambda img: img.serialize(), self.image)),
             "foods": list(map(lambda food: food.serialize(), self.foods))
         }
