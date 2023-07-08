@@ -27,11 +27,11 @@ const Login = () => {
     } 
 
     return (
-        <div className="container-fluid login_page_main_container">
-            <div className="login_form_container col-6">
-                <div className="col-12 bg-danger login_title">Login</div>
-                <form className="col-10 login_form" onSubmit={handleLogin}>
-                    <div className="mb-3">
+        <div className="container login_page_main_container">
+            <div className="bg-white border border-1 p-5 rounded-4 login_form_container col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5">
+                <div className="bg-danger login_title rounded-1"><strong>Login</strong></div>
+                <form className="login_form" onSubmit={handleLogin}>
+                    <div className="mt-4">
                         <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value={user.email} onChange={(event) => handleUser(event)} />
                     </div>
@@ -39,7 +39,9 @@ const Login = () => {
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                         <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={(event) => handleUser(event)} />
                     </div>
-                    <button type="submit" className="btn btn-success col-4 login_submit_button">Submit</button>
+                    <div>
+                    <button type="submit" className="btn btn-success w-100 m-0 login_submit_button">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
