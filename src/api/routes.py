@@ -493,6 +493,20 @@ def get_user_filtered():
     if user.role != Role.ADMIN:
         return jsonify({'message': 'not permise'}), 200
 
-    
+    user_role = request.args.get('role')
+    user_role = Role.get_role(user_role)
+    user_status = request.args.get('status')
+    user_status = UserStatus.get_status(user_status)
 
-    return jsonify(user.serialize()), 200
+    if user_role is not None and user_status is not None:
+        user_list = User.query.filter_by(role=user_role, status=user_status).all()
+    elif user_role is not None:
+        user_list = User.query.filter_by(role=user_role).all()
+    elif user_status is not None:
+        user_list = User.query.filter_by(status=user_status).all()
+    else:
+        user_list = User.query.all()
+
+    user_list = list(map(lambda user: user.serialize(), user_list))
+
+    return jsonify(user_list), 200
