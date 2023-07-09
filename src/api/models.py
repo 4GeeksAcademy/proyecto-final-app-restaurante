@@ -8,9 +8,37 @@ class Role(enum.Enum):
     ADMIN = 'Admin'
     RESTAURANT = 'Restaurant'
 
+    def get_role(role_string):
+        if role_string is None:
+            return None
+
+        role_string = str.lower(role_string)
+
+        if role_string == str.lower(Role.ADMIN.value):
+            return Role.ADMIN
+        elif role_string == str.lower(Role.RESTAURANT.value):
+            return Role.RESTAURANT
+        
+        return None
+
+
 class UserStatus(enum.Enum):
     INVALID = 'invalid'
     VALID = 'valid'
+
+    def get_status(status_string):
+        if status_string is None:
+            return None
+
+        status_string = str.lower(status_string)
+
+        if status_string == str.lower(UserStatus.VALID.value):
+            return UserStatus.VALID
+        elif status_string == str.lower(UserStatus.INVALID.value):
+            return UserStatus.INVALID
+        
+        return None
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
