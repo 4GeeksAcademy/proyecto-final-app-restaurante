@@ -429,3 +429,70 @@ def get_all_food():
 def get_allrest_food(restaurant_id = None):
     restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
     return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
+
+
+@api.route('/user', methods=['POST'])
+def add_user():
+    form = request.form
+    if(form is None):
+        return jsonify({'message': "Request must be a form"}), 400
+    # are there corrects properties?
+    user_name = form.get('name')
+    user_email = form.get('email')
+    user_role = form.get('role')
+    user_password = form.get('password')
+    user_status = form.get('status')
+    if None in [user_name, user_email, user_role, user_password, user_status]:
+        return jsonify({'message': "Form has a wrong property"}), 400
+
+    # is a valid password ? 
+    if not is_valid_password(user_password):
+        return jsonify({'message': 'Invalid password'}), 400
+
+    # is a valid email ?
+    if not is_valid_email(user_email):
+        return jsonify({'message': 'Invalid email'}), 400
+
+    user = User()
+    user.name = user_name
+    user.email = user_email
+    if str.lower(user_role) == 'admin':
+        user_role = Role.ADMIN
+    elif str.lower(user_role) == 'restaurant':
+        user_role = Role.RESTAURANT
+    user.role = user_role
+    if str.lower(user_status) == 'valid':
+        user_status = UserStatus.VALID
+    elif str.lower(user_status) == 'invalid':
+        user_status = UserStatus.INVALID
+    user.status = user_status
+    user.salt = b64encode(os.urandom(32)).decode('utf-8')
+    user.password = password_hash(user_password, user.salt)
+
+    user_avatar = request.files.get('avatar_url')
+    if user_avatar is not None:
+        result = cloudinary.uploader.upload(user_avatar)
+        image_url = result['secure_url']
+        user.avatar_url = image_url
+
+    db.session.add(user)
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify(error.args), 500
+
+    return jsonify(user.serialize()), 201
+
+
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def get_user_filtered():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if user.role != Role.ADMIN:
+        return jsonify({'message': 'not permise'}), 200
+
+    
+
+    return jsonify(user.serialize()), 200
