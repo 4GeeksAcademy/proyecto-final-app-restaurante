@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 
 export const RestaurantCard = ({key, restaurant}) => {
+    
     const { id, businessName, rif, phone, location, index } = restaurant
 
     return (
