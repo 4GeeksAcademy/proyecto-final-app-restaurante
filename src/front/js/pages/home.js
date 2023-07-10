@@ -3,9 +3,11 @@ import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 
 import { SearchBar } from "../component/searchBar.js";
+import { DeleteRest } from "../pages/deleteRest.jsx";
 import { DishCard } from "../component/dishCard.js";
 import { AddDishes } from "../component/addDishes.jsx";
 import Login from "../component/Login.js";
+
 
 export const Home = () => {
 
@@ -18,6 +20,8 @@ export const Home = () => {
 
 				{/* BARRA DE BUSQUEDA: */}
 				<SearchBar />
+
+				<DeleteRest />
 
 				<AddDishes/>
 
