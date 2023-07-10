@@ -63,6 +63,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				return { 'message': 'Some error ocurred' };
 			},
+
 			//PARA REGISTRO DE DISHES:
 			dishesRegister: async (dish) => {
 				const store = getStore();
@@ -72,26 +73,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "POST",
 						headers: {
 							Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
-						  },
+						},
 						body: dish							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
 					})
-			
+
 				} catch (error) {
 					console.log(error);
 				}
 			},
+
+
 			getOneRestaurant: async (id) => {
 				//fetch to the api
 				const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
 				if (response.ok) {
-					const restaurant = await response.json(); 
+					const restaurant = await response.json();
 					return restaurant;
 				}
 				return null;
 			},
+
+
 			foodSearch: async (search) => {
-				const { budget, food } = search; 
-				const priceParameter = budget == '' ?  "price" : `price=${budget}`; 
+				const { budget, food } = search;
+				const priceParameter = budget == '' ? "price" : `price=${budget}`;
 				const descriptionParameter = food == '' ? "description" : `description=${food}`;
 				const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
 				console.log(url);
@@ -122,7 +127,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (err) {
 					console.log(err);
 				}
+			},
+
+			getAllRestaurant: async () => {
+				const response = await fetch(`${process.env.BACKEND_URL}/restaurant`)
+
+				if (response.ok) {
+					const restaurant = await response.json();
+					console.log(restaurant)
+					return restaurant;
+				}
+				return null;
 			}
+
 		},
 	}
 };
