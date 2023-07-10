@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: JSON.parse(sessionStorage.getItem("user")) || null,
 			token: JSON.parse(sessionStorage.getItem("token")) || null,
 			results: [],
+			requests: [],
 			BASEURL: process.env.BACKEND_URL
 		},
 		actions: {
