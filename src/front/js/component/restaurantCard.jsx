@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 
 
-const deleteRest = (index) => {
-    const filteredRestaurant = restaurants.filter(restaurant => restaurant.index !== index) //ERROR RESTAURANT NOT DEFINED
-    setRestaurants(filteredRestaurant)
-}
 
 
 export const RestaurantCard = ({key, restaurant}) => {
+    const [restaurants, setRestaurants] = useState([])
     const { id, businessName, rif, phone, location, index } = restaurant
     
-
+    //PARA BORRAR
+    const deleteRest = (index) => {
+        const filteredRestaurant = restaurants.filter(restaurant => restaurant.index !== index)
+        setRestaurants(filteredRestaurant)
+    }
+    
     return (
         <div className="card border border-1 rounded-4 my-5" key={index}>
             <div className="card-body">
