@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { RestaurantCard } from "../component/restaurantCard.jsx";
 
-export const DeleteRest = () => {
+export const ControlPanel = () => {
   const [restaurants, setRestaurants] = useState([
     {
       id: 0,
@@ -27,6 +27,8 @@ export const DeleteRest = () => {
     },
   ]);
 
+   
+
   return (
     <>
       <div className="container">
@@ -40,7 +42,9 @@ export const DeleteRest = () => {
           console.log(restaurant);
           return <RestaurantCard key={index} restaurant={restaurant} />;
         })}
+        
       </div>
     </>
   );
 };
+
