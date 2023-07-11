@@ -93,6 +93,9 @@ def login():
     user = User.query.filter_by(email=email).one_or_none()
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
+
+    if user.status != UserStatus.VALID:
+        return jsonify({'message': "User isnt a valid one yet"}), 400
     
     user_salt = user.salt
     user_role = user.role.value
@@ -506,3 +509,26 @@ def get_user_filtered():
     user_list = list(map(lambda user: user.serialize(), user_list))
 
     return jsonify(user_list), 200
+
+@api.route('/user/<int:user_id>', methods=['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    if user.role != Role.ADMIN:
+        return jsonify({'message': 'Enough permision.'}), 405
+
+    user_delete = User.query.filter_by(id=user_id).one_or_none()
+    if user_delete is None:
+        return jsonify({'message': 'There isnt user to delete.'}), 400
+
+    user_delete.status = UserStatus.DELETED
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'ok'}), 200
