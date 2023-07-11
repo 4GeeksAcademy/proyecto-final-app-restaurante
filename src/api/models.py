@@ -37,6 +37,8 @@ class UserStatus(enum.Enum):
             return UserStatus.VALID
         elif status_string == str.lower(UserStatus.INVALID.value):
             return UserStatus.INVALID
+        elif status_string == str.lower(UserStatus.DELETED.value):
+            return UserStatus.DELETED
         
         return None
 
