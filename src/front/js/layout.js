@@ -9,12 +9,13 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import Restaurant from './pages/Restaurant.jsx';
 import { Register } from './pages/register.jsx';
-
+// import { DeleteRest } from "./pages/deleteRest.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 import { SearchBar } from "./component/searchBar";
 import Login  from "./component/Login";
+import { RestaurantRequest } from "./pages/restaurantsRequests";
 
 
 //create your first component
@@ -37,6 +38,7 @@ console.log(basename)
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
+                        <Route element={<RestaurantRequest />} path="/requests" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <Footer />

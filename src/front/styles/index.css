@@ -18,6 +18,11 @@
   border: 1px solid black;
 }
 
+.button-orange{
+  background-color: #ff9900;
+  border: 1px solid black;
+}
+
 nav {
   background-color: #cc0000;
   border-bottom: 4px solid #00FFA3;

@@ -2,6 +2,8 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../styles/index.css"
 import ComeconLogo from "../../img/comecon-logo.png"
+import ComeconName from "../../img/comecon-nombre.png"
+
 
 export const Navbar = () => {
 	const location = useLocation();
@@ -10,15 +12,8 @@ export const Navbar = () => {
 			<nav className="navbar p-0">
 				<div className="container">
 					<Link to="/"><img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px"></img></Link>
-					<h1 className="text-light"> Comecon </h1>
-					{/* <Link to="/">
-						<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-					</Link>
-					<div className="ml-auto">
-						<Link to="/demo">
-							<button className="btn btn-primary">Check the Context in action</button>
-						</Link>
-					</div> */}
+					<Link to="/"><img src={ComeconName} alt="comecon-logo" position="fixed" width="270px"></img></Link>
+					
 					{location.pathname === '/' && (
 						<div className="d-flex">
 							<Link to="/login"><button className="btn btn-light m-1">Login</button></Link>

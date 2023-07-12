@@ -22,6 +22,7 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
+        console.log("ASDASDASDAS")
         actions.handleLogin(user)
         .then(response => response&&redirect(response.user));
     } 
