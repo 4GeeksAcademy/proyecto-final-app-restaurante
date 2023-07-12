@@ -96,9 +96,12 @@
   flex-flow: column nowrap;
 }
 
-.btn--restaurantEdit {
+.btn__edit {
   margin-top: 0.7em;
   align-self: center;
+}
+
+.btn--restaurantEdit {
   width: 50%;
 }
 

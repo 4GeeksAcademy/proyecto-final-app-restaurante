@@ -82,7 +82,7 @@ const Restaurant = () => {
                 </p>
                 {
                   isOwner &&
-                  <Link to={`edit`} className='btn button-green btn--restaurantEdit'>
+                  <Link to={`edit`} className='btn btn__edit button-green btn--restaurantEdit'>
                     Edit profile
                   </Link>
                 }
@@ -112,9 +112,9 @@ const Restaurant = () => {
             </div>
             {
               isOwner &&
-              <>
-                Editar menú
-              </>
+              <Link to={`menu`} className='btn btn__edit button-red btn--restaurantEdit'>
+                Edit menu
+              </Link>
             }
           </div >
           : <h1>Restaurant not found</h1>

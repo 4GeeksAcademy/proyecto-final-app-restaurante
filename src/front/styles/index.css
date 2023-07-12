@@ -7,6 +7,12 @@
   --main_color: #cc0000;
 }
 
+.button-red {
+  background-color: var(--main_color);
+  color: white;
+  border: 1px solid black;
+}
+
 .button-green{
   background-color: #00FFA3;
   border: 1px solid black;
