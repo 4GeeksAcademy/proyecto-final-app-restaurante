@@ -6,6 +6,7 @@ import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
 import { AddDishes } from "../component/addDishes.jsx";
 import Login from "../component/Login.js";
+import EditProfile from "../component/EditProfile.js";
 
 export const Home = () => {
 
