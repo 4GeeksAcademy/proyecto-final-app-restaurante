@@ -8,12 +8,15 @@ const Restaurant = () => {
   const { actions } = useContext(Context);
   const [restaurant, setRestaurant] = useState({})
   const { store } = useContext(Context)
+  const { user } = store;
+  const isOwner = user.restaurant
+    ? user.restaurant.id == restaurantId
+    : false;
 
   const getCurrentRestaurant = async () => {
     const { getOneRestaurant } = actions;
     const response = await getOneRestaurant(restaurantId);
     setRestaurant(response);
-    console.log(response);
   }
 
   useEffect(() => {
