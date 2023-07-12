@@ -9,8 +9,14 @@ body {
   --main_color: #cc0000;
 }
 
-.button-green {
-  background-color: #00ffa3;
+.button-red {
+  background-color: var(--main_color);
+  color: white;
+  border: 1px solid black;
+}
+
+.button-green{
+  background-color: #00FFA3;
   border: 1px solid black;
 }
 
@@ -23,6 +29,10 @@ nav {
   background-color: rgb(44, 44, 44);
   border-bottom: 4px solid #e35656;
   /* border-top: 3px solid #00ffa3; */
+}
+
+.orange-line+div {
+  min-height: 80.5vh;
 }
 
 .orange-line {
