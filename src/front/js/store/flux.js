@@ -160,38 +160,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log("deleting restaurant...");
 				}
-        
-			getRequests: async (request) => {
-				const store = getStore()
-				try {
-					let response = await fetch(`${process.env.BACKEND_URL}/user`, {
-						method: "GET",
-						headers: {
-							Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
-						}						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
-					})
-					if (response.ok) {
-						const allRequests = await response.json();
-						console.log(allRequests)
-						const allRestaurantRequest = []
-						{allRequests.map((item, index) => {
-							allRestaurantRequest.push(item.restaurant)
-						})}
-						console.log(allRestaurantRequest)
-						setStore(
+
+				getRequests: async (request) => {
+					const store = getStore()
+					try {
+						let response = await fetch(`${process.env.BACKEND_URL}/user`, {
+							method: "GET",
+							headers: {
+								Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
+							}						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+						})
+						if (response.ok) {
+							const allRequests = await response.json();
+							console.log(allRequests)
+							const allRestaurantRequest = []
 							{
-								requests: allRestaurantRequest
+								allRequests.map((item, index) => {
+									allRestaurantRequest.push(item.restaurant)
+								})
 							}
-						)
+							console.log(allRestaurantRequest)
+							setStore(
+								{
+									requests: allRestaurantRequest
+								}
+							)
+						}
+					} catch (error) {
+						console.log(error)
 					}
-				} catch (error) {
-					console.log(error)
+
 				}
 
-			}
-
-		},
+			},
+		}
 	}
-}};
+};
 
 export default getState;
