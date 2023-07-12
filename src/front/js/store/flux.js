@@ -4,6 +4,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: JSON.parse(sessionStorage.getItem("user")) || null,
 			token: JSON.parse(sessionStorage.getItem("token")) || null,
 			results: [],
+			requests: [{
+				name: "Hong Kong",
+				phone: "010242655",
+				rif: "J123556",
+				location: "calle q",
+				description: "Business es un restaiurante de comida asiatica con fusion latina que destaca por su pizza"
+			}],
 			BASEURL: process.env.BACKEND_URL
 		},
 		actions: {
@@ -29,7 +36,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 						sessionStorage.setItem("token", JSON.stringify(data.token));
 
 						return data;
-
 					}
 
 					setStore({
@@ -93,7 +99,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return null;
 			},
 
-
 			foodSearch: async (search) => {
 				const { budget, food } = search;
 				const priceParameter = budget == '' ? "price" : `price=${budget}`;
@@ -155,6 +160,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log("deleting restaurant...");
 				}
+        
+			getRequests: async (request) => {
+				const store = getStore()
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/user`, {
+						method: "GET",
+						headers: {
+							Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
+						}						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+					})
+					if (response.ok) {
+						const allRequests = await response.json();
+						console.log(allRequests)
+						const allRestaurantRequest = []
+						{allRequests.map((item, index) => {
+							allRestaurantRequest.push(item.restaurant)
+						})}
+						console.log(allRestaurantRequest)
+						setStore(
+							{
+								requests: allRestaurantRequest
+							}
+						)
+					}
+				} catch (error) {
+					console.log(error)
+				}
+
 			}
 
 		},

@@ -22,6 +22,7 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
+        console.log("ASDASDASDAS")
         actions.handleLogin(user)
         .then(response => response&&redirect(response.user));
     } 
@@ -30,7 +31,7 @@ const Login = () => {
         <div className="container login_page_main_container">
             <div className="bg-white border border-1 p-5 rounded-4 login_form_container col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5">
                 <div className="bg-danger login_title rounded-1"><strong>Login</strong></div>
-                <form className="login_form" onSubmit={handleLogin}>
+                <form className="login_form">
                     <div className="mt-4">
                         <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value={user.email} onChange={(event) => handleUser(event)} />
@@ -40,7 +41,7 @@ const Login = () => {
                         <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={(event) => handleUser(event)} />
                     </div>
                     <div>
-                    <button type="button" className="btn btn-success w-100 m-0 login_submit_button">Submit</button>
+                    <button type="sbutton" onClick={handleLogin} className="btn btn-success w-100 m-0 login_submit_button">Submit</button>
                     </div>
                 </form>
             </div>

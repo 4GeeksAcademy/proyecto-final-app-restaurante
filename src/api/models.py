@@ -21,10 +21,10 @@ class Role(enum.Enum):
         
         return None
 
-
 class UserStatus(enum.Enum):
     INVALID = 'invalid'
     VALID = 'valid'
+    DELETED = 'deleted'
 
     def get_status(status_string):
         if status_string is None:
@@ -36,6 +36,8 @@ class UserStatus(enum.Enum):
             return UserStatus.VALID
         elif status_string == str.lower(UserStatus.INVALID.value):
             return UserStatus.INVALID
+        elif status_string == str.lower(UserStatus.DELETED.value):
+            return UserStatus.DELETED
         
         return None
 

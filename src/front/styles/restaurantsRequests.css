@@ -1,0 +1,36 @@
+/* Section styles */
+.section {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Title style */
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Subtitle style */
+  .subtitle {
+    font-size: 16px;
+  }
+  
+  /* Paragraph style */
+  .paragraph {
+    font-size: 14px;
+  }
+  
+  /* Check button style */
+  .check-button {
+    margin-right: 10px;
+  }
+  
+  /* Button style */
+  .button {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
