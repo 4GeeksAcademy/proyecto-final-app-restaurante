@@ -55,7 +55,7 @@ export const Register = () => {
             {/* FORMULARIO DE REGISTRO */}
             <div className="container mt-5">
                 <div className="row justify-content-center">
-                    <div className="bg-white border border-1 p-5 rounded-4 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
+                    <div className="bg-white border border-1 p-5 rounded-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
                         <h2 className="text-center bg-danger text-white rounded-1">
                             <strong>Create Account</strong>
                         </h2>
