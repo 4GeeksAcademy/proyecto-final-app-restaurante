@@ -1,3 +1,8 @@
+.searchBar {
+        box-shadow: 5px 5px 15px gray;
+
+}
+
 .searchBar input {
     border: none !important;
     border-radius: 0;
