@@ -2,38 +2,42 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { RestaurantCard } from "../component/restaurantCard.jsx";
 
-export const ControlPanel = () => {
-  const [restaurants, setRestaurants] = useState([
-    {
-      id: 0,
-      businessName: "Juan",
-      rif: "13296624",
-      phone: "2525343",
-      location: "khkjhkhk",
-    },
-    {
-      id: 1,
-      businessName: "Andres",
-      rif: "1234567",
-      phone: "2525343",
-      location: "khkjhkhk",
-    },
-    {
-      id: 2,
-      businessName: "Kelvin",
-      rif: "0987655",
-      phone: "2525343",
-      location: "khkjhkhk",
-    },
-  ]);
+const initialState = [
+  {
+    // id: number,
+    name: "",
+    rif: "",
+    phone: "",
+    location: "",
+  },
+];
 
-   
+export const ControlPanel = () => {
+  const [restaurants, setRestaurants] = useState([]);
+
+  //TRAER TODOS LOS RESTAURANTS
+  const getAllRestaurants = async () => {
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/restaurant`);
+      const data = await response.json();
+      setRestaurants (data);
+
+    } catch (err) {
+      console.error(err);
+    }
+    console.log("showing restaurants...")
+  };
+
+    useEffect(() => {
+      getAllRestaurants();
+    }, []);
+
 
   return (
     <>
       <div className="container">
         <div className="row justify-content-center">
-          <h2 className="text-center text-white rounded-1 title">
+          <h2 className="text-center bg-danger text-white rounded-1 title">
             Control Panel
           </h2>
         </div>
@@ -42,9 +46,7 @@ export const ControlPanel = () => {
           console.log(restaurant);
           return <RestaurantCard key={index} restaurant={restaurant} />;
         })}
-        
       </div>
     </>
   );
 };
-

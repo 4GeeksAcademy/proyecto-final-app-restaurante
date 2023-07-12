@@ -45,7 +45,7 @@ export const AddDishes = () => {
             {/* AGREGAR PLATOS */}
             <div className="container">
                 <div className="row justify-content-center">
-                    <h2 className="text-center text-white rounded-1 title">
+                    <h2 className="text-center bg-danger text-white rounded-1 title">
                         Add Dishes
                     </h2>
                     <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">

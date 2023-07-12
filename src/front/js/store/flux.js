@@ -132,26 +132,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			//TRAER TODOS LOS RESTAURANTS
 			getAllRestaurants: async () => {
 				try {
-					const response = await fetch('/restaurants');
+					const response = await fetch(`${process.env.BACKEND_URL}/restaurant`);
 					const restaurants = await response.json();
 					return restaurants;
 
 				} catch (err) {
 					console.error(err);
 				}
+				console.log("showing restaurants...")
 			},
 
 
 			//BORRAR RESTAURANTE POR ID
 			deleteRestaurant: async (id) => {
 				try {
-					const response = await fetch(`${process.env.BACKEND_URL}/restaurants/${id}`, {
+					const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
 						method: 'DELETE'
 					});
 					const data = await response.json();
 					return data;
 
-				} catch (err) {
+				} catch (error) {
 					console.log("deleting restaurant...");
 				}
 			}
