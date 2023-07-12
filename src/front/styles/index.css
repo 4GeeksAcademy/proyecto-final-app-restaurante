@@ -24,6 +24,10 @@ nav {
   border-top: 3px solid #00FFA3
 }
 
+.orange-line+div {
+  min-height: 80.5vh;
+}
+
 .orange-line {
   /* border-bottom: 1px solid #ff9900; */
     
