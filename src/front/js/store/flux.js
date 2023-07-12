@@ -69,6 +69,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				return { 'message': 'Some error ocurred' };
 			},
+
 			//PARA REGISTRO DE DISHES:
 			dishesRegister: async (dish) => {
 				const store = getStore();
@@ -86,6 +87,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 			},
+
+
 			getOneRestaurant: async (id) => {
 				//fetch to the api
 				const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
@@ -131,6 +134,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			//TRAER TODOS LOS RESTAURANTS
+			getAllRestaurants: async () => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/restaurant`);
+					const restaurants = await response.json();
+					return restaurants;
+
+				} catch (err) {
+					console.error(err);
+				}
+				console.log("showing restaurants...")
+			},
+
+
+			//BORRAR RESTAURANTE POR ID
+			deleteRestaurant: async (id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
+						method: 'DELETE'
+					});
+					const data = await response.json();
+					return data;
+
+				} catch (error) {
+					console.log("deleting restaurant...");
+				}
+        
 			getRequests: async (request) => {
 				const store = getStore()
 				try {
@@ -159,6 +189,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			}
+
 		},
 	}
 };

@@ -9,7 +9,7 @@ import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import Restaurant from './pages/Restaurant.jsx';
 import { Register } from './pages/register.jsx';
-
+// import { DeleteRest } from "./pages/deleteRest.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
