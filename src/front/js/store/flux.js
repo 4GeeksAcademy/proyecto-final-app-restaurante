@@ -134,10 +134,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 					body: form
 				});
 
-				if(response.ok) {
+				if (response.ok) {
 					//Actualizar  la imagen del la página
+					//Cerrar modal
 				}
+			},
+			addRestaurantImage: async form => {
+				const { token } = getStore();
 
+				const response = await fetch(`${process.env.BACKEND_URL}/restaurant/gallery`, {
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${token}`
+					},
+					body: form
+				});
+
+				if (response.ok) {
+					//Actualizar  la imagen del la página
+					//Cerrar modal
+				}
 			}
 		},
 	}

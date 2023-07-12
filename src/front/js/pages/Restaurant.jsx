@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import EditAvatar from '../component/EditAvatar.jsx';
+import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
 import '../../styles/restaurant.css';
 
 const Restaurant = () => {
@@ -10,7 +11,7 @@ const Restaurant = () => {
   const [restaurant, setRestaurant] = useState({})
   const { store } = useContext(Context)
   const { user } = store;
-  const isOwner = user.restaurant
+  const isOwner = user && user.restaurant
     ? user.restaurant.id == restaurantId
     : false;
 
@@ -105,9 +106,7 @@ const Restaurant = () => {
                 }
                 {
                   isOwner &&
-                  <button className='restaurant__add_more_images'>
-                    +
-                  </button>
+                  <AddRestaurantImage />
                 }
               </div>
             </div>
