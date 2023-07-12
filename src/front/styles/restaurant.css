@@ -36,6 +36,9 @@
 }
 
 .restaurant__information {
+  /* position */
+  display: flex;
+  flex-flow: column nowrap;
   /* box_model */
   padding: 1em 2em;
 }
@@ -91,6 +94,12 @@
 .restaurant__image {
   display: flex;
   flex-flow: column nowrap;
+}
+
+.btn--restaurantEdit {
+  margin-top: 0.7em;
+  align-self: center;
+  width: 50%;
 }
 
 @media (max-width: 768px) { 
