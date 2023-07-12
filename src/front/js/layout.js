@@ -14,7 +14,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 
 import { SearchBar } from "./component/searchBar";
-import Login  from "./component/Login";
+import Login  from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 
 
