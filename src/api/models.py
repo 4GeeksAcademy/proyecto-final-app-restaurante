@@ -21,7 +21,6 @@ class Role(enum.Enum):
         
         return None
 
-
 class UserStatus(enum.Enum):
     INVALID = 'invalid'
     VALID = 'valid'

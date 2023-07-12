@@ -7,9 +7,13 @@ import { RequestCard } from "../component/requestCard.js";
 
 
 export const RestaurantRequest = () => {
-    const { store } = useContext(Context)
+    const { store, actions } = useContext(Context)
 	const { requests } = store;   
-    
+
+    useEffect(() => {
+        actions.getRequests();
+    }, []);
+
     return (
         <>
             {requests.map((item, index) => {
