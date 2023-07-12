@@ -88,6 +88,11 @@
   background-color: inherit;
 }
 
+.restaurant__image {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
 @media (max-width: 768px) { 
   .restaurant__information {
     /* box_model */

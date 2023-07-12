@@ -32,10 +32,16 @@ const Restaurant = () => {
               Dashboard
             </h2>
             <div className='row restaurant__content'>
-              <img
-                src={restaurant.user_avatar}
-                alt="restaurant_avatar"
-                className='restaurant_avatar col-12 col-sm-3 order-sm-0' />
+              <div className='restaurant__image col-12 col-sm-3 order-sm-0'>
+                <img
+                  src={restaurant.user_avatar}
+                  alt="restaurant_avatar"
+                  className='restaurant_avatar' />
+                {
+                  isOwner &&
+                  <>Boton Editar Foto</>
+                }
+              </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
                 <h3 className='restaurant__name'>
                   {
@@ -74,6 +80,10 @@ const Restaurant = () => {
                     restaurant.description
                   }
                 </p>
+                {
+                  isOwner &&
+                  <>Boton editar perfil</>
+                }
               </div>
             </div>
             <div className='restaurant__gallery'>
@@ -90,11 +100,20 @@ const Restaurant = () => {
                     }
                   )
                 }
-                <button className='restaurant__add_more_images'>
-                  +
-                </button>
+                {
+                  isOwner &&
+                  <button className='restaurant__add_more_images'>
+                    +
+                  </button>
+                }
               </div>
             </div>
+            {
+              isOwner &&
+              <>
+                Editar menú
+              </>
+            }
           </div >
           : <h1>Restaurant not found</h1>
       }
