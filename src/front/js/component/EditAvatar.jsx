@@ -1,30 +1,23 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
-const initialValue = {
-  avatarFile: null
-}
-
 const EditAvatar = () => {
-  const [avatar, setAvatar] = useState(initialValue)
+  const [image, setImage] = useState(null)
   const { actions } = useContext(Context);
   const { changeAvatar } = actions;
 
-  const changeHandler = ({ target }) => {
-    setAvatar({
-      ...avatar,
-      [target.name]: target.type != 'file' ? target.value : target.files[0]
-    })
+  const changeHandler = ({ target }) => { 
+    setImage(target.files[0])
   }
 
   const clickHandler = () => {
-    if (avatar.avatarFile == null) {
+    if (image == null) {
       console.log('You have to choose an image')
       return '';
     }
 
     var formData = new FormData();
-    formData.append("avatar", avatar.avatarFile);
+    formData.append("image", image);
 
     changeAvatar(formData);
   }
@@ -42,7 +35,7 @@ const EditAvatar = () => {
           <div className="modal-body">
             <form action="">
               <input type="file"
-                id="avatarFile" name="avatarFile"
+                id="image" name="image"
                 accept="image/png, image/jpeg"
                 onChange={changeHandler} />
             </form>

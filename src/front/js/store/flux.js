@@ -123,8 +123,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(err);
 				}
 			},
-			changeAvatar: async () => {
-				console.log('NICE');
+			changeAvatar: async form => {
+				const { token } = getStore();
+
+				const response = await fetch(`${process.env.BACKEND_URL}/user/avatar`, {
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${token}`
+					},
+					body: form
+				});
+
+				if(response.ok) {
+					//Actualizar  la imagen del la página
+				}
+
 			}
 		},
 	}

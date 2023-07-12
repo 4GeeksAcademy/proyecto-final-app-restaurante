@@ -161,16 +161,17 @@ def upload_images():
 @api.route('/user/avatar', methods=['POST'])
 @jwt_required()
 def method_name():
+    print(get_jwt_identity())
     #verificar el permiso/ 
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-
+    print('a')
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
-    
+    print('b')
     #subir imagen
     if 'image' not in request.files:
         return jsonify({'message': 'Is not a image to upload'}), 400
-    
+    print('d')
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']
