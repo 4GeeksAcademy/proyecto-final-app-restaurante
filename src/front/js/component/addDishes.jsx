@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { Link } from "react-router-dom";
-import "../../styles/home.css";
-import "../../styles/title.css";
 import { onValidateDishes } from "../util.js";
 
 const initialState = {                                              //ESTADO INICIAL
@@ -26,7 +24,7 @@ export const AddDishes = () => {
     const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
-        setErrors(err)                     //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
+        setErrors(err)                                              //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
 
         if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
 

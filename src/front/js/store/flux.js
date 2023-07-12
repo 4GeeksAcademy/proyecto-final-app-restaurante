@@ -129,16 +129,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// getAllRestaurant: async () => {
-			// 	const response = await fetch(`${process.env.BACKEND_URL}/restaurant`)
+			//TRAER TODOS LOS RESTAURANTS
+			getAllRestaurants: async () => {
+				try {
+					const response = await fetch('/restaurants');
+					const restaurants = await response.json();
+					return restaurants;
 
-			// 	if (response.ok) {
-			// 		const restaurant = await response.json();
-			// 		console.log(restaurant)
-			// 		return restaurant;
-			// 	}
-			// 	return null;
-			// },
+				} catch (err) {
+					console.error(err);
+				}
+			},
+
 
 			//BORRAR RESTAURANTE POR ID
 			deleteRestaurant: async (id) => {
@@ -150,7 +152,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return data;
 
 				} catch (err) {
-					console.log(err);
+					console.log("deleting restaurant...");
 				}
 			}
 
