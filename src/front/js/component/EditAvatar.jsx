@@ -6,7 +6,7 @@ const EditAvatar = () => {
   const { actions } = useContext(Context);
   const { changeAvatar } = actions;
 
-  const changeHandler = ({ target }) => { 
+  const changeHandler = ({ target }) => {
     setImage(target.files[0])
   }
 
@@ -23,34 +23,41 @@ const EditAvatar = () => {
   }
 
   return (
-    <div className="modal fade" id="editAvatar" tabIndex="-1" aria-labelledby="editAvatarLabel" aria-hidden="true">
-      <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="editAvatarLabel">
-              Add a new avatar
-            </h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div className="modal-body">
-            <form action="">
-              <input type="file"
-                id="image" name="image"
-                accept="image/png, image/jpeg"
-                onChange={changeHandler} />
-            </form>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-              Close
-            </button>
-            <button type="button" className="btn btn-primary" onClick={clickHandler}>
-              Save
-            </button>
+    <>
+      {/* button */}
+      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAvatar">
+        Edit Avatar
+      </button>
+      {/* modal */}
+      <div className="modal fade" id="editAvatar" tabIndex="-1" aria-labelledby="editAvatarLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="editAvatarLabel">
+                Add a new avatar
+              </h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <form action="">
+                <input type="file"
+                  id="image" name="image"
+                  accept="image/png, image/jpeg"
+                  onChange={changeHandler} />
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="button" className="btn btn-primary" onClick={clickHandler}>
+                Save
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 export default EditAvatar;

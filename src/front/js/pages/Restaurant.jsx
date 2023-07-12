@@ -40,12 +40,7 @@ const Restaurant = () => {
                   className='restaurant_avatar' />
                 {
                   isOwner &&
-                  <>
-                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAvatar">
-                      Edit Avatar
-                    </button>
-                    <EditAvatar />
-                  </>
+                  <EditAvatar />
                 }
               </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
