@@ -167,8 +167,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${process.env.BACKEND_URL}/user`, {
 						method: "GET",
 						headers: {
-							Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
-						}						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+							Authorization: `Bearer ${store.token}` 	// Agrega el token en el encabezado Authorization
+						}											//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
 					})
 					if (response.ok) {
 						const allRequests = await response.json();
