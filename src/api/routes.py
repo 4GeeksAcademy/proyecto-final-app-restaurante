@@ -94,6 +94,7 @@ def login():
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
 
+    #PARA DESCOMENTAR SE DEBE IMPLEMENTAR CAMBIAR STATUS - KELVIN
     # if user.status != UserStatus.VALID:
     #     return jsonify({'message': "User isnt a valid one yet"}), 400
     
