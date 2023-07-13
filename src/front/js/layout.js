@@ -43,7 +43,7 @@ console.log(basename)
                         <Route element={<RestaurantRequest />} path="/requests" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
-                    <Footer />
+                    {/*<Footer />*/}
                 </ScrollToTop>
             </BrowserRouter>
         </div>
