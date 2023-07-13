@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../store/appContext.js';
 import '../../styles/placeImage.css';
 
 const PlaceImage = ({ deleteable, image }) => {
-  
+  const { actions } = useContext(Context);
+  const { deletePlaceImage } = actions;
+
   const deleteHandler = () => {
-    console.log('a');
+    deletePlaceImage(image.id);
   }
 
   return (

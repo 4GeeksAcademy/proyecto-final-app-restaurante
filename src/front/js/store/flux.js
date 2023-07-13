@@ -223,25 +223,46 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       editRestaurant: async (data) => {
-				console.log(data);
-				const store = getStore();
+        console.log(data);
+        const store = getStore();
 
-				try {
-					let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
-						method: "PUT",
-						headers: {
-							Authorization: `Bearer ${store.token}`
-						},
-						body: data
-					});
-					if (!response.ok){
-						console.log("No se pudo editar restaurante")
-					}
-				} catch (error){
-					console.error(error);
-				}
-			}
-		
+        try {
+          let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: data
+          });
+          if (!response.ok) {
+            console.log("No se pudo editar restaurante")
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      deletePlaceImage: async (imageId, restaurantId = null) => {
+        const store = getStore();
+        
+        const url = restaurantId == null
+          ? `${process.env.BACKEND_URL}/restaurant/gallery/${imageId}`
+          : `${process.env.BACKEND_URL}/restaurant/${restaurantId}/gallery/${imageId}`;
+
+        try {
+          const response = await fetch(url, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+          });
+          const data = await response.json();
+          console.log(data);
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+
     }
   };
 }
