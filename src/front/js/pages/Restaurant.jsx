@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import EditAvatar from '../component/EditAvatar.jsx';
+import PlaceImage from '../component/PlaceImage.jsx';
 import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
 import '../../styles/restaurant.css';
 
@@ -98,7 +99,10 @@ const Restaurant = () => {
                 restaurant.image && restaurant.image.map(
                   image => {
                     return (
-                      <img key={image.id} className='restaurant-image col-12 col-md-4  col-lg-3' src={image.image_url} />
+                      <PlaceImage 
+                        key={image.id} 
+                        image={image}
+                        deleteable={isOwner} />
                     )
                   }
                 )
