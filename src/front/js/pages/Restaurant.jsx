@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import EditAvatar from '../component/EditAvatar.jsx';
+import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
 import '../../styles/restaurant.css';
 
 const Restaurant = () => {
@@ -8,12 +10,15 @@ const Restaurant = () => {
   const { actions } = useContext(Context);
   const [restaurant, setRestaurant] = useState({})
   const { store } = useContext(Context)
+  const { user } = store;
+  const isOwner = user && user.restaurant
+    ? user.restaurant.id == restaurantId
+    : false;
 
   const getCurrentRestaurant = async () => {
     const { getOneRestaurant } = actions;
     const response = await getOneRestaurant(restaurantId);
     setRestaurant(response);
-    console.log(response);
   }
 
   useEffect(() => {
@@ -24,15 +29,21 @@ const Restaurant = () => {
     <>
       {
         restaurant != null
-          ? <div className='container restaurant__containr' >
+          ? <div className='container restaurant__container' >
             <h2 className='restaurant__title text-light'>
               Dashboard
             </h2>
             <div className='row restaurant__content'>
-              <img
-                src={restaurant.user_avatar}
-                alt="restaurant_avatar"
-                className='restaurant_avatar col-12 col-sm-3 order-sm-0' />
+              <div className='restaurant__image col-12 col-sm-3 order-sm-0'>
+                <img
+                  src={restaurant.user_avatar}
+                  alt="restaurant_avatar"
+                  className='restaurant_avatar' />
+                {
+                  isOwner &&
+                  <EditAvatar />
+                }
+              </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
                 <h3 className='restaurant__name'>
                   {
@@ -71,6 +82,12 @@ const Restaurant = () => {
                     restaurant.description
                   }
                 </p>
+                {
+                  isOwner &&
+                  <Link to={`edit`} className='btn btn__edit button-green btn--restaurantEdit'>
+                    Edit profile
+                  </Link>
+                }
               </div>
             </div>
             <div className='restaurant__gallery'>
@@ -87,11 +104,18 @@ const Restaurant = () => {
                     }
                   )
                 }
-                <button className='restaurant__add_more_images'>
-                  +
-                </button>
+                {
+                  isOwner &&
+                  <AddRestaurantImage />
+                }
               </div>
             </div>
+            {
+              isOwner &&
+              <Link to='/addDishes' className='btn btn__edit button-red btn--restaurantEdit'>
+                Edit menu
+              </Link>
+            }
           </div >
           : <h1>Restaurant not found</h1>
       }

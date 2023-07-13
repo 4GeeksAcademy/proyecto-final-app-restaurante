@@ -1,13 +1,23 @@
-/* body {
-  background-color: rgb(222, 222, 200);
-} */
+body {
+  background-image: url(https://fondosmil.com/fondo/35732.jpg);
+  backdrop-filter: blur(5px);
+  /* background-position: center center;
+  background-size: cover; */
+}
 
 :root {
   --main_color: #cc0000;
 }
 
-.button-green {
-  background-color: #00ffa3;
+
+.button-red {
+  background-color: var(--main_color);
+  color: white;
+  border: 1px solid black;
+}
+
+.button-green{
+  background-color: #00FFA3;
   border: 1px solid black;
 }
 
@@ -20,6 +30,7 @@ nav {
   background-color: rgb(44, 44, 44);
   border-bottom: 4px solid #e35656;
   /* border-top: 3px solid #00ffa3; */
+
 }
 
 .orange-line {
@@ -63,4 +74,5 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
+ 
 }

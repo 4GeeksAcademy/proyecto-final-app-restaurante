@@ -27,8 +27,8 @@ export const SearchBar = () => {
     }, [search])
 
     return (
-        <div className="container searchBar">
-            <div className="d-flex m-5 mb-4 border border-1 rounded-3">
+        <div className="container searchBar mt-5 w-20 bg-white p-4 rounded-3">
+            <div className="d-flex mx-3 border border-1 rounded-3">
                 <div className="input-group">
                     <span className="input-group-text border-0" id="budget"><strong>Hoy como</strong></span>
                     <input type="text"
@@ -53,7 +53,7 @@ export const SearchBar = () => {
                     <span className="input-group-text border-0"><strong>$</strong></span>
                 </div>
             </div>
-            <div className="d-flex mx-5">
+            <div className="d-flex mt-4 mx-3">
             <button type="button" className="btn btn-success w-100">Buscar <FaSearch /></button>
             </div>
 

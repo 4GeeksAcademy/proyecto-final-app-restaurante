@@ -16,6 +16,7 @@ import { Footer } from "./component/footer";
 import { SearchBar } from "./component/searchBar";
 import Login  from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
+import { AddDishes } from "./pages/addDishes.jsx";
 
 
 //create your first component
@@ -38,6 +39,7 @@ console.log(basename)
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
+                        <Route element={<AddDishes />} path="/restaurant/food" />
                         <Route element={<RestaurantRequest />} path="/requests" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
