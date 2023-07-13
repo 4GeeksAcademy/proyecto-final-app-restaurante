@@ -221,8 +221,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log(error)
         }
-      }
+      },
+      editRestaurant: async (data) => {
+				console.log(data);
+				const store = getStore();
 
+				try {
+					let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
+						method: "PUT",
+						headers: {
+							Authorization: `Bearer ${store.token}`
+						},
+						body: data
+					});
+					if (!response.ok){
+						console.log("No se pudo editar restaurante")
+					}
+				} catch (error){
+					console.error(error);
+				}
+			}
+		
     }
   };
 }

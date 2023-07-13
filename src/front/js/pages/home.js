@@ -5,7 +5,6 @@ import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
 
-
 export const Home = () => {
 
 	const { store } = useContext(Context)
