@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import EditAvatar from '../component/EditAvatar.jsx';
 import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
@@ -14,7 +14,7 @@ const Restaurant = () => {
   const isOwner = user && user.restaurant
     ? user.restaurant.id == restaurantId
     : false;
-
+  const location = useLocation(); //PARA ENRUTAR FUNCIONAL
   const getCurrentRestaurant = async () => {
     const { getOneRestaurant } = actions;
     const response = await getOneRestaurant(restaurantId);
@@ -112,9 +112,9 @@ const Restaurant = () => {
             </div>
             {
               isOwner &&
-              <Link to='/addDishes' className='btn btn__edit button-red btn--restaurantEdit'>
-                Edit menu
-              </Link>
+                <Link to='/restaurant/food' className='btn btn__edit button-red btn--restaurantEdit'>
+                  Edit menu
+                </Link>
             }
           </div >
           : <h1>Restaurant not found</h1>
