@@ -90,31 +90,29 @@ const Restaurant = () => {
                 }
               </div>
             </div>
-            <div className='restaurant__gallery'>
-              <h3>
+            <div className='row gallery'>
+              <h3 className='col-12'>
                 Place
               </h3>
-              <div className='restaurant__carroussel'>
-                {
-                  restaurant.image && restaurant.image.map(
-                    image => {
-                      return (
-                        <img key={image.id} className='' src={image.image_url} />
-                      )
-                    }
-                  )
-                }
-                {
-                  isOwner &&
+              {
+                restaurant.image && restaurant.image.map(
+                  image => {
+                    return (
+                      <img key={image.id} className='restaurant-image col-12 col-md-4  col-lg-3' src={image.image_url} />
+                    )
+                  }
+                )
+              }
+              {
+                isOwner &&
                   <AddRestaurantImage />
-                }
-              </div>
+              }
             </div>
             {
               isOwner &&
-                <Link to='/restaurant/food' className='btn btn__edit button-red btn--restaurantEdit'>
-                  Edit menu
-                </Link>
+              <Link to='/restaurant/food' className='btn btn__edit button-red btn--restaurantEdit'>
+                Edit menu
+              </Link>
             }
           </div >
           : <h1>Restaurant not found</h1>
