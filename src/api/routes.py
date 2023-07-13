@@ -484,7 +484,7 @@ def add_user():
 
     return jsonify(user.serialize()), 201
 
-
+#Obtiene los restaurantes no aprobados
 @api.route('/user', methods=['GET'])
 @jwt_required()
 def get_user_filtered():
@@ -532,3 +532,15 @@ def delete_user(user_id):
         return jsonify({'message': error.args}), 500
 
     return jsonify({'message': 'ok'}), 200
+
+#Actualiza el estatus de los restaurantes
+@api.route('/user', methods=['POST'])
+@jwt_required()
+def aprove_restaurant():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    if user.role != Role.ADMIN:
+        return jsonify({'message': 'Enough permision.'}), 405
+
+    response = request.json
