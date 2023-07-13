@@ -94,8 +94,9 @@ def login():
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
 
-    if user.status != UserStatus.VALID:
-        return jsonify({'message': "User isnt a valid one yet"}), 400
+    #PARA DESCOMENTAR SE DEBE IMPLEMENTAR CAMBIAR STATUS - KELVIN
+    # if user.status != UserStatus.VALID:
+    #     return jsonify({'message': "User isnt a valid one yet"}), 400
     
     user_salt = user.salt
     user_role = user.role.value
@@ -163,14 +164,11 @@ def upload_images():
 def method_name():
     #verificar el permiso/ 
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-
     if user is None:
         return jsonify({'message': 'Access denied'}), 400
-    
     #subir imagen
     if 'image' not in request.files:
         return jsonify({'message': 'Is not a image to upload'}), 400
-    
     image = request.files['image']
     result = cloudinary.uploader.upload(image)
     image_url = result['secure_url']

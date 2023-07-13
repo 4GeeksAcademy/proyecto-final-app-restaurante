@@ -22,13 +22,14 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
+        // console.log("ASDASDASDAS")
         actions.handleLogin(user)
         .then(response => response&&redirect(response.user));
     } 
 
     return (
-        <div className="container login_page_main_container">
-            <div className="bg-white border border-1 p-5 rounded-4 login_form_container col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5">
+        <div className="container login_page_main_container mt-5">
+            <div className="bg-white border border-1 p-5 rounded-3 login_form_container col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5">
                 <div className="bg-danger login_title rounded-1"><strong>Login</strong></div>
                 <form className="login_form">
                     <div className="mt-4">
@@ -40,7 +41,7 @@ const Login = () => {
                         <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={(event) => handleUser(event)} />
                     </div>
                     <div>
-                    <button type="sbutton" onClick={handleLogin} className="btn btn-success w-100 m-0 login_submit_button">Submit</button>
+                    <button type="button" onClick={handleLogin} className="btn btn-success w-100 m-0 login_submit_button">Submit</button>
                     </div>
                 </form>
             </div>

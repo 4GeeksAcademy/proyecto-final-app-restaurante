@@ -36,13 +36,19 @@
 }
 
 .restaurant__information {
+  /* position */
+  display: flex;
+  flex-flow: column nowrap;
   /* box_model */
   padding: 1em 2em;
 }
 
 .restaurant_avatar {
-  /* position */
+  /* box */
   padding: 0;
+  max-height: 200px;
+  /* style */
+  object-fit: contain;
 }
 
 .restaurant__information>* {
@@ -86,6 +92,24 @@
   box-shadow: none;
   /* style */
   background-color: inherit;
+}
+
+.restaurant__image {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.btn__edit {
+  margin-top: 0.7em;
+  align-self: center;
+}
+
+.btn--restaurantEdit {
+  width: 50%;
+}
+
+.restaurant-image {
+  margin-bottom: 1em;
 }
 
 @media (max-width: 768px) { 

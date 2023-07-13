@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import EditAvatar from '../component/EditAvatar.jsx';
+import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
 import '../../styles/restaurant.css';
 
 const Restaurant = () => {
@@ -8,12 +10,15 @@ const Restaurant = () => {
   const { actions } = useContext(Context);
   const [restaurant, setRestaurant] = useState({})
   const { store } = useContext(Context)
-
+  const { user } = store;
+  const isOwner = user && user.restaurant
+    ? user.restaurant.id == restaurantId
+    : false;
+  const location = useLocation(); //PARA ENRUTAR FUNCIONAL
   const getCurrentRestaurant = async () => {
     const { getOneRestaurant } = actions;
     const response = await getOneRestaurant(restaurantId);
     setRestaurant(response);
-    console.log(response);
   }
 
   useEffect(() => {
@@ -24,15 +29,21 @@ const Restaurant = () => {
     <>
       {
         restaurant != null
-          ? <div className='container restaurant__containr' >
+          ? <div className='container restaurant__container' >
             <h2 className='restaurant__title text-light'>
               Dashboard
             </h2>
             <div className='row restaurant__content'>
-              <img
-                src={restaurant.user_avatar}
-                alt="restaurant_avatar"
-                className='restaurant_avatar col-12 col-sm-3 order-sm-0' />
+              <div className='restaurant__image col-12 col-sm-3 order-sm-0'>
+                <img
+                  src={restaurant.user_avatar}
+                  alt="restaurant_avatar"
+                  className='restaurant_avatar' />
+                {
+                  isOwner &&
+                  <EditAvatar />
+                }
+              </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
                 <h3 className='restaurant__name'>
                   {
@@ -71,27 +82,38 @@ const Restaurant = () => {
                     restaurant.description
                   }
                 </p>
+                {
+                  isOwner &&
+                  <Link to={`edit`} className='btn btn__edit button-green btn--restaurantEdit'>
+                    Edit profile
+                  </Link>
+                }
               </div>
             </div>
-            <div className='restaurant__gallery'>
-              <h3>
+            <div className='row gallery'>
+              <h3 className='col-12'>
                 Place
               </h3>
-              <div className='restaurant__carroussel'>
-                {
-                  restaurant.image && restaurant.image.map(
-                    image => {
-                      return (
-                        <img key={image.id} className='' src={image.image_url} />
-                      )
-                    }
-                  )
-                }
-                <button className='restaurant__add_more_images'>
-                  +
-                </button>
-              </div>
+              {
+                restaurant.image && restaurant.image.map(
+                  image => {
+                    return (
+                      <img key={image.id} className='restaurant-image col-12 col-md-4  col-lg-3' src={image.image_url} />
+                    )
+                  }
+                )
+              }
+              {
+                isOwner &&
+                  <AddRestaurantImage />
+              }
             </div>
+            {
+              isOwner &&
+              <Link to='/restaurant/food' className='btn btn__edit button-red btn--restaurantEdit'>
+                Edit menu
+              </Link>
+            }
           </div >
           : <h1>Restaurant not found</h1>
       }
