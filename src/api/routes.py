@@ -94,8 +94,8 @@ def login():
     if user is None:
         return jsonify({'message': "Theres not user"}), 400
 
-    if user.status != UserStatus.VALID:
-        return jsonify({'message': "User isnt a valid one yet"}), 400
+    # if user.status != UserStatus.VALID:
+    #     return jsonify({'message': "User isnt a valid one yet"}), 400
     
     user_salt = user.salt
     user_role = user.role.value

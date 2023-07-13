@@ -112,7 +112,7 @@ const Restaurant = () => {
             </div>
             {
               isOwner &&
-              <Link to={`menu`} className='btn btn__edit button-red btn--restaurantEdit'>
+              <Link to='/addDishes' className='btn btn__edit button-red btn--restaurantEdit'>
                 Edit menu
               </Link>
             }
