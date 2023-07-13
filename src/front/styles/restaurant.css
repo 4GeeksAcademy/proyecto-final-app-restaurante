@@ -44,8 +44,11 @@
 }
 
 .restaurant_avatar {
-  /* position */
+  /* box */
   padding: 0;
+  max-height: 200px;
+  /* style */
+  object-fit: contain;
 }
 
 .restaurant__information>* {
@@ -103,6 +106,10 @@
 
 .btn--restaurantEdit {
   width: 50%;
+}
+
+.restaurant-image {
+  margin-bottom: 1em;
 }
 
 @media (max-width: 768px) { 
