@@ -15,9 +15,9 @@ export const Navbar = () => {
 					<Link to="/"><img src={ComeconName} alt="comecon-logo" position="fixed" width="270px"></img></Link>
 					
 					{location.pathname === '/' && (
-						<div className="d-flex">
-							<Link to="/login"><button className="btn btn-light m-1">Login</button></Link>
-							<Link to="/register"><button className="btn btn-light m-1">Signup</button></Link>
+						<div className="d-fle</strong>x">
+							<Link to="/login"><button className="btn btn-success m-1"><strong>Login</strong></button></Link>
+							<Link to="/register"><button className="btn btn-warning m-1"><strong>Signup</strong></button></Link>
 						</div>)}
 				</div>
 			</nav>
