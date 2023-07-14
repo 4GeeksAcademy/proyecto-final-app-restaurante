@@ -16,6 +16,7 @@ const Restaurant = () => {
     ? user.restaurant.id == restaurantId
     : false;
   const location = useLocation(); //PARA ENRUTAR FUNCIONAL
+
   const getCurrentRestaurant = async () => {
     const { getOneRestaurant } = actions;
     const response = await getOneRestaurant(restaurantId);
@@ -102,7 +103,8 @@ const Restaurant = () => {
                       <PlaceImage 
                         key={image.id} 
                         image={image}
-                        deleteable={isOwner} />
+                        deleteable={isOwner}
+                        refresh={getCurrentRestaurant} />
                     )
                   }
                 )
