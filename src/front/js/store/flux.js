@@ -1,3 +1,5 @@
+import { successAlert, errorAlert } from "../util";
+
 const getState = ({ getStore, getActions, setStore }) => {
 
   return {
@@ -25,9 +27,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: JSON.stringify(body),
           });
+          let data = await response.json();
 
           if (response.ok) {
-            let data = await response.json();
             setStore({
               user: data.user,
               token: data.token
@@ -35,6 +37,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             sessionStorage.setItem("user", JSON.stringify(data.user));
             sessionStorage.setItem("token", JSON.stringify(data.token));
+
+            successAlert('Loged successful');
 
             return data;
           }
@@ -46,6 +50,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           sessionStorage.setItem("user", null);
           sessionStorage.setItem("token", null);
 
+          errorAlert(data.message);
+
         } catch (error) {
           console.log(error)
         }
@@ -53,8 +59,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       //PARA REGISTRO DE RESTAURANT:
       restaurantRegister: async (user) => {
-        console.log(user);
-        const store = getStore();
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "POST",
@@ -62,9 +66,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
 
           let data = await response.json();
+
+          if (response.ok) {
+            successAlert('Registed successful');
+          }
+          else {
+            errorAlert(data.message);
+          }
+
           return data;
 
         } catch (error) {
+          errorAlert('Some error ocurred');
           console.log(error);
         }
 
@@ -74,7 +87,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       //PARA REGISTRO DE DISHES:
       dishesRegister: async (dish) => {
         const store = getStore();
-        console.log(store.token)
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
             method: "POST",
@@ -83,7 +95,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: dish
           })
+
+          const data = await response.json();
+
+          if (response.ok) {
+            successAlert('Dish added');
+          }
+          else {
+            errorAlert(data.message);
+          }
+
         } catch (error) {
+          errorAlert('Some error ocurred');
           console.log(error);
         }
       },
@@ -144,9 +167,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: form
         });
 
+        const data = await response.json();
+
         if (response.ok) {
-          //Actualizar  la imagen del la página
-          //Cerrar modal
+          successAlert('Avatar changed successful');
+        }
+        else {
+          errorAlert(data.message);
         }
       },
       addRestaurantImage: async form => {
@@ -160,9 +187,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: form
         });
 
+        const data = await response.json();
+
         if (response.ok) {
-          //Actualizar  la imagen del la página
-          //Cerrar modal
+          successAlert('Restaurant image added');
+        }
+        else {
+          errorAlert(data.message);
         }
       },
 
@@ -187,6 +218,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: 'DELETE'
           });
           const data = await response.json();
+
+          if(response.ok) {
+            successAlert('Image deleted');
+          }
+          else {
+            errorAlert(data.message);
+          }
           return data;
 
         } catch (error) {
@@ -243,7 +281,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       deletePlaceImage: async (imageId, restaurantId = null) => {
         const store = getStore();
-        
+
         const url = restaurantId == null
           ? `${process.env.BACKEND_URL}/restaurant/gallery/${imageId}`
           : `${process.env.BACKEND_URL}/restaurant/${restaurantId}/gallery/${imageId}`;
@@ -256,9 +294,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           const data = await response.json();
+
+          if(response.ok) {
+            successAlert('Place image deleted');
+          }
+          else {
+            errorAlert(data.message);
+          }
           console.log(data);
         }
         catch (error) {
+          errorAlert('some error ocurred');
           console.log(error);
         }
       }
