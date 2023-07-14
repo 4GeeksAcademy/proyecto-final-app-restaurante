@@ -19,19 +19,21 @@ export const Home = () => {
 
 
 				{/* Muestra los platos */}
-				{
-					results.map( food => {
-						return (
-							<DishCard 
-								key={food.id} 
-								restaurant={food.restaurant_name} 
-								name={food.name}
-								description={food.description}
-								price={food.price} 
-								image={food.image_url} />
-						);
-					})
-				}
+				<div className="container mt-4">
+					{
+						results.map(food => {
+							return (
+								<DishCard
+									key={food.id}
+									restaurant={food.restaurant_name}
+									name={food.name}
+									description={food.description}
+									price={food.price}
+									image={food.image_url} />
+							);
+						})
+					}
+				</div>
 			</div>
 		</>
 
