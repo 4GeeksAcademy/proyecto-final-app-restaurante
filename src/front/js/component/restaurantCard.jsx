@@ -27,8 +27,8 @@ export const RestaurantCard = ({ key, restaurant }) => {
         <h6 className="card-subtitle mb-2 text-muted">{phone}</h6>
         <h6 className="card-subtitle mb-2 text-muted">{location}</h6>
         <div className="d-flex justify-content-end">
-          <button className="btn btn-success mx-4">More details</button>
-          <button className="btn btn-danger" onClick={() => actions.deleteRestaurant(restaurant.index)}>Delete</button>
+          <button className="btn btn-primary col-2 mx-4">Edit</button>
+          <button className="btn btn-danger col-2" onClick={() => actions.deleteRestaurant(restaurant.index)}>Delete</button>
         </div>
       </div>
     </div>
