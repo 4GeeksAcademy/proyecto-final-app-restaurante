@@ -12,10 +12,13 @@ import { Register } from './pages/register.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SearchBar } from "./component/searchBar";
-import EditProfile  from "./component/EditProfile";
-import Login  from "./pages/Login";
+import EditProfile from "./component/EditProfile";
+import Login from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 import { AddDishes } from "./pages/addDishes.jsx";
+// notifications
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 
 
@@ -26,7 +29,7 @@ const Layout = () => {
     const basename = process.env.BASENAME || "";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
-console.log(basename)
+    console.log(basename)
     return (
         <div>
             <BrowserRouter basename={basename}>
@@ -44,7 +47,19 @@ console.log(basename)
                         <Route element={<RestaurantRequest />} path="/requests" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
-                    {/*<Footer />*/}
+                    <ToastContainer
+                        position="bottom-center"
+                        autoClose={3000}
+                        limit={1}
+                        hideProgressBar
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

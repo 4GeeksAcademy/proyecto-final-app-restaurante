@@ -1,3 +1,29 @@
+import { toast } from 'react-toastify';
+
+export const successAlert = (text) => {
+    toast.success(text, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+}
+
+export const errorAlert = (text) => {
+    toast.error(text, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+}
+
 
 export const onValidateRegister = (user) => {
     let errors = {};
