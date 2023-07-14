@@ -26,8 +26,8 @@ export const SearchBar = () => {
     }
 
     return (
-        <form className="container searchBar mt-5 w-20 bg-white p-4 rounded-3" onSubmit={submitHandler}>
-            <div className="d-flex mx-3 border border-1 rounded-3">
+        <form className="container searchBar mt-5 p-4" onSubmit={submitHandler}>
+            <div className="d-flex mx-3 border border-2 rounded-3">
                 <div className="input-group">
                     <span className="input-group-text border-0" id="budget"><strong>Hoy como</strong></span>
                     <input type="text"

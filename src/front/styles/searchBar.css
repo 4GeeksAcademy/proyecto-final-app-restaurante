@@ -1,5 +1,10 @@
 .searchBar {
-        box-shadow: 5px 5px 15px gray;
+    /* backdrop-filter: blur(50px); */
+    /* background-color: #ffffff95; */
+    background-color: white;
+    box-shadow: 5px 5px 15px black;
+    border: 3px solid rgba(255, 255, 255, 0.23);
+    border-radius: 10px;
 
 }
 
@@ -8,7 +13,7 @@
     border-radius: 0;
 }
 
-.searchBar .searchBar--border-bottom {
+/* .searchBar .searchBar--border-bottom {
     border: none !important;
     border-radius: 0;
     border-bottom: 1px solid black !important;
@@ -22,4 +27,4 @@
 .searchBar__submit {
     background-color: inherit !important;
     color: black !important;
-}
+} */
