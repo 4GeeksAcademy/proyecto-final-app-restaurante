@@ -26,7 +26,7 @@ const AddRestaurantImage = () => {
     <>
       {/* button */}
       <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRestaurantImage">
-        Add image
+        Agregar imágen
       </button>
       {/* modal */}
       <div className="modal fade" id="addRestaurantImage" tabIndex="-1" aria-labelledby="addRestaurantImageLabel" aria-hidden="true">
@@ -34,7 +34,7 @@ const AddRestaurantImage = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="addRestaurantImageLabel">
-                Add a new restaurant image
+                Agrega una nueva imágen
               </h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

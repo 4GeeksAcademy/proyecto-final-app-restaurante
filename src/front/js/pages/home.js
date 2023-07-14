@@ -4,6 +4,8 @@ import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
 import { ControlPanel } from "./controlPanel.jsx";
+import { EditMenu } from "../../js/pages/editMenu.jsx";
+import { EditProfile } from "../component/EditProfile.js";
 
 export const Home = () => {
 
@@ -15,11 +17,18 @@ export const Home = () => {
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}
-				<SearchBar />
+				<div>
+					<SearchBar />
+				</div>
 
-				<ControlPanel />
+				{/* <ControlPanel /> */}
+
+				{/* <EditMenu /> */}
 
 
+				{/* <div>
+				<EditProfile />
+				</div> */}
 
 				{/* Muestra los platos */}
 				<div className="container mt-4">

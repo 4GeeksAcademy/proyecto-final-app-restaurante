@@ -35,14 +35,11 @@ export const ControlPanel = () => {
 
   return (
     <>
-      <div className="container mt-4">
+      <div className="container mt-4 p-4 bg-white border border-1 rounded-3">
         <div className="row justify-content-center">
           <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
             Control Panel
           </h2>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button className="btn btn-success col-3" type="button">Agregar plato</button>
-          </div>
         </div>
 
         {restaurants.map((restaurant, index) => {

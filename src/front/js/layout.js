@@ -19,6 +19,8 @@ import { AddDishes } from "./pages/addDishes.jsx";
 // notifications
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { ControlPanel } from "./pages/controlPanel.jsx";
+import { EditMenu } from "./pages/editMenu.jsx";
 
 
 
@@ -43,8 +45,10 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<EditProfile />} path="/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
-                        <Route element={<AddDishes />} path="/restaurant/food" />
+                        <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<RestaurantRequest />} path="/requests" />
+                        <Route element={<ControlPanel />} path="/admin/restaurant" />
+                        <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <ToastContainer

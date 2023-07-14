@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
 import "../../styles/dishcard.css"
 
-export const DishCard = ({image, restaurant, name, price, description}) => {
+
+
+export const DishCard = ({ key, dish }) => {
+    // const { actions } = useContext(Context);
+    const { id, image, restaurant, name, price, description } = dish
 
     return (
-        <div className="d-flex justify-content-center">
+        <div className="row m-2" key={id}>
             <div className="card mb-3 dishcard-size">
                 <div className="row g-0">
                     <div className="col-md-4 text-center">
@@ -28,6 +32,10 @@ export const DishCard = ({image, restaurant, name, price, description}) => {
 
                         </div>
                     </div>
+                </div>
+                <div className="d-flex mx-2 justify-content-end">
+                    <button className="btn btn-primary mx-4">Editar</button>
+                    <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}>Borrar</button>
                 </div>
             </div>
         </div>
