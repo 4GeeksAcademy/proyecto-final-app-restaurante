@@ -20,7 +20,7 @@ export const ControlPanel = () => {
     try {
       const response = await fetch(`${process.env.BACKEND_URL}/restaurant`);
       const data = await response.json();
-      setRestaurants (data);
+      setRestaurants(data);
 
     } catch (err) {
       console.error(err);
@@ -28,18 +28,21 @@ export const ControlPanel = () => {
     console.log("showing restaurants...")
   };
 
-    useEffect(() => {
-      getAllRestaurants();
-    }, []);
+  useEffect(() => {
+    getAllRestaurants();
+  }, []);
 
 
   return (
     <>
-      <div className="container">
+      <div className="container mt-4">
         <div className="row justify-content-center">
-          <h2 className="text-center bg-danger text-white rounded-1 title">
+          <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
             Control Panel
           </h2>
+          <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button className="btn btn-success col-3" type="button">Agregar plato</button>
+          </div>
         </div>
 
         {restaurants.map((restaurant, index) => {
