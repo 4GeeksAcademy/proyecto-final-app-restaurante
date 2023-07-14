@@ -33,15 +33,11 @@ export const Home = () => {
 				{/* Muestra los platos */}
 				<div className="container mt-4">
 					{
-						results.map(food => {
+						results.map(dish => {
 							return (
 								<DishCard
-									key={food.id}
-									restaurant={food.restaurant_name}
-									name={food.name}
-									description={food.description}
-									price={food.price}
-									image={food.image_url} />
+									key={dish.id}
+									dish={dish} />
 							);
 						})
 					}
