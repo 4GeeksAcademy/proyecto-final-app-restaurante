@@ -43,10 +43,10 @@ export const AddDishes = () => {
     return (
         <>
             {/* AGREGAR PLATOS */}
-            <div className="container">
+            <div className="container mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
-                    <h2 className="text-center bg-danger text-white rounded-1 title">
-                        Add Dishes
+                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+                        Agregar Plato
                     </h2>
                     <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
                         <form
@@ -55,7 +55,7 @@ export const AddDishes = () => {
                             onSubmit={handleRegister}
                         >
                             <div className="form-group mt-4">
-                                <label htmlFor="name">Dish Name</label>
+                                <label htmlFor="name">Nombre del plato</label>
                                 <input
                                     type="text"
                                     className="form-control border border-dark"
@@ -73,7 +73,7 @@ export const AddDishes = () => {
                                 <label
                                     htmlFor="description"
                                 >
-                                    Description
+                                    Descripción
                                 </label>
                                 <textarea
                                     className="form-control border border-dark"
@@ -90,7 +90,7 @@ export const AddDishes = () => {
                             </div>
 
                             <div className="form-group mt-3">
-                                <label htmlFor="name">Price</label>
+                                <label htmlFor="name">Precio</label>
                                 <div className="input-group border rounded-3">
                                     <input
                                         type="text"
@@ -110,7 +110,7 @@ export const AddDishes = () => {
                             </div>
 
                             <div className="form-group mt-4">
-                                <label htmlFor="name">Tags</label>
+                                <label htmlFor="name">Etiquetas</label>
                                 <input
                                     type="text"
                                     className="form-control border border-dark"
@@ -126,7 +126,7 @@ export const AddDishes = () => {
 
                             <div className="mt-4">
                                 <label htmlFor="image" className="form-label">
-                                    Image
+                                    Imagen
                                 </label>
                                 <input
                                     className="form-control form-control-sm border border-dark" 
@@ -146,7 +146,7 @@ export const AddDishes = () => {
                                     className="btn w-100 mt-3 button-green"
                                     onClick={(e) => handleRegister(e)}
                                 >
-                                    Save Dish
+                                    Guardar
                                 </button>
                             </div>
                         </form>
