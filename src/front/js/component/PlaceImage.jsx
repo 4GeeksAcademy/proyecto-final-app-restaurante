@@ -6,8 +6,13 @@ const PlaceImage = ({ deleteable, image }) => {
   const { actions } = useContext(Context);
   const { deletePlaceImage } = actions;
 
-  const deleteHandler = (id) => {
-    deletePlaceImage(id);
+  const deleteHandler = async (id) => {
+    const response = await deletePlaceImage(id);
+
+    if(response) {  //close the modal.
+      $(`#placeImage${image.id}`).modal('hide');
+    }
+
   }
 
   return (
