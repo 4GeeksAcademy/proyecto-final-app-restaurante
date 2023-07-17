@@ -17,7 +17,7 @@ export const Navbar = () => {
 					{location.pathname === '/' && (
 						<div className="d-fle</strong>x">
 							<Link to="/login"><button className="btn btn-success m-1"><strong>Login</strong></button></Link>
-							<Link to="/register"><button className="btn btn-warning m-1"><strong>Signup</strong></button></Link>
+							<Link to="/register"><button className="btn btn-warning m-1"><strong>Regístrate</strong></button></Link>
 						</div>)}
 				</div>
 			</nav>

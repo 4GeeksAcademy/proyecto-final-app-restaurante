@@ -1,13 +1,18 @@
 /*DishCard*/
-.dishcard-image{
-    width: 150px;
-    height: 150px;
-  }
+.row {
+  box-shadow: 5px 5px 15px black;
 
-.dishcard-size{
-    width: 60%;
-    height: 160px;
 }
 
-  
-/*DishCard*/  
+.dishcard-image {
+  width: 150px;
+  height: 150px;
+}
+
+.dishcard-size {
+  width: 60%;
+  height: 160px;
+}
+
+
+/*DishCard*/
