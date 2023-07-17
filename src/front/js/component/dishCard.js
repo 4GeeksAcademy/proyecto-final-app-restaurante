@@ -1,9 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/dishcard.css"
 
 export const DishCard = ({ dish }) => {
-    // const { id, image, restaurant, name, price, description } = dish
-
+    console.log(dish);
     return (
         <div className="row m-2">
             <div className="card mb-3 dishcard-size">
@@ -17,7 +17,7 @@ export const DishCard = ({ dish }) => {
                     <div className="col-md-8">
                         <div className="card-body row">
                             <div className="col-9">
-                                <h5 className="">{dish.restaurant_name}</h5>
+                                <Link to={`/restaurant/${dish.restaurant_id}`} className="">{dish.restaurant_name}</Link>
                                 <p className="">{dish.name}</p>
                                 <p className="">
                                     {dish.description}
