@@ -36,7 +36,8 @@ const Restaurant = () => {
                   className='restaurant_avatar' />
                 {
                   isOwner &&
-                  <EditAvatar />
+                  <EditAvatar 
+                    restaurantId={restaurantId} />
                 }
               </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
