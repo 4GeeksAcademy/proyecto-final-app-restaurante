@@ -1,8 +1,3 @@
-.panel {
-  box-shadow: 5px 5px 15px black;
-
-}
-
 .restaurant__container {
   /* position */
   display: flex;

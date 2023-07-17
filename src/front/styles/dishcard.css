@@ -1,10 +1,6 @@
 /*DishCard*/
-.row {
-  box-shadow: 5px 5px 15px black;
 
-}
-
-.dishcard-image {
+/* .dishcard-image {
   width: 150px;
   height: 150px;
 }
@@ -12,7 +8,7 @@
 .dishcard-size {
   width: 60%;
   height: 160px;
-}
+} */
 
 
 /*DishCard*/

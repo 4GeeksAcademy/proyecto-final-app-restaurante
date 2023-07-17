@@ -9,6 +9,10 @@ body {
   --main_color: #cc0000;
 }
 
+.panel {
+  box-shadow: 5px 5px 15px black;
+
+}
 
 .button-red {
   background-color: var(--main_color);
@@ -16,7 +20,7 @@ body {
   border: 1px solid black;
 }
 
-.button-green{
+.button-green {
   background-color: #00FFA3;
   border: 1px solid black;
 }
@@ -74,5 +78,5 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
- 
+
 }
