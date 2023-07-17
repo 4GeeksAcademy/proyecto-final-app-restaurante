@@ -18,14 +18,15 @@ export const DishCard = ({ key, dish }) => {
                         <div className="card-body">
                             <div>
                                 <h5 className="card-title fs-2"><strong>{name}</strong></h5>
-                                <p className="card-text">{restaurant_name}</p>
+                                <a href={"..."} target="_blank">{restaurant_name}</a>
                                 <p className="card-text">{description}</p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
-                                <div className="btns-container">
-                                    <button className="btn btn-primary me-3">Editar</button>
-                                    <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}>Borrar</button>
-                                </div>
+                                {location.pathname === '/restaurant/menu' && (
+                                    <div className="btns-container">
+                                        <button className="btn btn-primary me-3">Editar</button>
+                                        <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}>Borrar</button>
+                                    </div>)}
                                 <p className="fs-1 text-center"><strong>{`${price}$`}</strong></p>
                             </div>
                         </div>
