@@ -159,42 +159,61 @@ const getState = ({ getStore, getActions, setStore }) => {
       changeAvatar: async form => {
         const { token } = getStore();
 
-        const response = await fetch(`${process.env.BACKEND_URL}/user/avatar`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: form
-        });
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/user/avatar`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: form
+          });
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (response.ok) {
-          successAlert('Avatar changed successful');
+          if (response.ok) {
+            successAlert('Avatar changed successful');
+          }
+          else {
+            errorAlert(data.message);
+            return false;
+          }
         }
-        else {
-          errorAlert(data.message);
+        catch (error) {
+          errorAlert('Some error ocurred');
+          return false;
         }
+
+        return true;
       },
       addRestaurantImage: async form => {
         const { token } = getStore();
 
-        const response = await fetch(`${process.env.BACKEND_URL}/restaurant/gallery`, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: form
-        });
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/restaurant/gallery`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: form
+          });
 
-        const data = await response.json();
+          const data = await response.json();
 
-        if (response.ok) {
-          successAlert('Restaurant image added');
+          if (response.ok) {
+            successAlert('Restaurant image added');
+          }
+          else {
+            errorAlert(data.message);
+            return false;
+          }
         }
-        else {
-          errorAlert(data.message);
+        catch (error) {
+          errorAlert('Some error ocurred');
+          console.log(error);
+          return false;
         }
+
+        return true;
       },
 
       //TRAER TODOS LOS RESTAURANTS
@@ -219,8 +238,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await response.json();
 
-          if(response.ok) {
-            successAlert('Image deleted');
+          if (response.ok) {
+            successAlert('Restaurant deleted');
           }
           else {
             errorAlert(data.message);
@@ -228,6 +247,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return data;
 
         } catch (error) {
+          errorAlert('Some error ocurred.');
           console.log("deleting restaurant...");
         }
       },
@@ -273,7 +293,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: data
           });
           if (!response.ok) {
+            errorAlert(data.message);
             console.log("No se pudo editar restaurante")
+          }
+          else {
+            successAlert('Restaurant edited');
           }
         } catch (error) {
           console.error(error);
@@ -295,18 +319,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await response.json();
 
-          if(response.ok) {
+          if (response.ok) {
             successAlert('Place image deleted');
           }
           else {
             errorAlert(data.message);
+            return false;
           }
-          console.log(data);
         }
         catch (error) {
           errorAlert('some error ocurred');
           console.log(error);
+          return false;
         }
+        
+        return true;
       }
 
     }
