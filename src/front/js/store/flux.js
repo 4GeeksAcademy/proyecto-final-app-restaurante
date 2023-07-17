@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       user: JSON.parse(sessionStorage.getItem("user")) || null,
       token: JSON.parse(sessionStorage.getItem("token")) || null,
       results: [],
+      restaurant: null,
       requests: [{
         name: "Hong Kong",
         phone: "010242655",
@@ -117,8 +118,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
         if (response.ok) {
           const restaurant = await response.json();
+          setStore({
+            'restaurant': restaurant
+          });
           return restaurant;
         }
+        setStore({
+          'restaurant': null
+        });
         return null;
       },
 
@@ -332,7 +339,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
           return false;
         }
-        
+
         return true;
       }
 

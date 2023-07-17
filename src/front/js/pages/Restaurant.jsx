@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import EditAvatar from '../component/EditAvatar.jsx';
@@ -9,22 +9,17 @@ import '../../styles/restaurant.css';
 const Restaurant = () => {
   const { restaurantId } = useParams();
   const { actions } = useContext(Context);
-  const [restaurant, setRestaurant] = useState({})
-  const { store } = useContext(Context)
+  const { getOneRestaurant } = actions;
+  const { store } = useContext(Context);
+  const { restaurant } = store;
   const { user } = store;
   const isOwner = user && user.restaurant
     ? user.restaurant.id == restaurantId
     : false;
   const location = useLocation(); //PARA ENRUTAR FUNCIONAL
 
-  const getCurrentRestaurant = async () => {
-    const { getOneRestaurant } = actions;
-    const response = await getOneRestaurant(restaurantId);
-    setRestaurant(response);
-  }
-
   useEffect(() => {
-    getCurrentRestaurant();
+    getOneRestaurant(restaurantId);
   }, []);
 
   return (
@@ -85,18 +80,18 @@ const Restaurant = () => {
                   }
                 </p>
                 <div className='d-flex mt-3 justify-content-end'>
-                {
-                  isOwner &&
-                  <Link to={`edit`} className='col-4 me-2 btn btn-primary'>
-                    Edit profile
-                  </Link>
-                }
-                {
-                  isOwner &&
-                  <Link to='/restaurant/menu' className='col-4 btn btn-primary'>
-                    Edit menu
-                  </Link>
-                }
+                  {
+                    isOwner &&
+                    <Link to={`edit`} className='col-4 me-2 btn btn-primary'>
+                      Edit profile
+                    </Link>
+                  }
+                  {
+                    isOwner &&
+                    <Link to='/restaurant/menu' className='col-4 btn btn-primary'>
+                      Edit menu
+                    </Link>
+                  }
                 </div>
               </div>
             </div>
@@ -112,7 +107,7 @@ const Restaurant = () => {
                         key={image.id}
                         image={image}
                         deleteable={isOwner}
-                        refresh={getCurrentRestaurant} />
+                        restaurantId={restaurantId} />
                     )
                   }
                 )
