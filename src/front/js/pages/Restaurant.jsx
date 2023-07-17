@@ -8,11 +8,9 @@ import '../../styles/restaurant.css';
 
 const Restaurant = () => {
   const { restaurantId } = useParams();
-  const { actions } = useContext(Context);
+  const { actions, store } = useContext(Context);
   const { getOneRestaurant } = actions;
-  const { store } = useContext(Context);
-  const { restaurant } = store;
-  const { user } = store;
+  const { restaurant, user } = store;
   const isOwner = user && user.restaurant
     ? user.restaurant.id == restaurantId
     : false;
@@ -114,7 +112,8 @@ const Restaurant = () => {
               }
               {
                 isOwner &&
-                <AddRestaurantImage />
+                <AddRestaurantImage 
+                  restaurantId={restaurantId}/>
               }
             </div>
           </div >

@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
-const AddRestaurantImage = () => {
+const AddRestaurantImage = ({restaurantId}) => {
   const [image, setImage] = useState(null)
   const { actions } = useContext(Context);
-  const { addRestaurantImage } = actions;
+  const { addRestaurantImage, getOneRestaurant } = actions;
 
   const changeHandler = ({ target }) => {
     setImage(target.files[0])
   }
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
     if (image == null) {
       console.log('You have to choose an image')
       return '';
@@ -19,7 +19,12 @@ const AddRestaurantImage = () => {
     var formData = new FormData();
     formData.append("image", image);
 
-    addRestaurantImage(formData);
+    const response = await addRestaurantImage(formData);
+
+    if (response) {
+      $('#addRestaurantImage').modal('hide');  // close modal
+      await getOneRestaurant(restaurantId);         // refresh data
+    }
   }
 
   return (

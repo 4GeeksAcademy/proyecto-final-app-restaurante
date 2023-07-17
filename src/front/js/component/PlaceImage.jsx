@@ -4,8 +4,7 @@ import '../../styles/placeImage.css';
 
 const PlaceImage = ({ deleteable, image, restaurantId }) => {
   const { actions } = useContext(Context);
-  const { getOneRestaurant } = actions;
-  const { deletePlaceImage } = actions;
+  const { getOneRestaurant, deletePlaceImage } = actions;
 
   const deleteHandler = async (id) => {
     const response = await deletePlaceImage(id);
