@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import EditAvatar from '../component/EditAvatar.jsx';
@@ -8,23 +8,16 @@ import '../../styles/restaurant.css';
 
 const Restaurant = () => {
   const { restaurantId } = useParams();
-  const { actions } = useContext(Context);
-  const [restaurant, setRestaurant] = useState({})
-  const { store } = useContext(Context)
-  const { user } = store;
+  const { actions, store } = useContext(Context);
+  const { getOneRestaurant } = actions;
+  const { restaurant, user } = store;
   const isOwner = user && user.restaurant
     ? user.restaurant.id == restaurantId
     : false;
   const location = useLocation(); //PARA ENRUTAR FUNCIONAL
 
-  const getCurrentRestaurant = async () => {
-    const { getOneRestaurant } = actions;
-    const response = await getOneRestaurant(restaurantId);
-    setRestaurant(response);
-  }
-
   useEffect(() => {
-    getCurrentRestaurant();
+    getOneRestaurant(restaurantId);
   }, []);
 
   return (
@@ -43,7 +36,8 @@ const Restaurant = () => {
                   className='restaurant_avatar' />
                 {
                   isOwner &&
-                  <EditAvatar />
+                  <EditAvatar
+                    restaurantId={restaurantId} />
                 }
               </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
@@ -115,15 +109,15 @@ const Restaurant = () => {
                           key={image.id}
                           image={image}
                           deleteable={isOwner}
-                          refresh={getCurrentRestaurant} />
-                      )
+                          restaurantId={restaurantId} />)
                     }
                   )
                 }</div>
               <div className='w-100'>
                 {
                   isOwner &&
-                  <AddRestaurantImage />
+                  <AddRestaurantImage
+                    restaurantId={restaurantId} />
                 }</div>
             </div>
           </div >

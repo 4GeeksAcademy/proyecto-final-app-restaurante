@@ -2,12 +2,18 @@ import React, { useContext } from 'react';
 import { Context } from '../store/appContext.js';
 import '../../styles/placeImage.css';
 
-const PlaceImage = ({ deleteable, image }) => {
+const PlaceImage = ({ deleteable, image, restaurantId }) => {
   const { actions } = useContext(Context);
-  const { deletePlaceImage } = actions;
+  const { getOneRestaurant, deletePlaceImage } = actions;
 
-  const deleteHandler = (id) => {
-    deletePlaceImage(id);
+  const deleteHandler = async (id) => {
+    const response = await deletePlaceImage(id);
+
+    if (response) {
+      $(`#placeImage${image.id}`).modal('hide');  // close modal
+      getOneRestaurant(restaurantId);             // refresh data
+    }
+
   }
 
   return (

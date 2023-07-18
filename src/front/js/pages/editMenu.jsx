@@ -57,7 +57,9 @@ export const EditMenu = () => {
 
         {dishes.map((dish, index) => {
           console.log(dish);
-          return <DishCard key={index} dish={dish} />;
+          return <DishCard 
+            key={index} 
+            dish={dish} />;
         })}
       </div>
     </>

@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import "../../styles/dishcard.css"
 
 
@@ -18,7 +19,7 @@ export const DishCard = ({ key, dish }) => {
                         <div className="card-body">
                             <div>
                                 <h5 className="card-title fs-2"><strong>{name}</strong></h5>
-                                <a href={"..."} target="_blank">{restaurant_name}</a>
+                                <Link to={`/restaurant/${dish.restaurant_id}`} className="">{dish.restaurant_name}</Link>
                                 <p className="card-text">{description}</p>
                             </div>
                             <div className="d-flex justify-content-between align-items-center">
@@ -53,18 +54,18 @@ export const DishCard = ({ key, dish }) => {
             {/* <div className="card mb-3 dishcard-size">
                 <div className="row g-0">
                     <div className="col-md-4 text-center">
-                        <img src={image}
+                        <img src={dish.image_url}
                             className="img-fluid rounded-start dishcard-image"
-                            alt={`${name} image`}
+                            alt={`${dish.name} image`}
                         />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body row">
                             <div className="col-9">
-                                <h5 className="">{restaurant}</h5>
-                                <p className="">{name}</p>
+                                <Link to={`/restaurant/${dish.restaurant_id}`} className="">{dish.restaurant_name}</Link>
+                                <p className="">{dish.name}</p>
                                 <p className="">
-                                    {description}
+                                    {dish.description}
                                 </p>
                             </div>
                             <div className="col-3">

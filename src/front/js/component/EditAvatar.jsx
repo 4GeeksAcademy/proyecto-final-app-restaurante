@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
-const EditAvatar = () => {
+const EditAvatar = ({ restaurantId }) => {
   const [image, setImage] = useState(null)
   const { actions } = useContext(Context);
-  const { changeAvatar } = actions;
+  const { changeAvatar, getOneRestaurant } = actions;
 
   const changeHandler = ({ target }) => {
     setImage(target.files[0])
   }
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
     if (image == null) {
       console.log('You have to choose an image')
       return '';
@@ -19,7 +19,13 @@ const EditAvatar = () => {
     var formData = new FormData();
     formData.append("image", image);
 
-    changeAvatar(formData);
+    const response = await changeAvatar(formData);
+
+    if (response) {
+      console.log('nice');
+      $('#editAvatar').modal('hide');        // close modal
+      await getOneRestaurant(restaurantId);  // refresh data
+    }
   }
 
   return (

@@ -1,20 +1,16 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import { onValidateRegister } from "../util.js"
 
 const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
-
     restaurantName: "",
     restaurantRif: "",
     phone: "",
     email: "",
     location: "",
     password: "",
-
 }
-
 
 export const Register = () => {
     const { actions } = useContext(Context);
@@ -59,7 +55,6 @@ export const Register = () => {
                         <h2 className="text-center bg-danger text-white rounded-1">
                             <strong>Crear una Cuenta</strong>
                         </h2>
-
 
                         <form className="needs-validation" noValidate onSubmit={handleRegister}>
 
@@ -158,9 +153,8 @@ export const Register = () => {
                             {/* BOTON DE ENVIO */}
                             <div>
                                 <button
-                                    type="button"
+                                    type="submit"
                                     className="btn btn-success text-white w-100 mt-3"
-                                    onClick={(e) => handleRegister(e)}
                                 >
                                     <strong>Únete a nosotros!</strong>
                                 </button>
