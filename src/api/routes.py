@@ -536,7 +536,7 @@ def delete_user(user_id):
 
 @api.route('/send-email-register', methods=['POST'])
 @jwt_required()
-def send_email():
+def send_email_register():
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
     if user is None:
         return jsonify({'message': 'Wrong user.'}), 400
