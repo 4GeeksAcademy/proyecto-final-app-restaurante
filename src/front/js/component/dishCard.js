@@ -6,14 +6,14 @@ import "../../styles/dishcard.css"
 
 export const DishCard = ({ key, dish }) => {
     // const { actions } = useContext(Context);
-    const { id, image, restaurant_name, name, price, description } = dish
+    const { id, image_url, restaurant_name, name, price, description } = dish
 
     return (
         <div className="row m-3" key={id}>
             <div className="card p-0 m-0">
                 <div className="row m-2">
                     <div className="col-md-4">
-                        <img src={image} className="img-fluid rounded-start border border-1" alt={`${name} image`} />
+                        <img src={image_url} className="img-fluid rounded-start border border-1" alt={`${name} image`} />
                     </div>
                     <div className="col-md-8">
                         <div className="card-body">
