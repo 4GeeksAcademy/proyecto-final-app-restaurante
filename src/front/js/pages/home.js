@@ -6,6 +6,7 @@ import { DishCard } from "../component/dishCard.js";
 import { ControlPanel } from "./controlPanel.jsx";
 import { EditMenu } from "../../js/pages/editMenu.jsx";
 import { EditProfile } from "../component/EditProfile.js";
+import AccessDeniedPage from "./AccessDeniedPage.jsx";
 
 export const Home = () => {
 
@@ -17,9 +18,11 @@ export const Home = () => {
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}
-				<div>
+				{/* <div>
 					<SearchBar />
-				</div>
+				</div> */}
+
+				<AccessDeniedPage/>
 
 				{/* <ControlPanel /> */}
 

@@ -1,0 +1,11 @@
+.main_container {
+    /* border: solid red 1px; */
+}
+
+.message_container {
+    width: 500px;
+    height: 300px;
+    background-color: #f8f9fa;
+    border: solid green 1px;
+    border-radius: 10px;
+}
