@@ -6,7 +6,6 @@
 }
 
 .placeImage__img {
-  border-radius: 10px;
   aspect-ratio: 2/1;
   object-fit: cover;
   height: 150px;
@@ -18,7 +17,7 @@
 }
 
 .placeImage__img:hover {
-  border: 1px solid rgba(255, 255, 255, 0);
+  border-bottom: 2px solid rgb(71, 64, 64);
   filter: opacity(0.95);
 }
 

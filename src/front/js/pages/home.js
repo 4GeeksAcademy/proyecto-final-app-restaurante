@@ -21,7 +21,7 @@ export const Home = () => {
 					<SearchBar />
 				</div>
 
-				{/* <ControlPanel /> */}
+				<ControlPanel />
 
 				{/* <EditMenu /> */}
 
