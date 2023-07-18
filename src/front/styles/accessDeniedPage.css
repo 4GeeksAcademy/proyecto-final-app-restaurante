@@ -1,5 +1,6 @@
 .main_container {
-    /* border: solid red 1px; */
+    display: flex;
+    justify-content: center;
 }
 
 .message_container {
