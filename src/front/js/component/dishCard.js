@@ -9,8 +9,8 @@ export const DishCard = ({ key, dish }) => {
     const { id, image_url, restaurant_name, name, price, description } = dish
 
     return (
-        <div className="row m-3" key={id}>
-            <div className="card p-0 m-0">
+        <div className="d-flex justify-content-center" key={id}>
+            <div className="card col-11 p-0 m-0">
                 <div className="row m-2">
                     <div className="col-md-4 p-0">
                         <img src={image_url} className="img img-fluid rounded-1 border border-1" alt={`${name} image`} />

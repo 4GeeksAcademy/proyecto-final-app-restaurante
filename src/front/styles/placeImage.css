@@ -6,6 +6,7 @@
 }
 
 .placeImage__img {
+  border-radius: 10px;
   aspect-ratio: 2/1;
   object-fit: cover;
   height: 150px;

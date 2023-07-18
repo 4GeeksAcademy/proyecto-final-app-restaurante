@@ -21,7 +21,7 @@ export const Home = () => {
 					<SearchBar />
 				</div>
 
-				<ControlPanel />
+				{/* <ControlPanel /> */}
 
 				{/* <EditMenu /> */}
 
@@ -31,7 +31,7 @@ export const Home = () => {
 				</div> */}
 
 				{/* Muestra los platos */}
-				<div className="container mt-4">
+				<div className="container grid mt-4">
 					{
 						results.map(dish => {
 							return (
