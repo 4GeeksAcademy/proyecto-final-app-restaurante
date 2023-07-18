@@ -30,8 +30,8 @@ const AddRestaurantImage = ({restaurantId}) => {
   return (
     <>
       {/* button */}
-      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRestaurantImage">
-        Agregar imágen
+      <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addRestaurantImage">
+        <strong>Agregar imágen</strong>
       </button>
       {/* modal */}
       <div className="modal fade" id="addRestaurantImage" tabIndex="-1" aria-labelledby="addRestaurantImageLabel" aria-hidden="true">
@@ -53,10 +53,10 @@ const AddRestaurantImage = ({restaurantId}) => {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                Close
+                Cerrar
               </button>
               <button type="button" className="btn btn-primary" onClick={clickHandler}>
-                Save
+                Guardar
               </button>
             </div>
           </div>

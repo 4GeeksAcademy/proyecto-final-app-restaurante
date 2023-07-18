@@ -31,8 +31,8 @@ const EditAvatar = ({ restaurantId }) => {
   return (
     <>
       {/* button */}
-      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAvatar">
-        Edit Avatar
+      <button type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editAvatar">
+        <strong>Editar Avatar</strong>
       </button>
       {/* modal */}
       <div className="modal fade" id="editAvatar" tabIndex="-1" aria-labelledby="editAvatarLabel" aria-hidden="true">
@@ -40,7 +40,7 @@ const EditAvatar = ({ restaurantId }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="editAvatarLabel">
-                Add a new avatar
+                Agregar nuevo avatar
               </h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -54,10 +54,10 @@ const EditAvatar = ({ restaurantId }) => {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                Close
+                Cerrar
               </button>
               <button type="button" className="btn btn-primary" onClick={clickHandler}>
-                Save
+                Guardar
               </button>
             </div>
           </div>
