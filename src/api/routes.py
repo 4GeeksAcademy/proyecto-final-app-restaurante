@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 from sqlalchemy import and_, or_
@@ -8,6 +8,9 @@ import sys
 import os
 import cloudinary.uploader as uploader
 import cloudinary
+import smtplib
+from dotenv import load_dotenv
+import email.message
 
 api = Blueprint('api', __name__)
 
@@ -528,5 +531,49 @@ def delete_user(user_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'ok'}), 200
+
+@api.route('/send-email', methods=['POST'])
+@jwt_required()
+def send_email():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    if user.role != Role.ADMIN:
+        return jsonify({'message': 'Enough permision.'}), 405
+
+    form = request.form
+    if(form is None):
+        return jsonify({'message': "Request must be a form"}), 400
+
+    title = form.get('title')
+
+
+    smpt = 'smtp.gmail.com'
+    server = smtplib.SMTP(smpt, '587') 
+    # server.ehlo() 
+    server.starttls()
+
+    load_dotenv()
+
+    email_account = os.getenv('EMAIL_ACCOUNT')
+    email_password = os.getenv('EMAIL_PASSWORD')
+    server.login(email_account, email_password)
+
+    email_to = form.get('to')
+    title = form.get('title')
+
+    if None in [email_to, title]:
+        return jsonify({'message': 'wrong property'})
+
+    msg = email.message.Message()
+    msg["From"] = email_account
+    msg["To"] = email_to
+    msg["Subject"] = title
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(get_register_email())
+    server.sendmail(email_account, email_to,  msg.as_string().encode(encoding = 'UTF-8'))
+    server.quit()
 
     return jsonify({'message': 'ok'}), 200
