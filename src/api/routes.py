@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 from sqlalchemy import and_, or_
@@ -8,6 +8,9 @@ import sys
 import os
 import cloudinary.uploader as uploader
 import cloudinary
+import smtplib
+from dotenv import load_dotenv
+import email.message
 
 api = Blueprint('api', __name__)
 
@@ -531,6 +534,29 @@ def delete_user(user_id):
 
     return jsonify({'message': 'ok'}), 200
 
+@api.route('/send-email-register', methods=['POST'])
+@jwt_required()
+def send_email_register():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    if user.role != Role.ADMIN:
+        return jsonify({'message': 'Enough permision.'}), 405
+
+    form = request.form
+    if(form is None):
+        return jsonify({'message': "Request must be a form"}), 400
+
+    email_to =  form.get('to')
+    title =  'You have registered on Comecon'
+
+    if None in [email_to]:
+        return jsonify({'message': 'wrong property'})
+
+    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
+
+    return jsonify({'message': 'ok'}), 200
+  
 #Change status 
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
