@@ -1,6 +1,10 @@
 from flask import jsonify, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import re
+import smtplib
+from dotenv import load_dotenv
+import email.message
+import os
 
 class APIException(Exception):
     status_code = 400
@@ -56,7 +60,7 @@ def check_password(check_password, password, salt):
     return check_password_hash(check_password, f'{password}{salt}')
 
 
-def send_email(**keywords):
+def send_a_email(**kwargs):
     smpt = 'smtp.gmail.com'
     server = smtplib.SMTP(smpt, '587') 
     server.starttls()
@@ -67,12 +71,14 @@ def send_email(**keywords):
     email_password = os.getenv('EMAIL_PASSWORD')
     server.login(email_account, email_password)
 
+    email_to = kwargs.get('to')
+
     msg = email.message.Message()
     msg["From"] = email_account
     msg["To"] = email_to
-    msg["Subject"] = title
+    msg["Subject"] = kwargs.get('title')
     msg.add_header('Content-Type', 'text/html')
-    msg.set_payload(get_register_email())
+    msg.set_payload(kwargs.get('html'))
     server.sendmail(email_account, email_to, msg.as_string().encode('utf-8'))
     server.quit()
 

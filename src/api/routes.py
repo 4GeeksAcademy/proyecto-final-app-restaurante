@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 from sqlalchemy import and_, or_
@@ -534,7 +534,7 @@ def delete_user(user_id):
 
     return jsonify({'message': 'ok'}), 200
 
-@api.route('/send-email', methods=['POST'])
+@api.route('/send-email-register', methods=['POST'])
 @jwt_required()
 def send_email():
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
@@ -547,33 +547,12 @@ def send_email():
     if(form is None):
         return jsonify({'message': "Request must be a form"}), 400
 
-    title = form.get('title')
+    email_to =  form.get('to')
+    title =  'You have registered on Comecon'
 
-
-    smpt = 'smtp.gmail.com'
-    server = smtplib.SMTP(smpt, '587') 
-    # server.ehlo() 
-    server.starttls()
-
-    load_dotenv()
-
-    email_account = os.getenv('EMAIL_ACCOUNT')
-    email_password = os.getenv('EMAIL_PASSWORD')
-    server.login(email_account, email_password)
-
-    email_to = form.get('to')
-    title = form.get('title')
-
-    if None in [email_to, title]:
+    if None in [email_to]:
         return jsonify({'message': 'wrong property'})
 
-    msg = email.message.Message()
-    msg["From"] = email_account
-    msg["To"] = email_to
-    msg["Subject"] = title
-    msg.add_header('Content-Type', 'text/html')
-    msg.set_payload(get_register_email())
-    server.sendmail(email_account, email_to,  msg.as_string().encode(encoding = 'UTF-8'))
-    server.quit()
+    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
 
     return jsonify({'message': 'ok'}), 200
