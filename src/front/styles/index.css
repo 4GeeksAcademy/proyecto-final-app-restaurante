@@ -1,7 +1,7 @@
 body {
-  /* background-color: transparent; */
-  background-image: url(https://images.pexels.com/photos/4021982/pexels-photo-4021982.jpeg);
-  /* backdrop-filter: blur(2px); */
+  background-image: url(https://images.pexels.com/photos/4021982/pexels-photo-4021982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  backdrop-filter: blur(2px);
+  background-position: center bottom;
   background-size: cover;
   background-attachment: fixed;
 }
