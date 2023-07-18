@@ -12,6 +12,14 @@
 
 
 /*DishCard*/
+
+.img {
+  height: 180px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  
+}
+
 a:link, a:visited, a:active {
   text-decoration:none;
 }

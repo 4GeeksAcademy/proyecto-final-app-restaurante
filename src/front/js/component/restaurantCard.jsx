@@ -24,13 +24,13 @@ export const RestaurantCard = ({ key, restaurant }) => {
       <div class="col-6 m-2">
         <div class="card d-flex flex-wrap ">
           <div class="card-body">
-            <h5 className="card-title">{name}</h5>
+            <h5 className="card-title"><strong>{name}</strong></h5>
             <h6 className="card-subtitle mb-2 text-muted">{rif}</h6>
             <h6 className="card-subtitle mb-2 text-muted">{phone}</h6>
             <h6 className="card-subtitle mb-2 text-muted">{location}</h6>
             <div className="d-flex justify-content-end">
-              <button className="btn btn-primary mx-4">Edit</button>
-              <button className="btn btn-danger" onClick={() => actions.deleteRestaurant(restaurant.index)}>Delete</button>
+              <button className="btn btn-primary me-2"><strong>Edit</strong></button>
+              <button className="btn btn-danger" onClick={() => actions.deleteRestaurant(restaurant.index)}><strong>Delete</strong></button>
             </div>
           </div>
         </div>
