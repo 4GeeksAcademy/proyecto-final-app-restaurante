@@ -25,7 +25,7 @@ export const DishCard = ({ key, dish }) => {
                             {location.pathname === '/restaurant/menu' && (
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btns-container">
-                                        <button className="btn btn-primary me-3">Editar</button>
+                                        <button className="btn btn-primary me-2">Editar</button>
                                         <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}>Borrar</button>
                                     </div>
                                     <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
