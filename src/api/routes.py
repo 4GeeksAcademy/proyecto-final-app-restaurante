@@ -556,3 +556,32 @@ def send_email_register():
     send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
 
     return jsonify({'message': 'ok'}), 200
+  
+#Change status 
+@api.route('/user/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def change_status_restaurant(user_id = None):
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    # if user.role != Role.ADMIN:
+    #     return jsonify({'message': 'Enough permision.'}), 405
+
+    form = request.form
+    
+    user_to_change = User.query.filter_by(id=user_id).one_or_none()
+    if user_to_change is None:
+        return jsonify({'message': "There isn't user valid!."}), 400
+
+    if form.get('status') != "valid":
+        return jsonify({'message': "Invalid."}), 400
+
+    user_to_change.status = UserStatus.VALID
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': 'Something wrong ocurred'})  
+
+    return jsonify({'message': 'ok'}), 200      

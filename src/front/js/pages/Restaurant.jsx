@@ -24,9 +24,9 @@ const Restaurant = () => {
     <>
       {
         restaurant != null
-          ? <div className='container mt-4 p-3 bg-white border border-1 rounded-3' >
+          ? <div className='container panel mt-4 p-3 bg-white border border-1 rounded-3' >
             <h2 className='text-center bg-danger p-2 text-white rounded-1 title'>
-              Dashboard
+              Panel de Control
             </h2>
             <div className='row border border-1 m-4 restaurant__content'>
               <div className='restaurant__image col-12 col-sm-3 order-sm-0'>
@@ -36,7 +36,7 @@ const Restaurant = () => {
                   className='restaurant_avatar' />
                 {
                   isOwner &&
-                  <EditAvatar 
+                  <EditAvatar
                     restaurantId={restaurantId} />
                 }
               </div>
@@ -61,7 +61,7 @@ const Restaurant = () => {
                 </p>
                 <p className='information-group'>
                   <span className='restaurant__label'>
-                    Phone:
+                    Teléfono de contacto::
                   </span>
                   {
                     restaurant.phone
@@ -69,7 +69,7 @@ const Restaurant = () => {
                 </p>
                 <p className='information-group'>
                   <span className='restaurant__label'>
-                    Location link:
+                    Link de ubicación:
                   </span>
                   <a href={restaurant.location} target="_blank">Click here!</a>
                 </p>
@@ -81,41 +81,44 @@ const Restaurant = () => {
                 <div className='d-flex mt-3 justify-content-end'>
                   {
                     isOwner &&
-                    <Link to={`edit`} className='col-4 me-2 btn btn-primary'>
-                      Edit profile
+                    <Link to={`edit`} className='col-4 me-2 btn btn-warning'>
+                      <strong>Editar Perfil</strong>
                     </Link>
                   }
                   {
                     isOwner &&
-                    <Link to='/restaurant/menu' className='col-4 btn btn-primary'>
-                      Edit menu
+                    <Link to='/restaurant/menu' className='col-4 btn btn-warning'>
+                      <strong>Editar Menú</strong>
                     </Link>
                   }
                 </div>
               </div>
             </div>
             <div className='container mt-4 p-4 bg-white rounded-3'>
-              <h3 className='text-center'>
-                Galeria de imágenes
-              </h3>
-              {
-                restaurant.image && restaurant.image.map(
-                  image => {
-                    return (
-                      <PlaceImage
-                        key={image.id}
-                        image={image}
-                        deleteable={isOwner}
-                        restaurantId={restaurantId} />
-                    )
-                  }
-                )
-              }
-              {
-                isOwner &&
-                <AddRestaurantImage 
-                  restaurantId={restaurantId}/>
-              }
+              <div>
+                <h3 className='text-center'>
+                  Galeria de imágenes
+                </h3>
+              </div>
+              <div className='column'>
+                {
+                  restaurant.image && restaurant.image.map(
+                    image => {
+                      return (
+                        <PlaceImage
+                          key={image.id}
+                          image={image}
+                          deleteable={isOwner}
+                          restaurantId={restaurantId} />)
+                    }
+                  )
+                }</div>
+              <div className='w-100'>
+                {
+                  isOwner &&
+                  <AddRestaurantImage
+                    restaurantId={restaurantId} />
+                }</div>
             </div>
           </div >
           : <h1>Restaurant not found</h1>

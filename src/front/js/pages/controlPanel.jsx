@@ -35,10 +35,10 @@ export const ControlPanel = () => {
 
   return (
     <>
-      <div className="container mt-4 p-4 bg-white border border-1 rounded-3">
+      <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
         <div className="row justify-content-center">
           <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
-            Control Panel
+            <strong>Control Panel</strong>
           </h2>
         </div>
 
