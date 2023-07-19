@@ -4,13 +4,20 @@ import '../../styles/registerAdmin.css';
 
 const initialValues = {
   avatar: null,
-  username: null,
-  password: null
+  name: '',
+  password: ''
 }
 
 const RegisterAdmin = () => {
   const { token } = useParams();
   const [user, setUser] = useState(initialValues);
+
+  const changeHandler = ({ target }) => {
+    setUser({
+      ...user,
+      [target.name]: target.file=='file' ? target.files[0] : target.value
+    })
+  };
 
   return (
     <div className='container register-admin panel rounded-3 border border-1 p-3 mt-4'>
@@ -25,7 +32,7 @@ const RegisterAdmin = () => {
             id="avatar"
             name="avatar"
             type="file"
-            onChange={({ target }) => setUser({ ...user, avatar: target.files[0] })}
+            onChange={changeHandler}
             required
           />
         </div>
@@ -36,6 +43,8 @@ const RegisterAdmin = () => {
             className="form-control border"
             id="name"
             name="name"
+            onChange={changeHandler}
+            value={user.name}
             placeholder="Ingresa su username"
             required
           />
@@ -47,6 +56,8 @@ const RegisterAdmin = () => {
             className="form-control border"
             id="password"
             name="password"
+            onChange={changeHandler}
+            value={user.password}
             placeholder="Ingresa su contraseña"
             required
           />
