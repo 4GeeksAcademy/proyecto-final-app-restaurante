@@ -1,0 +1,25 @@
+/*DishCard*/
+
+/* .dishcard-image {
+  width: 150px;
+  height: 150px;
+}
+
+.dishcard-size {
+  width: 60%;
+  height: 160px;
+} */
+
+
+/*DishCard*/
+
+.img {
+  height: 180px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  
+}
+
+a:link, a:visited, a:active {
+  text-decoration:none;
+}

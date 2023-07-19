@@ -1,0 +1,130 @@
+.restaurant__container {
+  /* position */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+}
+
+.restaurant__title {
+  /* box_model */
+  width: 90%;
+  padding: 0.5em;
+  margin: auto;
+  /* position */
+  position: relative;
+  /* style */
+  text-align: center;
+  background-color: var(--main_color);
+}
+
+.restaurant__title::after {
+  content: '';
+  /* box_model */
+  width: 110%;
+  height: 2.2px;
+  /* position */
+  position: absolute;
+  bottom: 0;
+  left: -5%;
+  /* style */
+  background-color: black;
+}
+
+.restaurant__content {
+  /* box_model */
+  padding: 1em;
+}
+
+.restaurant__information {
+  /* position */
+  display: flex;
+  flex-flow: column nowrap;
+  /* box_model */
+  padding: 1em 2em;
+}
+
+.restaurant_avatar {
+  /* box */
+  padding: 0;
+  max-height: 200px;
+  /* style */
+  object-fit: contain;
+}
+
+.restaurant__information>* {
+  margin: 0;
+  margin-bottom: 0.3em;
+}
+
+.restaurant__label {
+  margin-right: 0.3em;
+  font-weight: 600;
+}
+
+.location__content {
+  cursor: pointer;
+}
+
+.information-group {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.restaurant__social {
+  margin-right: 1em;
+  font-size: 1.4em;
+}
+
+.restaurant__carroussel {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.restaurant__carroussel {
+  min-height: 200px;
+}
+
+.restaurant__add_more_images {
+  /* box_model */
+  min-width: 100px;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+  box-shadow: none;
+  /* style */
+  background-color: inherit;
+}
+
+.restaurant__image {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.btn__edit {
+  margin-top: 0.7em;
+  align-self: center;
+}
+
+.btn--restaurantEdit {
+  width: 50%;
+}
+
+.restaurant-image {
+  margin-bottom: 1em;
+}
+
+@media (max-width: 768px) { 
+  .restaurant__information {
+    /* box_model */
+    padding: 1em;
+  }
+}
+
+.column {
+  /* flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* grid-auto-rows: minmax(100px, auto-fill); */
+  gap: 10px;
+  /* padding: 20px; */
+  grid-auto-flow: dense;
+}

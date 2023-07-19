@@ -1,3 +1,83 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
+body {
+  background-image: url(https://images.pexels.com/photos/4021982/pexels-photo-4021982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  backdrop-filter: blur(2px);
+  background-position: center bottom;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+:root {
+  --main_color: #cc0000;
+}
+
+.panel {
+  box-shadow: 5px 5px 15px black;
+
+}
+
+.button-red {
+  background-color: var(--main_color);
+  color: white;
+  border: 1px solid black;
+}
+
+.button-green {
+  background-color: #00FFA3;
+  border: 1px solid black;
+}
+
+.button-orange {
+  background-color: #ff9900;
+  border: 1px solid black;
+}
+
+nav {
+  background-color: rgb(44, 44, 44);
+  border-bottom: 4px solid #e35656;
+  /* border-top: 3px solid #00ffa3; */
+
+}
+
+.orange-line {
+  /* border-bottom: 1px solid #ff9900; */
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+}
+
+button[type="submit"] {
+  padding: 8px 12px;
+  margin-left: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+footer {
+  height: 50px;
+  /*  poner footer abajo */
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+}

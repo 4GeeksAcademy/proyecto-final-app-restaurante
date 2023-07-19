@@ -1,0 +1,34 @@
+.placeImage {
+  overflow: hidden;
+  background-color: transparent;
+  margin-bottom: 1em;
+  position: relative;
+}
+
+.placeImage__img {
+  border-radius: 10px;
+  aspect-ratio: 2/1;
+  object-fit: cover;
+  height: 150px;
+  /* padding: none;
+  margin: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+}
+
+.placeImage__img:hover {
+  border-bottom: 2px solid rgb(71, 64, 64);
+  filter: opacity(0.95);
+}
+
+.placeImage__delete {
+  color: rgba(112, 0, 0, 0.61);
+  border: 0;
+  position: absolute;
+  background-color: transparent;
+  font-size: 1em;
+  top: 1px;
+  padding-left: 10px;
+  right: calc((var(--bs-gutter-x) * .5) + 5px);
+}
