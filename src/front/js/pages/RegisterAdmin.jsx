@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { Context } from '../store/appContext.js';
 import '../../styles/registerAdmin.css';
 
 const initialValues = {
   avatar: null,
   name: '',
-  password: ''
+  password: '',
+  valid: 'valid'
 }
 
 const RegisterAdmin = () => {
+  const { actions } = useContext(Context);
+  const { validateAdmin } = actions;
   const { token } = useParams();
   const [user, setUser] = useState(initialValues);
 
   const changeHandler = ({ target }) => {
     setUser({
       ...user,
-      [target.name]: target.file=='file' ? target.files[0] : target.value
+      [target.name]: target.file == 'file' ? target.files[0] : target.value
     })
   };
 
-  const onSubmit = event => {
+  const onSubmit = async event => {
     event.preventDefault();
-    
+    const formData = new FormData()                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
+
+    formData.append("name", user.name);
+    formData.append("avatar", user.avatar);
+    formData.append("status", user.status);
+    formData.append("password", user.password);
+
+    const response = await validateAdmin(token, formData);
+    console.log(response);
   }
 
   return (
@@ -68,10 +80,10 @@ const RegisterAdmin = () => {
           />
         </div>
 
-        <button 
-          type='submit' 
+        <button
+          type='submit'
           className='mt-4 btn btn-success bg-success register-admin__button'>
-            Registrar
+          Registrar
         </button>
       </form>
     </div>

@@ -607,7 +607,7 @@ def send_email_register_admin():
     
     email_to =  form.get('to')
     if None in [email_to]:
-        return jsonify({'message': 'wrong property'})
+        return jsonify({'message': 'wrong property'}), 400
 
     new_user = User()
     new_user.name = email_to
@@ -639,7 +639,6 @@ def send_email_register_admin():
 def self_register_admin(): 
     password = get_jwt_identity()
     user = User.query.filter_by(password=password).one_or_none()
-    print(user)
     if user is None:
         return jsonify({'message': 'Wrong user.'}), 400
 
@@ -660,9 +659,7 @@ def self_register_admin():
         user.salt = b64encode(os.urandom(32)).decode('utf-8')
         user.password = password_hash(password, user.salt)
 
-    status = form.get('status')
-    if status is not None:
-        user.status = UserStatus.get_status(status)
+    user.status = UserStatus.VALID
 
     try:
         db.session.commit()
