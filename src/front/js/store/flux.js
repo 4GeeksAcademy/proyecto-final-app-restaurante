@@ -1,4 +1,4 @@
-import { successAlert, errorAlert } from "../util";
+import { successAlert, errorAlert, warningAlert } from "../util";
 
 const getState = ({ getStore, getActions, setStore }) => {
 
@@ -258,7 +258,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("deleting restaurant...");
         }
       },
-      getRequests: async (request) => {
+      getRequests: async () => {
         const store = getStore()
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
@@ -339,22 +339,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return true;
       },
-      manageRequest: async (form, user_id) => {
+      manageRequest: async (form) => {
         const store = getStore();
-        console.log(form)
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/user/${user_id}`, {
+          const response = await fetch(`${process.env.BACKEND_URL}/user/${form.get('user_id')}`, {
             method: "PUT",
             headers: {
               Authorization: `Bearer ${store.token}`
             },
             body: form
           });
+
+          const data = await response.json();
+
           if (response.ok) {
-            successAlert('Restaurant is validated');
+            console.log(form.get('status'))
+            if (form.get('status')==='valid')
+              successAlert('Restaurante aceptado');
+            else 
+              warningAlert('Restaurante rechazado')
           }
           else {
-            errorAlert('Something is wrong');
+            errorAlert('Something is wrong', data.message);
           }
         } catch (error) {
           console.log(error)

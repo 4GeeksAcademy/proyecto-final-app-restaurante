@@ -573,10 +573,10 @@ def change_status_restaurant(user_id = None):
     if user_to_change is None:
         return jsonify({'message': "There isn't user valid!."}), 400
 
-    if form.get('status') != "valid":
-        return jsonify({'message': "Invalid."}), 400
-
-    user_to_change.status = UserStatus.VALID
+    if form.get('status') == "valid":
+        user_to_change.status = UserStatus.VALID
+    elif form.get('status') == "invalid":
+        user_to_change.status = UserStatus.INVALID
 
     try:
         db.session.commit()

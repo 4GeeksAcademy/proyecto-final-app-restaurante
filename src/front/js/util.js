@@ -11,7 +11,17 @@ export const successAlert = (text) => {
         theme: "light",
     });
 }
-
+export const warningAlert = (text) => {
+    toast.warning(text, {
+        position: "bottom-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    });
+}
 export const errorAlert = (text) => {
     toast.error(text, {
         position: "bottom-center",

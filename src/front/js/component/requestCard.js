@@ -20,7 +20,7 @@ export const RequestCard = ({ key, restaurant }) => {
     //     }
     // };
 
-    const [request, setRequest] = useState('')
+    const [request, setRequest] = useState('invalid')
     const { name, phone, rif, location, description, user_id } = restaurant
     const { store, actions } = useContext(Context)
 
@@ -33,24 +33,32 @@ export const RequestCard = ({ key, restaurant }) => {
     //     })
     // }
 
-    const handleRequest = ({ target }) => {
+    // const handleRequest = ({ target }) => {
+    //     event.preventDefault();
+    //     if (target.name === "accept") {
+    //         setRequest('valid')
+    //     }
+
+    //     if (target.name === "reject") {
+    //         setRequest('invalid')
+    //     }
+
+    //     sendRequest(request)
+    // }
+
+    const sendRequest = async (response) => {
         event.preventDefault();
-        if (target.name === "accept") {
-            setRequest('valid')
-            console.log(request)
-        }
-
-        if (target.name === "reject") {
-            setRequest('invalid')
-        }
-
-        sendRequest(request)
-    }
-
-    const sendRequest = (request) => {
         var formData = new FormData();
-        formData.append("status", request);
-        actions.manageRequest(formData, user_id)
+        formData.append('status', response);
+        formData.append('user_id', user_id)
+
+        const response = await actions.manageRequest(formData)
+
+        if (response) {
+            console.log('nice');
+            $('#editAvatar').modal('hide');        // close modal
+            await getRequests();  // refresh data
+        }
     }
 
     return (
@@ -107,13 +115,13 @@ export const RequestCard = ({ key, restaurant }) => {
                         <button
                             className="btn button-green w-50 me-1"
                             name="accept"
-                            onClick={(e) => handleRequest(e)}
+                            onClick={(e) => sendRequest('valid')}
                         >
                             Accept
                         </button>
                         <button className="btn button-orange w-50 ms-1"
                             name="reject"
-                            onClick={(e) => handleRequest(e)}
+                            onClick={(e) => sendRequest('invalid')}
                         >
                             Reject
                         </button>
