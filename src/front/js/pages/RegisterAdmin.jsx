@@ -19,9 +19,14 @@ const RegisterAdmin = () => {
     })
   };
 
+  const onSubmit = event => {
+    event.preventDefault();
+    
+  }
+
   return (
     <div className='container register-admin panel rounded-3 border border-1 p-3 mt-4'>
-      <form className="register-admin__form">
+      <form className="register-admin__form" onSubmit={onSubmit}>
         <h2 className='register-admin__h2'>Regístrate como admin</h2>
         <div className="form-group mt-4 px-4">
           <label htmlFor="avatar" className="form-label">

@@ -15,8 +15,14 @@ import email.message
 api = Blueprint('api', __name__)
 
 @api.route('/status', methods=['GET'])
+@jwt_required()
 def server_status():
-    return jsonify({'message': 'ok'}), 200
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is not None:
+        user = user.serialize()
+
+    return jsonify(user), 200
 
 
 @api.route('/restaurant', methods=['POST'])
@@ -596,17 +602,73 @@ def send_email_register_admin():
         return jsonify({'message': 'Enough permision.'}), 405
 
     form = request.form
-    if(form is None):
+    if form is None:
         return jsonify({'message': "Request must be a form"}), 400
-
+    
     email_to =  form.get('to')
-    token = form.get('token')
-    title =  'Register as admin in Comecon'
-
-    if None in [email_to, token]:
+    if None in [email_to]:
         return jsonify({'message': 'wrong property'})
+
+    new_user = User()
+    new_user.name = email_to
+    new_user.email = email_to
+    new_user.role = Role.ADMIN
+    new_user.status = UserStatus.INVALID
+    new_user.salt = b64encode(os.urandom(32)).decode('utf-8')
+    new_user.password = password_hash(email_to, user.salt)
+
+    db.session.add(new_user)
+    try:
+        db.session.commit()
+    except Exception as err:
+        db.session.rollback()
+        return jsonify({'message': err.args}), 500
+
+    token = create_access_token(identity=new_user.password, expires_delta=False)
+    title =  'Register as admin in Comecon'
 
     html = get_register_admin(token=token)
     send_a_email(to=email_to, title=title, html=html)
 
     return jsonify({'message': 'ok'}), 200
+
+
+#Change status 
+@api.route('/self-register-admin', methods=['PUT'])
+@jwt_required()
+def self_register_admin(): 
+    password = get_jwt_identity()
+    user = User.query.filter_by(password=password).one_or_none()
+    print(user)
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+
+    form = request.form
+
+    avatar = request.files.get('avatar')
+    if avatar is not None:
+        result = cloudinary.uploader.upload(avatar)
+        image_url = result['secure_url']
+        user.avatar_url = image_url
+
+    name = form.get('name')
+    if name is not None:
+        user.name = name
+
+    password = form.get('password')
+    if password is not None:
+        user.salt = b64encode(os.urandom(32)).decode('utf-8')
+        user.password = password_hash(password, user.salt)
+
+    status = form.get('status')
+    if status is not None:
+        user.status = UserStatus.get_status(status)
+
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error.args)
+        return jsonify({'message': 'Something wrong ocurred'}), 500
+
+    return jsonify({'message': 'ok'}), 200  
