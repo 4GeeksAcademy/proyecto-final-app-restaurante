@@ -341,8 +341,29 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
 
         return true;
-      }
+      },
+      validateAdmin: async (specialToken, userData) => {
+        console.log(userData);
 
+        const response = await fetch(`${process.env.BACKEND_URL}/self-register-admin`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${specialToken}`
+          },
+          body: userData
+        });
+
+        const data = await response.json();
+
+        if(response.ok) {
+          console.log(data.message);
+          return true;
+        }
+
+        console.log(response.message);
+        return false;
+
+      }
     }
   };
 }
