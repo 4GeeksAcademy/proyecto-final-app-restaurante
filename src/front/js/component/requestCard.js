@@ -20,8 +20,8 @@ export const RequestCard = ({ key, restaurant }) => {
     //     }
     // };
 
-    const [request, setRequest] = useState(true)
-    const { name, phone, rif, location, description } = restaurant
+    const [request, setRequest] = useState('')
+    const { name, phone, rif, location, description, user_id } = restaurant
     const { store, actions } = useContext(Context)
 
     // const handleChange = ({ target }) => {
@@ -35,17 +35,22 @@ export const RequestCard = ({ key, restaurant }) => {
 
     const handleRequest = ({ target }) => {
         event.preventDefault();
-
-        if(target.name === "accept"){
-            setRequest(true)
+        if (target.name === "accept") {
+            setRequest('valid')
+            console.log(request)
         }
 
-        if(target.name === "reject"){
-            setRequest(false)
+        if (target.name === "reject") {
+            setRequest('invalid')
         }
-        console.log(request)
-        //actions.manageRequest(request)
 
+        sendRequest(request)
+    }
+
+    const sendRequest = (request) => {
+        var formData = new FormData();
+        formData.append("status", request);
+        actions.manageRequest(formData, user_id)
     }
 
     return (
@@ -66,9 +71,9 @@ export const RequestCard = ({ key, restaurant }) => {
                             <input className="form-check-input"
                                 type="checkbox"
                                 name="location"
-                                //checked={locationState}
-                                //onChange={}
-                                //value={request.location}
+                            //checked={locationState}
+                            //onChange={}
+                            //value={request.location}
                             />
                             <label className="form-check-label" >
                                 Ubicacion
@@ -79,8 +84,8 @@ export const RequestCard = ({ key, restaurant }) => {
                                 type="checkbox"
                                 isChecked
                                 name="phone"
-                                //onChange={}
-                                //value={request.phone}
+                            //onChange={}
+                            //value={request.phone}
                             />
                             <label className="form-check-label">
                                 Numero verificado
@@ -90,8 +95,8 @@ export const RequestCard = ({ key, restaurant }) => {
                             <input className="form-check-input"
                                 type="checkbox"
                                 name="rif"
-                                //onChange={}
-                                //value={request.rif}
+                            //onChange={}
+                            //value={request.rif}
                             />
                             <label className="form-check-label">
                                 RIF
@@ -107,7 +112,7 @@ export const RequestCard = ({ key, restaurant }) => {
                             Accept
                         </button>
                         <button className="btn button-orange w-50 ms-1"
-                            name="accept"
+                            name="reject"
                             onClick={(e) => handleRequest(e)}
                         >
                             Reject

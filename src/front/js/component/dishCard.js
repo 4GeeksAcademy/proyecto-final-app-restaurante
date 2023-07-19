@@ -2,12 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/dishcard.css"
 
-
-
 export const DishCard = ({ key, dish }) => {
     // const { actions } = useContext(Context);
     const { id, image, restaurant_name, name, price, description } = dish
-
     return (
         <div className="row m-3" key={id}>
             <div className="card p-0 m-0">

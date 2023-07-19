@@ -485,13 +485,13 @@ def add_user():
 
     return jsonify(user.serialize()), 201
 
-
+#Get all requests
 @api.route('/user', methods=['GET'])
 @jwt_required()
 def get_user_filtered():
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-    if user.role != Role.ADMIN:
-        return jsonify({'message': 'not permise'}), 200
+    # if user.role != Role.ADMIN:
+    #     return jsonify({'message': 'not permise'}), 200
 
     user_role = request.args.get('role')
     user_role = Role.get_role(user_role)

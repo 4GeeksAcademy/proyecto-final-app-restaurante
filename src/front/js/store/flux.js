@@ -264,19 +264,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
-            }						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+              Authorization: `Bearer ${store.token}` 
+            }						
           })
           if (response.ok) {
             const allRequests = await response.json();
-            console.log(allRequests)
             const allRestaurantRequest = []
             {
               allRequests.map((item, index) => {
                 allRestaurantRequest.push(item.restaurant)
               })
             }
-            console.log(allRestaurantRequest)
             setStore(
               {
                 requests: allRestaurantRequest
@@ -288,7 +286,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       editRestaurant: async (data) => {
-        console.log(data);
         const store = getStore();
 
         try {
@@ -341,8 +338,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
 
         return true;
+      },
+      manageRequest: async (form, user_id) => {
+        const store = getStore();
+        console.log(form)
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/user/${user_id}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: form
+          });
+          if (response.ok) {
+            successAlert('Restaurant is validated');
+          }
+          else {
+            errorAlert('Something is wrong');
+          }
+        } catch (error) {
+          console.log(error)
+        }
       }
-
     }
   };
 }
