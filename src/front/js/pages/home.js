@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
@@ -17,15 +17,6 @@ export const Home = () => {
 				<div>
 					<SearchBar />
 				</div>
-
-				{/* <ControlPanel /> */}
-
-				{/* <EditMenu /> */}
-
-
-				{/* <div>
-				<EditProfile />
-				</div> */}
 
 				{/* Muestra los platos */}
 				<div className="container grid mt-4">

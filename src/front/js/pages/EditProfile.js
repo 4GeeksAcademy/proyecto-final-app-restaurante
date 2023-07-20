@@ -42,14 +42,14 @@ const EditProfile = () => {
 
         actions.editRestaurant(restaurant);
     }
-   
+
     const handleChange = (event) => {
         console.log(event.target.name)
         setRestaurant({...restaurant,[event.target.name]:event.target.value})        
     }
 
     return(
-        <div className="container-fluid mt-4 profileEdit-main-container">
+        <div className="container mt-4 profileEdit-main-container">
             <div className="col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 bg-white profileEdit_form_container border">
                 <span className="w-100 bg-danger editProfile_title">Editar perfil de datos</span>
                 <form className="col-8 editProfile_form" onSubmit={handleEdit}>
