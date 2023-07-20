@@ -82,6 +82,16 @@ def send_a_email(**kwargs):
     server.sendmail(email_account, email_to, msg.as_string().encode('utf-8'))
     server.quit()
 
+def aproved_email():
+    return(
+        "Su restaurante ha sido aprobado, felicitaciones!"
+    )
+
+def rejected_email():
+    return(
+        "Su restaurante ha sido rechazado, ponganse en contacto con soporte"
+    )
+
 
 def get_register_email():
     return(
