@@ -6,8 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       user: JSON.parse(sessionStorage.getItem("user")) || null,
       token: JSON.parse(sessionStorage.getItem("token")) || null,
+      restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
-      restaurant: null,
       requests: [{
         name: "Hong Kong",
         phone: "010242655",
@@ -116,16 +116,23 @@ const getState = ({ getStore, getActions, setStore }) => {
       getOneRestaurant: async (id) => {
         //fetch to the api
         const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
+        
         if (response.ok) {
           const restaurant = await response.json();
+
           setStore({
             'restaurant': restaurant
           });
+          sessionStorage.setItem("restaurant", JSON.stringify(restaurant));
+
           return restaurant;
         }
+
         setStore({
           'restaurant': null
         });
+        sessionStorage.setItem("restaurant", JSON.stringify(null));
+
         return null;
       },
 
