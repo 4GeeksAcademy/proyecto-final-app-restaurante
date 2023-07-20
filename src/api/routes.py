@@ -80,6 +80,11 @@ def register_restaurant():
         db.session.rollback()
         return jsonify({'message': err.args}), 500
 
+    # sending email
+    email_to = restaurant_user.email
+    title =  'You have registered on Comecon'
+    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
+
     return jsonify({'message': 'ok'}), 201
 
 
@@ -537,29 +542,6 @@ def delete_user(user_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({'message': error.args}), 500
-
-    return jsonify({'message': 'ok'}), 200
-
-@api.route('/send-email-register', methods=['POST'])
-@jwt_required()
-def send_email_register():
-    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-    if user is None:
-        return jsonify({'message': 'Wrong user.'}), 400
-    if user.role != Role.ADMIN:
-        return jsonify({'message': 'Enough permision.'}), 405
-
-    form = request.form
-    if(form is None):
-        return jsonify({'message': "Request must be a form"}), 400
-
-    email_to =  form.get('to')
-    title =  'You have registered on Comecon'
-
-    if None in [email_to]:
-        return jsonify({'message': 'wrong property'})
-
-    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
 
     return jsonify({'message': 'ok'}), 200
 
