@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import "../../styles/editProfile.css"
 
@@ -18,6 +19,8 @@ const initialValues = {
 const EditProfile = () => {
     const { actions, store } = useContext(Context);
     const [restaurant, setRestaurant] = useState(initialValues);
+    const { restaurantId } = useParams();
+    const navigate = useNavigate();
 
     useEffect( ()=> {
         const currentRestaurant = store.restaurant;
@@ -103,7 +106,12 @@ const EditProfile = () => {
 
                     <div className="mb-3 mt-3 d-flex justify-content-center">
                         <button type="submit" className="btn btn-success bg-success col-4 login_submit_button">Actualizar</button>
-                        <button type="button" className="btn btn-danger bg-danger col-4 login_submit_button">Cancelar</button>
+                        <button 
+                            type="button" 
+                            className="btn btn-danger bg-danger col-4 login_submit_button"
+                            onClick={() => navigate(`/restaurant/${restaurantId}`)}>
+                            Cancelar
+                        </button>
                     </div>
                 </form>
             </div>
