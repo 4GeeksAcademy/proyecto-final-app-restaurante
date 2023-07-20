@@ -632,8 +632,6 @@ def send_email_register_admin():
 
     return jsonify({'message': 'ok'}), 200
 
-
-#Change status 
 @api.route('/self-register-admin', methods=['PUT'])
 @jwt_required()
 def self_register_admin(): 

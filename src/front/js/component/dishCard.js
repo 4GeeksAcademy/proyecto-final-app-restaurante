@@ -4,12 +4,8 @@ import "../../styles/dishcard.css"
 
 export const DishCard = ({ key, dish }) => {
     // const { actions } = useContext(Context);
-<<<<<<< HEAD
-    const { id, image, restaurant_name, name, price, description } = dish
-=======
     const { id, image_url, restaurant_name, name, price, description } = dish
 
->>>>>>> e1541fa1079aa3789de836143dab5bdab34f2dce
     return (
         <div className="d-flex justify-content-center" key={id}>
             <div className="card col-11 p-0 m-0">

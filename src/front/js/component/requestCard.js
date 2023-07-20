@@ -52,7 +52,7 @@ export const RequestCard = ({ key, restaurant }) => {
         formData.append('status', response);
         formData.append('user_id', user_id)
 
-        response = actions.manageRequest(formData)
+        actions.manageRequest(formData)
     }
 
     return (
