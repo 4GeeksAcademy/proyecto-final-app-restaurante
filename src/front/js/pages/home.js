@@ -3,9 +3,6 @@ import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
-import { ControlPanel } from "./controlPanel.jsx";
-import { EditMenu } from "../../js/pages/editMenu.jsx";
-import { EditProfile } from "../component/EditProfile.js";
 
 export const Home = () => {
 

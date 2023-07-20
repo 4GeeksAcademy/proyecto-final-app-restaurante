@@ -12,7 +12,7 @@ import { Register } from './pages/register.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SearchBar } from "./component/searchBar";
-import EditProfile from "./component/EditProfile";
+import EditProfile from "./pages/EditProfile";
 import Login from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 import { AddDishes } from "./pages/addDishes.jsx";
