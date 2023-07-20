@@ -46,19 +46,13 @@ export const RequestCard = ({ key, restaurant }) => {
     //     sendRequest(request)
     // }
 
-    const sendRequest = async (response) => {
+    const sendRequest = (response) => {
         event.preventDefault();
         var formData = new FormData();
         formData.append('status', response);
         formData.append('user_id', user_id)
 
-        const response = await actions.manageRequest(formData)
-
-        if (response) {
-            console.log('nice');
-            $('#editAvatar').modal('hide');        // close modal
-            await getRequests();  // refresh data
-        }
+        response = actions.manageRequest(formData)
     }
 
     return (

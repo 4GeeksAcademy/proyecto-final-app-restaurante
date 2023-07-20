@@ -100,7 +100,7 @@ const Restaurant = () => {
                   Galeria de imágenes
                 </h3>
               </div>
-              <div className='column'>
+              <div className='column col-11'>
                 {
                   restaurant.image && restaurant.image.map(
                     image => {
