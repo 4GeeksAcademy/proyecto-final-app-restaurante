@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/editProfile.css"
 
-
 const initialValues = {
     name: "",
     // rif: "",
@@ -16,13 +15,23 @@ const initialValues = {
     twitter: ""
 }
 
-
-// here we must send a token
-// here we must send the form's data
-
 const EditProfile = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [restaurant, setRestaurant] = useState(initialValues);
+
+    useEffect( ()=> {
+        const currentRestaurant = store.restaurant;
+        setRestaurant({
+            ...restaurant,
+            name: currentRestaurant.name,
+            phone: currentRestaurant.phone,
+            location: currentRestaurant.location,
+            description: currentRestaurant.description,
+            facebook: currentRestaurant.facebook_url,
+            instagram: currentRestaurant.instagram_url,
+            twitter: currentRestaurant.twitter_url
+        })
+    }, []);
 
     const handleEdit = (e) => {
         e.preventDefault();
