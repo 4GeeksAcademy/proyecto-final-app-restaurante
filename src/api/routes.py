@@ -211,14 +211,11 @@ def edit_restaurant():
 
     data = request.form
 
-    user_email = data.get('userEmail')
-    if user_email is not None:
-        user.email = user_email
     user_password = data.get('userPassword')
     if user_password is not None:
         user.salt = b64encode(os.urandom(32)).decode('utf-8')
         user.password = password_hash(user_password, user.salt)  
-    user_avatar = request.files['userAvatar']
+    user_avatar = request.files.get('userAvatar')
     if user_avatar is not None:
         result = cloudinary.uploader.upload(user_avatar)
         image_url = result['secure_url']

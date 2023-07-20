@@ -288,6 +288,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       editRestaurant: async (data) => {
+        console.log('THIS');
         console.log(data);
         const store = getStore();
 

@@ -40,8 +40,7 @@ const EditProfile = () => {
         formData.append("restaurantInstagram", restaurant.instagram);
         formData.append("restaurantTwitter", restaurant.twitter);
 
-        console.log(formData);
-        actions.editRestaurant(restaurant);
+        actions.editRestaurant(formData);
     }
 
     const handleChange = (event) => {
