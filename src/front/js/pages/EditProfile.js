@@ -99,7 +99,7 @@ const EditProfile = () => {
                         <input type="text" className="form-control border" id="twitter-input" aria-describedby="emailHelp" name="twitter" value={restaurant.twitter} onChange={handleChange} />
                     </div>
                     <label htmlFor="password-input" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="password-input" name="password" value={restaurant.password} onChange={handleChange} />
+                    <input type="password" className="form-control" id="password-input" name="password" value={restaurant.password} onChange={handleChange} placeholder="********"/>
 
                     <div className="mb-3 mt-3 d-flex justify-content-center">
                         <button type="submit" className="btn btn-success bg-success col-4 login_submit_button">Actualizar</button>
