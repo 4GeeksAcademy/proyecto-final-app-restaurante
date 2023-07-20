@@ -12,7 +12,7 @@ import { Register } from './pages/register.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SearchBar } from "./component/searchBar";
-import EditProfile from "./component/EditProfile";
+import EditProfile from "./pages/EditProfile";
 import Login from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 import { AddDishes } from "./pages/addDishes.jsx";
@@ -44,7 +44,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<EditProfile />} path="/edit" />
+                        <Route element={<EditProfile />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<RestaurantRequest />} path="/requests" />
