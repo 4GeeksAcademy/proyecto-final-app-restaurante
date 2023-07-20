@@ -212,40 +212,31 @@ def edit_restaurant():
     data = request.form
 
     user_password = data.get('userPassword')
-    if user_password is not None:
+    if user_password is not None and user_password != '':
         user.salt = b64encode(os.urandom(32)).decode('utf-8')
         user.password = password_hash(user_password, user.salt)  
-    user_avatar = request.files.get('userAvatar')
-    if user_avatar is not None:
-        result = cloudinary.uploader.upload(user_avatar)
-        image_url = result['secure_url']
-        user.avatar_url = image_url
     
     restaurant = user.restaurant
     restaurant_name = data.get('restaurantName')
-    if restaurant_name is not None:
+    if restaurant_name is not None and restaurant_name != '':
         restaurant.name = restaurant_name
-    restaurant_rif = data.get('restaurantRif')
-    if restaurant_rif is not None:
-        restaurant.rif = restaurant_rif
-        user.name = restaurant_rif
     restaurant_phone = data.get('restaurantPhone')
-    if restaurant_phone is not None:
+    if restaurant_phone is not None and restaurant_phone != '':
         restaurant.phone = restaurant_phone
     restaurant_location = data.get('restaurantLocation')
-    if restaurant_location is not None:
+    if restaurant_location is not None and restaurant_location != '':
         restaurant.location = restaurant_location
     restaurant_description = data.get('restaurantDescription')
-    if restaurant_description is not None:
+    if restaurant_description is not None and restaurant_description != '':
         restaurant.description = restaurant_description
     restaurant_facebook = data.get('restaurantFacebook')
-    if  restaurant_facebook is not None:
+    if  restaurant_facebook is not None and restaurant_facebook != '':
         restaurant.facebook_url =  restaurant_facebook
     restaurant_instagram = data.get('restaurantInstagram')
-    if restaurant_instagram is not None:
+    if restaurant_instagram is not None and restaurant_instagram != '':
         restaurant.instagram_url = restaurant_instagram
     restaurant_twitter = data.get('restaurantTwitter')
-    if restaurant_twitter is not None:
+    if restaurant_twitter is not None and restaurant_twitter != '':
         restaurant.twitter_url = restaurant_twitter
 
     try:
