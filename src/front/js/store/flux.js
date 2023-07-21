@@ -369,6 +369,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(response.message);
         return false;
 
+      },
+      clearResults: () => {
+        setStore({
+          results: []
+        })
       }
     }
   };
