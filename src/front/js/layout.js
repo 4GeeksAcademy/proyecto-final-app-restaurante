@@ -22,6 +22,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
+import { EditDish } from "./pages/editDish.jsx";
 
 
 
@@ -47,6 +48,7 @@ const Layout = () => {
                         <Route element={<EditProfile />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
+                        <Route element={<EditDish />} path="/restaurant/menu/food/edit/:dishId" />
                         <Route element={<RestaurantRequest />} path="/requests" />
                         <Route element={<ControlPanel />} path="/admin/restaurant" />
                         <Route element={<EditMenu />} path="/restaurant/menu" />

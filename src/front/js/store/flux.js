@@ -265,6 +265,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("deleting restaurant...");
         }
       },
+
       getRequests: async (request) => {
         const store = getStore()
         try {
@@ -294,6 +295,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
       },
+
       editRestaurant: async (data) => {
         const store = getStore();
 
@@ -316,6 +318,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
       deletePlaceImage: async (imageId, restaurantId = null) => {
         const store = getStore();
 
@@ -348,6 +351,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return true;
       },
+
       validateAdmin: async (specialToken, userData) => {
         console.log(userData);
 
@@ -369,7 +373,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(response.message);
         return false;
 
-      }
+      },
+
+      editDish: async (data) => {
+        const store = getStore();
+
+        try {
+          let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: data
+          });
+          if (!response.ok) {
+            errorAlert(data.message);
+            console.log("No se pudo editar el plato")
+          }
+          else {
+            successAlert('Plato editado correctamente');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      },
     }
   };
 }
