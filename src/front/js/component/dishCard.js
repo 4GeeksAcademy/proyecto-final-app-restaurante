@@ -10,11 +10,9 @@ import "../../styles/dishcard.css"
 export const DishCard = ({ key, dish }) => {
     const { actions } = useContext(Context);
     const { id, image_url, restaurant_name, name, price, description } = dish
-    // const dishId = user.restaurant.foods.id;
-            // nav(`/restaurant/${dishId}`);
-
+   
     return (
-        <div className="d-flex justify-content-center" key={id}>
+        <div className="d-flex m-3 justify-content-center" key={id}>
             <div className="card col-11 p-0 m-0">
                 <div className="row m-2">
                     <div className="col-md-4 p-0">

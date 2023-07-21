@@ -21,21 +21,25 @@ export const EditDish = () => {
 
 
     useEffect(() => {
-        const currentDish = store.restaurant.foods;
+        let arrayDish = store.restaurant.foods;
 
-        const result = currentDish.filter(dish => dish.id == dishId);
-        console.log(result);
+        arrayDish = arrayDish.filter(dish => dish.id == dishId);
+        const currentDish = arrayDish[0]
         
         setDish({
             ...dish,
-            name: result.name,
-            description: result.description,
-            price: result.price,
-            tags: result.tags,
-            image: result.image,
+            name: currentDish.name,
+            description: currentDish.description,
+            price: currentDish.price,
+            tags: currentDish.tags,
+            image: currentDish.image,
         })
         
     }, []);
+    
+    const handleChange = (e) => {
+        setDish({ ...dish, [e.target.name]: e.target.value });
+    };
 
     const handleEdit = (e) => {                                 
         e.preventDefault()
@@ -56,9 +60,6 @@ export const EditDish = () => {
         };
     }
 
-    const handleChange = (e) => {
-        setDish({ ...dish, [e.target.name]: e.target.value });
-    };
 
     return (
         <>
