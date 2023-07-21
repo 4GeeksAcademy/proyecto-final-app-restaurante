@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
+import { onValidateDishes } from "../util.js";
+
 
 const initialState = {
     name: "",
@@ -14,18 +16,23 @@ export const EditDish = () => {
     const { actions, store } = useContext(Context);
     const [dish, setDish] = useState(initialState);
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
+    const { dishId } = useParams();
 
 
     useEffect(() => {
         const currentDish = store.restaurant.foods;
-        console.log(currentDish);
+
+        const result = currentDish.filter(dish => dish.id == dishId);
+        console.log(result);
+        
         setDish({
             ...dish,
-            name: currentDish.name,
-            description: currentDish.description,
-            price: currentDish.price,
-            tags: currentDish.tags,
-            image: currentDish.image,
+            name: result.name,
+            description: result.description,
+            price: result.price,
+            tags: result.tags,
+            image: result.image,
         })
         
     }, []);
@@ -45,7 +52,7 @@ export const EditDish = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            actions.EditDish(formData);
+            actions.editDish(formData);
         };
     }
 
@@ -151,10 +158,10 @@ export const EditDish = () => {
                                 {/* {errors.image && <div className="alert p-0 m-0 bg-none text-danger">{errors.image}</div>} */}
                             </div>
 
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex  mt-3 justify-content-between">
                                 <button
                                     type="button"
-                                    className="btn btn-success w-100 mt-3"
+                                    className="btn btn-success w-100 me-2"
                                     onClick={(e) => handleEdit(e)}
                                 >
                                     <strong>Actualizar</strong>
@@ -163,7 +170,7 @@ export const EditDish = () => {
                                     type="button"
                                     className="btn btn-danger bg-danger col-4 login_submit_button"
                                     onClick={() => navigate("/restaurant/menu")}>
-                                    Cancelar
+                                    <strong>Cancelar</strong>
                                 </button>
                             </div>
                         </form>
