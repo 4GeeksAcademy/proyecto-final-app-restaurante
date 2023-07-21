@@ -14,18 +14,9 @@ export const Home = () => {
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}
-				{/* <div>
+				<div>
 					<SearchBar />
 				</div>
-
-				{/* <ControlPanel /> */}
-
-				{/* <EditMenu /> */}
-
-
-				{/* <div>
-				<EditProfile />
-				</div> */}
 
 				{/* Muestra los platos */}
 				<div className="container grid mt-4">
