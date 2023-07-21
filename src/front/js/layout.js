@@ -44,7 +44,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<EditProfile />} path="/restaurant/:restaurantId/edit" />
+                        <Route element={<RequiredAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" /> {/* adds authorization requirements */}
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<RestaurantRequest />} path="/requests" />
@@ -52,6 +52,7 @@ const Layout = () => {
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
                         <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route path="*" element={<RequiredAuth child={<NoPageFound />} />} /> {/* adds authorization requirements */}
                     </Routes>
                     <ToastContainer
                         position="bottom-center"
@@ -69,6 +70,51 @@ const Layout = () => {
                 </ScrollToTop>
             </BrowserRouter>
         </div>
+
+        // const RequiredAuth = ({ child }) => {
+        //     // Logout if token.exp is in the past (expired)
+        //     const payload = getTokenPayload();
+        //     const navigate = useNavigate();
+        //     if (payload && payload.exp && payload.exp <= Date.now() / 1000) {
+        //     applyToken(null);
+        //     navigate("/login");
+        //     return null;
+        //     }
+        
+        //     if (!getToken()) {
+        //     return <Navigate to="/login" replace />;
+        //     } else {
+        //     return child;
+        //     }
+        // };
+        // const applyToken = (token) => {
+        //     if (token) {
+        //     localStorage.setItem("access_token", token);
+        //     axios.interceptors.request.use(
+        //         (config) => {
+        //         config.headers["Authorization"] = `Bearer ${token}`;
+        //         return config;
+        //         },
+        //         (error) => {
+        //         return Promise.reject(error);
+        //         }
+        //     );
+        //     } else {
+        //     localStorage.removeItem("access_token");
+        //     delete axios.defaults.headers.common.Authorization;
+        //     }
+        // };
+        
+        // const getTokenPayload = () => {
+        //     const token = getToken();
+        //     if (!token) return null;
+        
+        //     return jwtDecode(token);
+        // };
+        
+        // const getToken = () => {
+        //     return localStorage.getItem("access_token");
+        // };
     );
 };
 

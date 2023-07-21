@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
