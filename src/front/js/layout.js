@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 import { AddDishes } from "./pages/addDishes.jsx";
 import RegisterAdmin from './pages/RegisterAdmin.jsx';
+import RequeireAuth from './component/RequireAuth.jsx';
 // notifications
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -44,7 +45,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<RequiredAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" /> {/* adds authorization requirements */}
+                        <Route element={<RequeireAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" /> {/* adds authorization requirements */}
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<RestaurantRequest />} path="/requests" />
@@ -52,7 +53,7 @@ const Layout = () => {
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
                         <Route element={<h1>Not found!</h1>} path="*" />
-                        <Route path="*" element={<RequiredAuth child={<NoPageFound />} />} /> {/* adds authorization requirements */}
+                        <Route path="*" element={<div>Not Found</div>} />
                     </Routes>
                     <ToastContainer
                         position="bottom-center"
