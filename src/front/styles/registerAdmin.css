@@ -1,0 +1,17 @@
+.register-admin {
+  background-color: white;
+}
+
+.register-admin__form {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.register-admin__h2 {
+  text-align: center;
+}
+
+.register-admin__button {
+  width: 50%; 
+  align-self: center;
+}

@@ -1,8 +1,9 @@
 body {
-  background-image: url(https://fondosmil.com/fondo/35732.jpg);
-  backdrop-filter: blur(5px);
-  /* background-position: center center;
-  background-size: cover; */
+  background-image: url(https://images.pexels.com/photos/4021982/pexels-photo-4021982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  backdrop-filter: blur(2px);
+  background-position: center bottom;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 :root {

@@ -6,8 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       user: JSON.parse(sessionStorage.getItem("user")) || null,
       token: JSON.parse(sessionStorage.getItem("token")) || null,
+      restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
-      restaurant: null,
       requests: [{
         name: "Hong Kong",
         phone: "010242655",
@@ -116,16 +116,23 @@ const getState = ({ getStore, getActions, setStore }) => {
       getOneRestaurant: async (id) => {
         //fetch to the api
         const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
+        
         if (response.ok) {
           const restaurant = await response.json();
+
           setStore({
             'restaurant': restaurant
           });
+          sessionStorage.setItem("restaurant", JSON.stringify(restaurant));
+
           return restaurant;
         }
+
         setStore({
           'restaurant': null
         });
+        sessionStorage.setItem("restaurant", JSON.stringify(null));
+
         return null;
       },
 
@@ -134,7 +141,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const priceParameter = budget == '' ? "price" : `price=${budget}`;
         const descriptionParameter = food == '' ? "description" : `description=${food}`;
         const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
-        console.log(url);
 
         try {
           let response = await fetch(url, {
@@ -288,7 +294,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       editRestaurant: async (data) => {
-        console.log(data);
         const store = getStore();
 
         try {
@@ -341,8 +346,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
 
         return true;
-      }
+      },
+      validateAdmin: async (specialToken, userData) => {
+        console.log(userData);
 
+        const response = await fetch(`${process.env.BACKEND_URL}/self-register-admin`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${specialToken}`
+          },
+          body: userData
+        });
+
+        const data = await response.json();
+
+        if(response.ok) {
+          console.log(data.message);
+          return true;
+        }
+
+        console.log(response.message);
+        return false;
+
+      },
+      clearResults: () => {
+        setStore({
+          results: []
+        })
+      }
     }
   };
 }
