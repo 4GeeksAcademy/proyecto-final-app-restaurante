@@ -24,4 +24,6 @@ const RequireAuth = ({child}) => {
     );
 }
 
+
+
 export default RequireAuth;

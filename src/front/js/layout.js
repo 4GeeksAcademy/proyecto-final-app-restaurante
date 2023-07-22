@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
+import {Context} from "./store/appContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
@@ -23,6 +24,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
+import AccessDeniedPage from "./pages/AccessDeniedPage.jsx"
 
 
 
@@ -34,26 +36,28 @@ const Layout = () => {
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
     console.log(basename)
+    const {store} = useContext(Context)
+    console.log(store.user?.role);
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
+                
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<RequiereAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
-                        <Route element={<AddDishes />} path="/restaurant/menu/food" />
-                        <Route element={<RestaurantRequest />} path="/requests" />
-                        <Route element={<ControlPanel />} path="/admin/restaurant" />
-                        <Route element={<EditMenu />} path="/restaurant/menu" />
-                        <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
+                        <Route element={<RequiereAuth child={<AddDishes />} />} path="/restaurant/menu/food" />
+                        <Route element={<RequiereAuth child={<RestaurantRequest />} />} path="/requests" />
+                        <Route element={<RequiereAuth child={<ControlPanel />} />} path="/admin/restaurant" />
+                        <Route element={<RequiereAuth child={<EditMenu />} />} path="/restaurant/menu" />
+                        <Route element={<RequiereAuth child={<RegisterAdmin/>} />} path='/register-admin/:token' />
+                        <Route element={<AccessDeniedPage />} path="/access_denied" />
                         <Route element={<h1>Not found!</h1>} path="*" />
-                        <Route path="*" element={<div>Not found</div>} />
                     </Routes>
                     <ToastContainer
                         position="bottom-center"
