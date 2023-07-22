@@ -678,4 +678,3 @@ def self_register_admin():
         return jsonify({'message': 'Something wrong ocurred'}), 500
 
     return jsonify({'message': 'ok'}), 200  
-

@@ -37,7 +37,8 @@ export const RequestCard = ({ key, user }) => {
         event.preventDefault();
         var formData = new FormData();
         formData.append('status', response);
-        formData.append('user_id', user_id)
+        formData.append('user_id', user_id);
+        formData.append('email', email);
 
         actions.manageRequest(formData)
     }

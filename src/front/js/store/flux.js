@@ -264,15 +264,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           if (response.ok) {
             const allRequests = await response.json();
-            const allRestaurantRequest = []
-            {
-              allRequests.map((item, index) => {
-                allRestaurantRequest.push(item)
-              })
-            }
             setStore(
               {
-                requests: allRestaurantRequest
+                requests: allRequests
               }
             )
           }
