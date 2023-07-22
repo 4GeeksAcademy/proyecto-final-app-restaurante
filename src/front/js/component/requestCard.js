@@ -4,7 +4,7 @@ import { faAddressCard, faLocationDot, faPhone } from '@fortawesome/free-solid-s
 import "../../styles/dishcard.css"
 import { Context } from "../store/appContext";
 
-export const RequestCard = ({ key, restaurant }) => {
+export const RequestCard = ({ key, user }) => {
 
     // const [locationState, setLocationState] = useState(true);
     // const [phoneState, setPhoneState] = useState(true);
@@ -20,8 +20,8 @@ export const RequestCard = ({ key, restaurant }) => {
     //     }
     // };
 
-    const [request, setRequest] = useState('invalid')
-    const { name, phone, rif, location, description, user_id } = restaurant
+    const [request, setRequest] = useState(false)
+    const { restaurant } = user
     const { store, actions } = useContext(Context)
 
     // const handleChange = ({ target }) => {
@@ -31,19 +31,6 @@ export const RequestCard = ({ key, restaurant }) => {
     //         ...request,
     //         [target.name]: target.value
     //     })
-    // }
-
-    // const handleRequest = ({ target }) => {
-    //     event.preventDefault();
-    //     if (target.name === "accept") {
-    //         setRequest('valid')
-    //     }
-
-    //     if (target.name === "reject") {
-    //         setRequest('invalid')
-    //     }
-
-    //     sendRequest(request)
     // }
 
     const sendRequest = (response) => {
@@ -56,15 +43,15 @@ export const RequestCard = ({ key, restaurant }) => {
     }
 
     return (
-        <div className="container d-flex justify-content-center"> { }
-            <div className="border border-dark border-2 rounded w-50 mt-3">
+        <div className="container d-flex justify-content-center ">
+            <div className="border border-dark border-2 rounded w-50 mt-3 bg-light">
                 <div className="ms-4 me-4 mb-2 mt-2">
-                    <h2>{name}</h2>
-                    <h5><FontAwesomeIcon icon={faAddressCard} className="me-2" />{rif}</h5>
-                    <h5><FontAwesomeIcon icon={faPhone} className="me-2" />{phone}</h5>
-                    <h5><FontAwesomeIcon icon={faLocationDot} className="me-2" /> <a href='${location}'> {location}</a> </h5>
+                    <h2>{restaurant?.name}</h2>
+                    <h5><FontAwesomeIcon icon={faAddressCard} className="me-2" />{restaurant?.rif}</h5>
+                    <h5><FontAwesomeIcon icon={faPhone} className="me-2" />{restaurant?.phone}</h5>
+                    <h5><FontAwesomeIcon icon={faLocationDot} className="me-2" /> <a href='${location}'> {restaurant?.location}</a> </h5>
                     <p className="">
-                        {description}
+                        {restaurant?.description}
                     </p>
                 </div>
                 <form>

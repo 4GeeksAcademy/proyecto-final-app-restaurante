@@ -70,7 +70,6 @@ def send_a_email(**kwargs):
     email_account = os.getenv('EMAIL_ACCOUNT')
     email_password = os.getenv('EMAIL_PASSWORD')
     server.login(email_account, email_password)
-
     email_to = kwargs.get('to')
 
     msg = email.message.Message()

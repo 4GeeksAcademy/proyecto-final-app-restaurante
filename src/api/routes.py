@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin, aproved_email
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin, aproved_email, rejected_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 from sqlalchemy import and_, or_
@@ -584,24 +584,22 @@ def change_status_restaurant(user_id = None):
     if None in [email_to]:
         return jsonify({'message': 'wrong property'})
 
-    send_a_email(to=email_to, title='Has sido aprobado en Comecon', html=aproved_email())
+    user_to_change = User.query.filter_by(id=user_id).one_or_none()
+    if user_to_change is None:
+        return jsonify({'message': "There isn't user valid!."}), 400
 
-    # user_to_change = User.query.filter_by(id=user_id).one_or_none()
-    # if user_to_change is None:
-    #     return jsonify({'message': "There isn't user valid!."}), 400
+    if form.get('status') == "valid":
+        user_to_change.status = UserStatus.VALID
+        send_a_email(to=email_to, title='Has sido aprobado en Comecon', html=aproved_email())
+    elif form.get('status') == "invalid":
+        user_to_change.status = UserStatus.INVALID
+        send_a_email(to=email_to, title='Has sido rechazado en Comecon', html=rejected_email())
 
-    # if form.get('status') == "valid":
-    #     user_to_change.status = UserStatus.VALID
-    #     send_a_email(to=email_to, title='Has sido aprobado en Comecon', html=aproved_email())
-    # elif form.get('status') == "invalid":
-    #     user_to_change.status = UserStatus.INVALID
-    #     send_a_email(to=email_to, title='Has sido rechazado en Comecon', html=rejected_email())
-
-    # try:
-    #     db.session.commit()
-    # except Exception as error:
-    #     db.session.rollback()
-    #     return jsonify({'message': 'Something wrong ocurred'})  
+    try:
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': 'Something wrong ocurred'})  
 
     return jsonify({'message': 'ok'}), 200      
 

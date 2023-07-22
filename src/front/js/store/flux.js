@@ -9,13 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: JSON.parse(sessionStorage.getItem("token")) || null,
       results: [],
       restaurant: null,
-      requests: [{
-        name: "Hong Kong",
-        phone: "010242655",
-        rif: "J123556",
-        location: "calle q",
-        description: "Business es un restaiurante de comida asiatica con fusion latina que destaca por su pizza"
-      }],
+      requests: [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -273,7 +267,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             const allRestaurantRequest = []
             {
               allRequests.map((item, index) => {
-                allRestaurantRequest.push(item.restaurant)
+                allRestaurantRequest.push(item)
               })
             }
             setStore(
@@ -288,7 +282,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       editRestaurant: async (data) => {
         const store = getStore();
-
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "PUT",
