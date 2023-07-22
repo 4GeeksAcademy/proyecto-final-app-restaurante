@@ -54,7 +54,7 @@ export const EditMenu = () => {
             <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
           </div>
         </div>
-        <div className="container grid px-0 m-0 mt-3">
+        <div className="container col-12 px-0 m-0 mt-3">
           {dishes.map((dish, index) => {
             console.log(dish);
             return <DishCard

@@ -13,6 +13,10 @@
 
 /*DishCard*/
 
+.card {
+  box-shadow: 5px 5px 15px black;
+}
+
 .img {
   height: 180px;
   aspect-ratio: 1/1;
