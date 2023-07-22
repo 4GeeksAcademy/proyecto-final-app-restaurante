@@ -141,7 +141,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const priceParameter = budget == '' ? "price" : `price=${budget}`;
         const descriptionParameter = food == '' ? "description" : `description=${food}`;
         const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
-        console.log(url);
 
         try {
           let response = await fetch(url, {
@@ -397,6 +396,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+      
+      clearResults: () => {
+        setStore({
+          results: []
+        })
+      }
     }
   };
 }

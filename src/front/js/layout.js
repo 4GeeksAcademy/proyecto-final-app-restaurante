@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 import { AddDishes } from "./pages/addDishes.jsx";
 import RegisterAdmin from './pages/RegisterAdmin.jsx';
+import RequiereAuth from './component/RequireAuth.jsx';
 // notifications
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -45,7 +46,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<EditProfile />} path="/restaurant/:restaurantId/edit" />
+                        <Route element={<RequiereAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<EditDish />} path="/restaurant/menu/food/edit/:dishId" />
@@ -54,6 +55,7 @@ const Layout = () => {
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
                         <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route path="*" element={<div>Not found</div>} />
                     </Routes>
                     <ToastContainer
                         position="bottom-center"

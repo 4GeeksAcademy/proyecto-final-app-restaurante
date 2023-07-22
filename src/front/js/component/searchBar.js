@@ -10,7 +10,7 @@ const initialValue = {
 
 export const SearchBar = () => {
     const { actions } = useContext(Context);
-    const { foodSearch } = actions;
+    const { foodSearch, clearResults } = actions;
     const [search, setSearch] = useState(initialValue)
 
     const handleOnChange = ({ target }) => {
@@ -22,7 +22,12 @@ export const SearchBar = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        foodSearch(search);
+
+        if(search.budget != '' || search.food != '')
+            foodSearch(search);
+        else
+            clearResults();
+
     }
 
     return (
