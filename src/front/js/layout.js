@@ -12,11 +12,12 @@ import { Register } from './pages/register.jsx';
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SearchBar } from "./component/searchBar";
-import EditProfile from "./component/EditProfile";
+import EditProfile from "./pages/EditProfile";
 import Login from "./pages/Login";
 import { RestaurantRequest } from "./pages/restaurantsRequests";
 import { AddDishes } from "./pages/addDishes.jsx";
 import RegisterAdmin from './pages/RegisterAdmin.jsx';
+import RequiereAuth from './component/RequireAuth.jsx';
 // notifications
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -44,7 +45,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
-                        <Route element={<EditProfile />} path="/edit" />
+                        <Route element={<RequiereAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<RestaurantRequest />} path="/requests" />
@@ -52,6 +53,7 @@ const Layout = () => {
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
                         <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route path="*" element={<div>Not found</div>} />
                     </Routes>
                     <ToastContainer
                         position="bottom-center"

@@ -80,6 +80,11 @@ def register_restaurant():
         db.session.rollback()
         return jsonify({'message': err.args}), 500
 
+    # sending email
+    email_to = restaurant_user.email
+    title =  'You have registered on Comecon'
+    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
+
     return jsonify({'message': 'ok'}), 201
 
 
@@ -206,44 +211,32 @@ def edit_restaurant():
 
     data = request.form
 
-    user_email = data.get('userEmail')
-    if user_email is not None:
-        user.email = user_email
     user_password = data.get('userPassword')
-    if user_password is not None:
+    if user_password is not None and user_password != '':
         user.salt = b64encode(os.urandom(32)).decode('utf-8')
         user.password = password_hash(user_password, user.salt)  
-    user_avatar = request.files['userAvatar']
-    if user_avatar is not None:
-        result = cloudinary.uploader.upload(user_avatar)
-        image_url = result['secure_url']
-        user.avatar_url = image_url
     
     restaurant = user.restaurant
     restaurant_name = data.get('restaurantName')
-    if restaurant_name is not None:
+    if restaurant_name is not None and restaurant_name != '':
         restaurant.name = restaurant_name
-    restaurant_rif = data.get('restaurantRif')
-    if restaurant_rif is not None:
-        restaurant.rif = restaurant_rif
-        user.name = restaurant_rif
     restaurant_phone = data.get('restaurantPhone')
-    if restaurant_phone is not None:
+    if restaurant_phone is not None and restaurant_phone != '':
         restaurant.phone = restaurant_phone
     restaurant_location = data.get('restaurantLocation')
-    if restaurant_location is not None:
+    if restaurant_location is not None and restaurant_location != '':
         restaurant.location = restaurant_location
     restaurant_description = data.get('restaurantDescription')
-    if restaurant_description is not None:
+    if restaurant_description is not None and restaurant_description != '':
         restaurant.description = restaurant_description
     restaurant_facebook = data.get('restaurantFacebook')
-    if  restaurant_facebook is not None:
+    if  restaurant_facebook is not None and restaurant_facebook != '':
         restaurant.facebook_url =  restaurant_facebook
     restaurant_instagram = data.get('restaurantInstagram')
-    if restaurant_instagram is not None:
+    if restaurant_instagram is not None and restaurant_instagram != '':
         restaurant.instagram_url = restaurant_instagram
     restaurant_twitter = data.get('restaurantTwitter')
-    if restaurant_twitter is not None:
+    if restaurant_twitter is not None and restaurant_twitter != '':
         restaurant.twitter_url = restaurant_twitter
 
     try:
@@ -537,29 +530,6 @@ def delete_user(user_id):
     except Exception as error:
         db.session.rollback()
         return jsonify({'message': error.args}), 500
-
-    return jsonify({'message': 'ok'}), 200
-
-@api.route('/send-email-register', methods=['POST'])
-@jwt_required()
-def send_email_register():
-    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-    if user is None:
-        return jsonify({'message': 'Wrong user.'}), 400
-    if user.role != Role.ADMIN:
-        return jsonify({'message': 'Enough permision.'}), 405
-
-    form = request.form
-    if(form is None):
-        return jsonify({'message': "Request must be a form"}), 400
-
-    email_to =  form.get('to')
-    title =  'You have registered on Comecon'
-
-    if None in [email_to]:
-        return jsonify({'message': 'wrong property'})
-
-    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
 
     return jsonify({'message': 'ok'}), 200
 
