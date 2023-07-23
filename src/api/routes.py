@@ -308,8 +308,8 @@ def add_dish():
     food.restaurant_id = user.restaurant.id
     food.name = food_name
     food.price = food_price
-    food.description = food_description
-    food.tags = food_tags
+    food.description = str.lower(food_description)
+    food.tags = str.lower(food_tags)
     food.image_url = food_image
 
     db.session.add(food)
@@ -414,8 +414,8 @@ def get_all_food():
     queryLimit = request.args.get('limit') if request.args.get('limit') != '' else None
 
     query_filter = and_(
-                        Food.description.like(str.lower(queryDescription)), 
-                        Food.tags.like(str.lower(queryTag)),
+                        Food.description.ilike(queryDescription), 
+                        Food.tags.ilike(queryTag),
                         Food.price <= queryPrice
                     )
 
