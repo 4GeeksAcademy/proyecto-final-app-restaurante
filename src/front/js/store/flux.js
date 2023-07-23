@@ -260,7 +260,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("deleting restaurant...");
         }
       },
+<<<<<<< HEAD
       getRequests: async () => {
+=======
+
+      getRequests: async (request) => {
+>>>>>>> e60d8581b9182d2d71916d6f1c375e8292752e86
         const store = getStore()
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
@@ -281,6 +286,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error)
         }
       },
+
       editRestaurant: async (data) => {
         const store = getStore();
         try {
@@ -302,6 +308,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
+
       deletePlaceImage: async (imageId, restaurantId = null) => {
         const store = getStore();
 
@@ -334,6 +341,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return true;
       },
+
       validateAdmin: async (specialToken, userData) => {
         console.log(userData);
 
@@ -356,14 +364,24 @@ const getState = ({ getStore, getActions, setStore }) => {
         return false;
 
       },
+<<<<<<< HEAD
       manageRequest: async (form) => {
         const store = getStore();
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/user/${form.get('user_id')}`, {
+=======
+
+      editDish: async (data) => {
+        const store = getStore();
+
+        try {
+          let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
+>>>>>>> e60d8581b9182d2d71916d6f1c375e8292752e86
             method: "PUT",
             headers: {
               Authorization: `Bearer ${store.token}`
             },
+<<<<<<< HEAD
             body: form
           });
 
@@ -384,6 +402,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
         
+=======
+            body: data
+          });
+          if (!response.ok) {
+            errorAlert(data.message);
+            console.log("No se pudo editar el plato")
+          }
+          else {
+            successAlert('Plato editado correctamente');
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      
+>>>>>>> e60d8581b9182d2d71916d6f1c375e8292752e86
       clearResults: () => {
         setStore({
           results: []
