@@ -9,7 +9,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: JSON.parse(sessionStorage.getItem("token")) || null,
       restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
-      restaurant: null,
       requests: [],
       BASEURL: process.env.BACKEND_URL
     },
@@ -404,13 +403,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(error);
         }
       },
-      
       clearResults: () => {
         setStore({
           results: []
         })
+      },
+      logOut: () => {
+        setStore({
+          user: null,
+          restaurant: null,
+          token: null
+        });
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('restaurant');
       }
-      
     }
   };
 }
