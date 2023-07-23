@@ -349,6 +349,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
 
         if(response.ok) {
+          successAlert('You have validated your account successful')
           console.log(data.message);
           return true;
         }
