@@ -56,7 +56,10 @@ export const EditDish = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            actions.editDish(formData);
+            const success = actions.editDish(formData);
+
+            if(success)
+                navigate('/restaurant/menu');
         };
     }
 
