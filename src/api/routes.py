@@ -544,12 +544,12 @@ def change_status_restaurant(user_id = None):
     #     return jsonify({'message': 'Enough permision.'}), 405
 
     form = request.form
+    print(form, user)
     
     if(form is None):
         return jsonify({'message': "Request must be a form"}), 400
 
-    email_to =  form.get('to')
-    title =  'You have registered on Comecon'
+    email_to =  form.get('email')
 
     if None in [email_to]:
         return jsonify({'message': 'wrong property'})
@@ -557,8 +557,8 @@ def change_status_restaurant(user_id = None):
     user_to_change = User.query.filter_by(id=user_id).one_or_none()
     if user_to_change is None:
         return jsonify({'message': "There isn't user valid!."}), 400
-
-    if form.get('status') == "valid":
+    
+    if form.get('status') == "valid":   
         user_to_change.status = UserStatus.VALID
         send_a_email(to=email_to, title='Has sido aprobado en Comecon', html=aproved_email())
     elif form.get('status') == "invalid":

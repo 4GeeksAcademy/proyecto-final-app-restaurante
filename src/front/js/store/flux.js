@@ -260,12 +260,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("deleting restaurant...");
         }
       },
-<<<<<<< HEAD
       getRequests: async () => {
-=======
-
-      getRequests: async (request) => {
->>>>>>> e60d8581b9182d2d71916d6f1c375e8292752e86
         const store = getStore()
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
@@ -275,12 +270,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             }						
           })
           if (response.ok) {
-            const allRequests = await response.json();
-            setStore(
-              {
-                requests: allRequests
-              }
-            )
+            const restaurants = await response.json();
+            const allRequests = restaurants.filter((item) => {
+              return item.status == 'invalid'
+            })
+            setStore({ requests: allRequests })
           }
         } catch (error) {
           console.log(error)
@@ -364,45 +358,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         return false;
 
       },
-<<<<<<< HEAD
-      manageRequest: async (form) => {
-        const store = getStore();
-        try {
-          const response = await fetch(`${process.env.BACKEND_URL}/user/${form.get('user_id')}`, {
-=======
-
       editDish: async (data) => {
         const store = getStore();
 
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
->>>>>>> e60d8581b9182d2d71916d6f1c375e8292752e86
             method: "PUT",
             headers: {
               Authorization: `Bearer ${store.token}`
             },
-<<<<<<< HEAD
-            body: form
-          });
-
-          const data = await response.json();
-
-          if (response.ok) {
-            console.log(form.get('status'))
-            if (form.get('status')==='valid')
-              successAlert('Restaurante aceptado');
-            else 
-              warningAlert('Restaurante rechazado')
-          }
-          else {
-            errorAlert('Something is wrong', data.message);
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      },
-        
-=======
             body: data
           });
           if (!response.ok) {
@@ -417,7 +381,30 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
->>>>>>> e60d8581b9182d2d71916d6f1c375e8292752e86
+      manageRequest: async (form) => {
+        const store = getStore();
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/user/${form.get('user_id')}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: form
+          });
+
+          if (response.ok) {
+            if (form.get('status')==='valid')
+              successAlert('Restaurante aceptado');
+            else 
+              warningAlert('Restaurante rechazado')
+          }else{
+            errorAlert(data.message);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      
       clearResults: () => {
         setStore({
           results: []

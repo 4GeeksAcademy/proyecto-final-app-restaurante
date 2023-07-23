@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import "../../styles/dishcard.css"
@@ -37,8 +37,8 @@ export const RequestCard = ({ key, user }) => {
         event.preventDefault();
         var formData = new FormData();
         formData.append('status', response);
-        formData.append('user_id', user_id);
-        formData.append('email', email);
+        formData.append('user_id', restaurant?.user_id);
+        formData.append('email', user?.email);
 
         actions.manageRequest(formData)
     }
