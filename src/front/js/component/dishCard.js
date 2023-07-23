@@ -5,8 +5,6 @@ import { FaSearch } from 'react-icons/fa';
 
 import "../../styles/dishcard.css"
 
-
-
 export const DishCard = ({ key, dish }) => {
     const { actions } = useContext(Context);
     const { id, image_url, restaurant_name, name, price, description } = dish

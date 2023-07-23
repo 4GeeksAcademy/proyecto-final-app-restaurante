@@ -1,4 +1,5 @@
-import { successAlert, errorAlert } from "../util";
+import { useRef } from "react";
+import { successAlert, errorAlert, warningAlert } from "../util";
 
 const getState = ({ getStore, getActions, setStore }) => {
 
@@ -8,13 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: JSON.parse(sessionStorage.getItem("token")) || null,
       restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
-      requests: [{
-        name: "Hong Kong",
-        phone: "010242655",
-        rif: "J123556",
-        location: "calle q",
-        description: "Business es un restaiurante de comida asiatica con fusion latina que destaca por su pizza"
-      }],
+      restaurant: null,
+      requests: [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -264,31 +260,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("deleting restaurant...");
         }
       },
-
-      getRequests: async (request) => {
+      getRequests: async () => {
         const store = getStore()
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
-            }						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+              Authorization: `Bearer ${store.token}` 
+            }						
           })
           if (response.ok) {
-            const allRequests = await response.json();
-            console.log(allRequests)
-            const allRestaurantRequest = []
-            {
-              allRequests.map((item, index) => {
-                allRestaurantRequest.push(item.restaurant)
-              })
-            }
-            console.log(allRestaurantRequest)
-            setStore(
-              {
-                requests: allRestaurantRequest
-              }
-            )
+            const restaurants = await response.json();
+            const allRequests = restaurants.filter((item) => {
+              return item.status == 'invalid'
+            })
+            setStore({ requests: allRequests })
           }
         } catch (error) {
           console.log(error)
@@ -297,7 +283,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       editRestaurant: async (data) => {
         const store = getStore();
-
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "PUT",
@@ -373,7 +358,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         return false;
 
       },
-
       editDish: async (data) => {
         const store = getStore();
 
@@ -397,11 +381,36 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
+      manageRequest: async (form) => {
+        const store = getStore();
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/user/${form.get('user_id')}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: form
+          });
+
+          if (response.ok) {
+            if (form.get('status')==='valid')
+              successAlert('Restaurante aceptado');
+            else 
+              warningAlert('Restaurante rechazado')
+          }else{
+            errorAlert(data.message);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      
       clearResults: () => {
         setStore({
           results: []
         })
       }
+      
     }
   };
 }
