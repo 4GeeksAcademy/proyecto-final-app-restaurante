@@ -113,7 +113,7 @@ export const EditDish = () => {
                                 <label htmlFor="name">Precio</label>
                                 <div className="input-group border rounded-3">
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control border border-dark"
                                         id="price"
                                         name="price"

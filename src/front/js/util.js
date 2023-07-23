@@ -38,44 +38,44 @@ export const onValidateRegister = (user) => {
     //VALIDACIONES PARA REGISTRO DE RESTAURANT
 
     if (!user.restaurantName.trim()) {
-        errors.restaurantName = "This field should not be empty"
+        errors.restaurantName = "Este campo no debe estar vacío"
     } else if (!regexName.test(user.restaurantName)) {
-        errors.restaurantName = "This field should not be more than 150 characters long"
+        errors.restaurantName = "Este campo no debe tener mas de 150 caracteres"
     }
 
 
     if (!user.restaurantRif.trim()) {
-        errors.restaurantRif = "This field should not be empty"
+        errors.restaurantRif = "Este campo no debe estar vacío"
     } else if (!regexRif.test(user.restaurantRif)) {
-        errors.restaurantRif = "This field should not be more than 20 characters long"
+        errors.restaurantRif = "Este campo no debe ser mayor a 20 caracteres"
     }
 
 
     if (!user.phone.trim()) {
-        errors.phone = "This field should not be empty"
+        errors.phone = "Este campo no debe estar vacío"
     } else if (!regexPhone.test(user.phone)) {
-        errors.phone = "This field only accepts numbers and '+' character"
+        errors.phone = "Este campo acepta solo números y el caracter '+'"
     }
 
 
     if (!user.email.trim()) {
-        errors.email = "This field should not be empty"
+        errors.email = "Este campo no debe estar vacío"
     } else if (!regexEmail.test(user.email)) {
-        errors.email = "This field should have '@' and '.DOM' characters"
+        errors.email = "Este campo debe llevar los caracteres '@' y '.DOM'"
     }
 
 
     if (!user.location.trim()) {
-        errors.location = "This field should not be empty"
+        errors.location = "Este campo no debe estar vacío"
     } else if (!regexLocation.test(user.location)) {
-        errors.location = "This field should have a valid URL"
+        errors.location = "Este campo debe tener una URL válida"
     }
 
 
     if (!user.password.trim()) {
-        errors.password = "This field should not be empty"
+        errors.password = "Este campo no debe estar vacío"
     } else if (!regexPassword.test(user.password)) {
-        errors.password = "This field should be between 8 and 20 characters"
+        errors.password = "Este campo debe llevar entre 8 y 20 caracteres"
     }
 
 
@@ -89,25 +89,26 @@ export const onValidateRegister = (user) => {
 export const onValidateDishes = (user) => {
     let errors = {};
     let regexName = /^.{1,20}$/;
-    let regexComment = /^.{1,200}$/;                                               //LETTERS VALIDATION
+    let regexComment = /^.{1,100}$/; 
+    let regexNumber = /^[0-9]$/;                               
 
 
     //VALIDACIONES PARA REGISTRO DE DISHES
 
     if (!user.name.trim()) {
-        errors.name = "This field should not be empty"
+        errors.name = "Este campo no debe estar vacío"
     } else if (!regexName.test(user.name)) {
-        errors.name = "This field should not be more than 20 characters long"
+        errors.name = "Este campo no debe llevar mas de 20 caracteres"
     }
 
     if (!user.description.trim()) {
-        errors.description = "This field should not be empty"
+        errors.description = "Este campo no debe estar vacío"
     } else if (!regexComment.test(user.description)) {
-        errors.description = "This field should not be more than 200 characters long"
+        errors.description = "Este campo no debe ser mayor a 100 caracteres"
     }
 
     if (!user.price.trim()) {
-        errors.price = "This field should not be empty"
+        errors.price = "Este campo no debe estar vacío"
     }
 
 

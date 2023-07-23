@@ -90,10 +90,10 @@ export const AddDishes = () => {
                             </div>
 
                             <div className="form-group mt-3">
-                                <label htmlFor="name">Precio</label>
+                                <label htmlFor="price">Precio</label>
                                 <div className="input-group border rounded-3">
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control border border-dark"
                                         id="price"
                                         name="price"
