@@ -83,6 +83,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       //PARA REGISTRO DE DISHES:
       dishesRegister: async (dish) => {
         const store = getStore();
+        const actions = getActions();
+        const { getOneRestaurant } = actions;
+
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
             method: "POST",
@@ -96,6 +99,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             successAlert('Dish added');
+            await getOneRestaurant(store.restaurant.id);
+            return true;
           }
           else {
             errorAlert(data.message);
@@ -105,9 +110,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           errorAlert('Some error ocurred');
           console.log(error);
         }
+
+        return false;
       },
-
-
       getOneRestaurant: async (id) => {
         //fetch to the api
         const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
@@ -360,6 +365,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       editDish: async (data) => {
         const store = getStore();
+        const actions = getActions();
+        const { getOneRestaurant } = actions;
 
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
@@ -376,10 +383,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           else {
             successAlert('Plato editado correctamente');
             getOneRestaurant(store.restaurant.id);
+            return true;
           }
         } catch (error) {
           console.error(error);
         }
+
+        return false;
       },
       
       manageRequest: async (form) => {

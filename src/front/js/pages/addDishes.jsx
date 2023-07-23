@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
 import { onValidateDishes } from "../util.js";
 
 const initialState = {                                              //ESTADO INICIAL
@@ -15,13 +15,14 @@ export const AddDishes = () => {
     const { actions } = useContext(Context);
     const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         //MANEJA LOS CAMBIOS EN LOS FORM FIELDS
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM
+    const handleRegister = async(e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
         setErrors(err)                                              //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
@@ -36,7 +37,10 @@ export const AddDishes = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            actions.dishesRegister(formData); //FUNCION FLUX
+            const success = await actions.dishesRegister(formData); //FUNCION FLUX
+
+            if (success)
+                navigate('/restaurant/menu');
         };
     }
 
