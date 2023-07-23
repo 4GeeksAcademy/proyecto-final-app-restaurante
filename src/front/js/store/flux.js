@@ -374,6 +374,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           else {
             successAlert('Plato editado correctamente');
+            getOneRestaurant(store.restaurant.id);
           }
         } catch (error) {
           console.error(error);
