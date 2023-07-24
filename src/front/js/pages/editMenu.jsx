@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { DishCard } from "../component/dishCard";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const initialState = [
   {
@@ -45,24 +46,26 @@ export const EditMenu = () => {
 
   return (
     <>
-      <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
-        <div className="row justify-content-center">
-          <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
-            <strong>Editar Menú</strong>
-          </h2>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
+      {store.user.role == "Restaurant" ?
+        <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
+          <div className="row justify-content-center">
+            <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+              <strong>Editar Menú</strong>
+            </h2>
+            <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+              <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
+            </div>
           </div>
-        </div>
-        <div className="container grid px-0 m-0 mt-3">
-          {dishes.map((dish, index) => {
-            console.log(dish);
-            return <DishCard
-              key={index}
-              dish={dish} />;
-          })}
-        </div>
-      </div>
+          <div className="container grid px-0 m-0 mt-3">
+            {dishes.map((dish, index) => {
+              console.log(dish);
+              return <DishCard
+                key={index}
+                dish={dish} />;
+            })}
+          </div>
+        </div> : navigate("/access-denied")
+      }
     </>
   );
 };

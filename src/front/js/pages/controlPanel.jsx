@@ -49,7 +49,7 @@ export const ControlPanel = () => {
             console.log(restaurant);
             return <RestaurantCard key={index} restaurant={restaurant} />;
           })}
-        </div> : navigate("/access_denied")
+        </div> : navigate("/access-denied")
       }
     </>
   );

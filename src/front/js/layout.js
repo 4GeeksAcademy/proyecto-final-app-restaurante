@@ -44,7 +44,8 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                
+                        {/* "exclusive-for-restaurant": editMenu[DONE], addDishes, editProfile[DONE]} */}
+                        {/* "exclusive-for-admin": {controlPanel[DONE] */}
                         <Route element={<Home />} path="/" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
@@ -56,7 +57,7 @@ const Layout = () => {
                         <Route element={<RequiereAuth child={<ControlPanel />} />} path="/admin/restaurant" />
                         <Route element={<RequiereAuth child={<EditMenu />} />} path="/restaurant/menu" />
                         <Route element={<RequiereAuth child={<RegisterAdmin/>} />} path='/register-admin/:token' />
-                        <Route element={<AccessDeniedPage />} path="/access_denied" />
+                        <Route element={<AccessDeniedPage />} path="/access-denied" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <ToastContainer
