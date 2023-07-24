@@ -363,19 +363,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         return false;
 
       },
-      editDish: async (data) => {
+      editDish: async (data, id) => {
         const store = getStore();
         const actions = getActions();
         const { getOneRestaurant } = actions;
 
         try {
-          let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
+          let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food/${id}`, {
             method: "PUT",
             headers: {
               Authorization: `Bearer ${store.token}`
             },
             body: data
           });
+          
           if (!response.ok) {
             errorAlert(data.message);
             console.log("No se pudo editar el plato")
