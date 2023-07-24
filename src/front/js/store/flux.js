@@ -116,7 +116,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getOneRestaurant: async (id) => {
         //fetch to the api
         const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
-        
+
         if (response.ok) {
           const restaurant = await response.json();
 
@@ -270,8 +270,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${store.token}` 
-            }						
+              Authorization: `Bearer ${store.token}`
+            }
           })
           if (response.ok) {
             const restaurants = await response.json();
@@ -353,7 +353,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         const data = await response.json();
 
-        if(response.ok) {
+        if (response.ok) {
           successAlert('You have validated your account successful')
           console.log(data.message);
           return true;
@@ -376,7 +376,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: data
           });
-          
+
           if (!response.ok) {
             errorAlert(data.message);
             console.log("No se pudo editar el plato")
@@ -392,7 +392,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return false;
       },
-      
+
+
+      deleteDish: async (id) => {
+        const store = getStore();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/restaurant/food/${id}`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            successAlert('Tu plato ha sido eliminado');
+          }
+          else {
+            errorAlert(data.message);
+          }
+          return data;
+
+        } catch (error) {
+          errorAlert('Un error ha ocurrido!');
+          console.log(error)
+        }
+      },
+
       manageRequest: async (form) => {
         const store = getStore();
         try {
@@ -405,11 +432,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-            if (form.get('status')==='valid')
+            if (form.get('status') === 'valid')
               successAlert('Restaurante aceptado');
-            else 
+            else
               warningAlert('Restaurante rechazado')
-          }else{
+          } else {
             errorAlert(data.message);
           }
         } catch (error) {

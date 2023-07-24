@@ -3,6 +3,7 @@ import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
 
+
 import "../../styles/dishcard.css"
 
 export const DishCard = ({ key, dish }) => {
