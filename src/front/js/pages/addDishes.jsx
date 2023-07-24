@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-import { Link, useNavigate } from "react-router-dom";
 import { onValidateDishes } from "../util.js";
 
 
@@ -16,13 +16,14 @@ export const AddDishes = () => {
     const { actions } = useContext(Context);
     const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         //MANEJA LOS CAMBIOS EN LOS FORM FIELDS
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = (e) => {                                 //MANEJA EL ENVIO DEL FORM
+    const handleRegister = async(e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
         setErrors(err)                                              //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
@@ -37,7 +38,10 @@ export const AddDishes = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            actions.dishesRegister(formData); //FUNCION FLUX
+            const success = await actions.dishesRegister(formData); //FUNCION FLUX
+
+            if (success)
+                navigate('/restaurant/menu');
         };
     }
 
@@ -110,56 +114,52 @@ export const AddDishes = () => {
                                         </div>
                                         {errors.price && <div className="alert p-0 m-0 bg-none text-danger">{errors.price}</div>}
 
-                                    </div>
-
-                                    <div className="form-group mt-4">
-                                        <label htmlFor="name">Etiquetas</label>
-                                        <input
-                                            type="text"
-                                            className="form-control border border-dark"
-                                            id="tags"
-                                            name="tags"
-                                            placeholder="Agrega algunas palabras claves"
-                                            onChange={handleChange}
-                                            value={dish.tags}
-                                            required
-                                        ></input>
-                                        {errors.tags && <div className="alert p-0 m-0 bg-none text-danger">{errors.tags}</div>}
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <label htmlFor="image" className="form-label">
-                                            Imagen
-                                        </label>
-                                        <input
-                                            className="form-control form-control-sm border border-dark"
-                                            id="image"
-                                            name="image"
-                                            type="file"
-                                            onChange={({ target }) => setDish({ ...dish, image: target.files[0] })}
-                                            required
-                                        ></input>
-                                        {/* {errors.image && <div className="alert p-0 m-0 bg-none text-danger">{errors.image}</div>} */}
-                                    </div>
-
-                                    {/* BOTON DE ENVIO */}
-                                    <div>
-                                        <button
-                                            type="button"
-                                            className="btn btn-success w-100 mt-3"
-                                            onClick={(e) => handleRegister(e)}
-                                        >
-                                            <strong>Guardar</strong>
-                                        </button>
-                                    </div>
-                                </form>
                             </div>
-                        </div>
-                    </div> 
-            {/* : navigate("/access-denied") 
-            } */}
-            
-            
+
+                            <div className="form-group mt-4">
+                                <label htmlFor="name">Etiquetas</label>
+                                <input
+                                    type="text"
+                                    className="form-control border border-dark"
+                                    id="tags"
+                                    name="tags"
+                                    placeholder="Agrega algunas palabras claves"
+                                    onChange={handleChange}
+                                    value={dish.tags}
+                                    required
+                                ></input>
+                                {errors.tags && <div className="alert p-0 m-0 bg-none text-danger">{errors.tags}</div>}
+                            </div>
+
+                            <div className="mt-4">
+                                <label htmlFor="image" className="form-label">
+                                    Imagen
+                                </label>
+                                <input
+                                    className="form-control form-control-sm border border-dark"
+                                    id="image"
+                                    name="image"
+                                    type="file"
+                                    onChange={({ target }) => setDish({ ...dish, image: target.files[0] })}
+                                    required
+                                ></input>
+                                {/* {errors.image && <div className="alert p-0 m-0 bg-none text-danger">{errors.image}</div>} */}
+                            </div>
+
+                            {/* BOTON DE ENVIO */}
+                            <div>
+                                <button
+                                    type="button"
+                                    className="btn btn-success w-100 mt-3"
+                                    onClick={(e) => handleRegister(e)}
+                                >
+                                    <strong>Guardar</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };

@@ -46,7 +46,7 @@ export const EditMenu = () => {
 
   return (
     <>
-      {store.user.role == "Restaurant" ?
+      
         <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
           <div className="row justify-content-center">
             <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
@@ -56,16 +56,16 @@ export const EditMenu = () => {
               <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
             </div>
           </div>
-          <div className="container grid px-0 m-0 mt-3">
-            {dishes.map((dish, index) => {
-              console.log(dish);
-              return <DishCard
-                key={index}
-                dish={dish} />;
-            })}
-          </div>
-        </div> : navigate("/access-denied")
-      }
+        </div>
+        <div className="container col-12 px-0 m-0 mt-3">
+          {dishes.map((dish, index) => {
+            console.log(dish);
+            return <DishCard
+              key={index}
+              dish={dish} />;
+          })}
+        </div>
+        
     </>
   );
 };

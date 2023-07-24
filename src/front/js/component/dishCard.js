@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
+import { FaSearch } from 'react-icons/fa';
+
 import "../../styles/dishcard.css"
 
-
-
 export const DishCard = ({ key, dish }) => {
-    // const { actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const { id, image_url, restaurant_name, name, price, description } = dish
-
+   
     return (
-        <div className="d-flex justify-content-center" key={id}>
+        <div className="d-flex m-3 justify-content-center" key={id}>
             <div className="card col-11 p-0 m-0">
                 <div className="row m-2">
                     <div className="col-md-4 p-0">
@@ -25,8 +26,8 @@ export const DishCard = ({ key, dish }) => {
                             {location.pathname === '/restaurant/menu' && (
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btns-container">
-                                        <button className="btn btn-primary me-2">Editar</button>
-                                        <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}>Borrar</button>
+                                        <Link to = {`/restaurant/menu/food/edit/${dish.id}`} className='btn btn-warning me-2'><strong>Editar</strong></Link>
+                                        <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}><strong>Borrar</strong></button>
                                     </div>
                                     <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
                                 </div>

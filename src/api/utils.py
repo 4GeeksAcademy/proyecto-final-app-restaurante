@@ -70,7 +70,6 @@ def send_a_email(**kwargs):
     email_account = os.getenv('EMAIL_ACCOUNT')
     email_password = os.getenv('EMAIL_PASSWORD')
     server.login(email_account, email_password)
-
     email_to = kwargs.get('to')
 
     msg = email.message.Message()
@@ -81,6 +80,16 @@ def send_a_email(**kwargs):
     msg.set_payload(kwargs.get('html'))
     server.sendmail(email_account, email_to, msg.as_string().encode('utf-8'))
     server.quit()
+
+def aproved_email():
+    return(
+        "Su restaurante ha sido aprobado, felicitaciones!"
+    )
+
+def rejected_email():
+    return(
+        "Su restaurante ha sido rechazado, ponganse en contacto con soporte"
+    )
 
 
 def get_register_email():

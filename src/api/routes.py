@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin, aproved_email, rejected_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 from sqlalchemy import and_, or_
@@ -308,8 +308,8 @@ def add_dish():
     food.restaurant_id = user.restaurant.id
     food.name = food_name
     food.price = food_price
-    food.description = food_description
-    food.tags = food_tags
+    food.description = str.lower(food_description)
+    food.tags = str.lower(food_tags)
     food.image_url = food_image
 
     db.session.add(food)
@@ -414,8 +414,8 @@ def get_all_food():
     queryLimit = request.args.get('limit') if request.args.get('limit') != '' else None
 
     query_filter = and_(
-                        Food.description.like(str.lower(queryDescription)), 
-                        Food.tags.like(str.lower(queryTag)),
+                        Food.description.ilike(queryDescription), 
+                        Food.tags.ilike(queryTag),
                         Food.price <= queryPrice
                     )
 
@@ -484,13 +484,13 @@ def add_user():
 
     return jsonify(user.serialize()), 201
 
-
+#Get all requests
 @api.route('/user', methods=['GET'])
 @jwt_required()
 def get_user_filtered():
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-    if user.role != Role.ADMIN:
-        return jsonify({'message': 'not permise'}), 200
+    # if user.role != Role.ADMIN:
+    #     return jsonify({'message': 'not permise'}), 200
 
     user_role = request.args.get('role')
     user_role = Role.get_role(user_role)
@@ -544,15 +544,26 @@ def change_status_restaurant(user_id = None):
     #     return jsonify({'message': 'Enough permision.'}), 405
 
     form = request.form
+    print(form, user)
     
+    if(form is None):
+        return jsonify({'message': "Request must be a form"}), 400
+
+    email_to =  form.get('email')
+
+    if None in [email_to]:
+        return jsonify({'message': 'wrong property'})
+
     user_to_change = User.query.filter_by(id=user_id).one_or_none()
     if user_to_change is None:
         return jsonify({'message': "There isn't user valid!."}), 400
-
-    if form.get('status') != "valid":
-        return jsonify({'message': "Invalid."}), 400
-
-    user_to_change.status = UserStatus.VALID
+    
+    if form.get('status') == "valid":   
+        user_to_change.status = UserStatus.VALID
+        send_a_email(to=email_to, title='Has sido aprobado en Comecon', html=aproved_email())
+    elif form.get('status') == "invalid":
+        user_to_change.status = UserStatus.INVALID
+        send_a_email(to=email_to, title='Has sido rechazado en Comecon', html=rejected_email())
 
     try:
         db.session.commit()
@@ -602,8 +613,6 @@ def send_email_register_admin():
 
     return jsonify({'message': 'ok'}), 200
 
-
-#Change status 
 @api.route('/self-register-admin', methods=['PUT'])
 @jwt_required()
 def self_register_admin(): 

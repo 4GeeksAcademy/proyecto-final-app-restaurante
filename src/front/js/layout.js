@@ -24,7 +24,7 @@ import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
-import AccessDeniedPage from "./pages/AccessDeniedPage.jsx"
+import { EditDish } from "./pages/editDish.jsx";
 
 
 
@@ -52,12 +52,12 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<RequiereAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
-                        <Route element={<RequiereAuth child={<AddDishes />} />} path="/restaurant/menu/food" />
-                        <Route element={<RequiereAuth child={<RestaurantRequest />} />} path="/requests" />
-                        <Route element={<RequiereAuth child={<ControlPanel />} />} path="/admin/restaurant" />
-                        <Route element={<RequiereAuth child={<EditMenu />} />} path="/restaurant/menu" />
-                        <Route element={<RequiereAuth child={<RegisterAdmin/>} />} path='/register-admin/:token' />
-                        <Route element={<AccessDeniedPage />} path="/access-denied" />
+                        <Route element={<AddDishes />} path="/restaurant/menu/food" />
+                        <Route element={<EditDish />} path="/restaurant/menu/food/edit/:dishId" />
+                        <Route element={<RestaurantRequest />} path="/requests" />
+                        <Route element={<ControlPanel />} path="/admin/restaurant" />
+                        <Route element={<EditMenu />} path="/restaurant/menu" />
+                        <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <ToastContainer

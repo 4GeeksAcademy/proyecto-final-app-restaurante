@@ -19,16 +19,18 @@ export const Home = () => {
 				</div>
 
 				{/* Muestra los platos */}
-				<div className="container grid mt-4">
-					{
-						results.map(dish => {
-							return (
-								<DishCard
-									key={dish.id}
-									dish={dish} />
-							);
-						})
-					}
+				<div className="d-flex justify-content-center px-0 m-0 mt-4">
+					<div>
+						{
+							results.map(dish => {
+								return (
+									<DishCard
+										key={dish.id}
+										dish={dish} />
+								);
+							})
+						}
+					</div>
 				</div>
 			</div>
 		</>
