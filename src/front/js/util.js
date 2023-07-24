@@ -100,7 +100,7 @@ export const onValidateDishes = (user) => {
     let errors = {};
     let regexName = /^.{1,20}$/;
     let regexComment = /^.{1,100}$/; 
-    let regexNumber = /^[0-9]$/;                               
+    let regexNumber = /^([0-9])*$/;                         
 
 
     //VALIDACIONES PARA REGISTRO DE DISHES
@@ -119,6 +119,8 @@ export const onValidateDishes = (user) => {
 
     if (!user.price.trim()) {
         errors.price = "Este campo no debe estar vacío"
+    } else if (!regexNumber.test(user.price)) {
+        errors.price = "Este campo debe llevar solo numeros"
     }
 
 

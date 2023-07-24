@@ -56,7 +56,7 @@ export const EditDish = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            const success = actions.editDish(formData);
+            const success = actions.editDish(formData, dishId);
 
             if(success)
                 navigate('/restaurant/menu');
@@ -116,7 +116,7 @@ export const EditDish = () => {
                                 <label htmlFor="name">Precio</label>
                                 <div className="input-group border rounded-3">
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="form-control border border-dark"
                                         id="price"
                                         name="price"
@@ -166,7 +166,7 @@ export const EditDish = () => {
                                 <button
                                     type="button"
                                     className="btn btn-success w-100 me-2"
-                                    onClick={(e) => handleEdit(e)}
+                                    onClick={handleEdit}
                                 >
                                     <strong>Actualizar</strong>
                                 </button>
