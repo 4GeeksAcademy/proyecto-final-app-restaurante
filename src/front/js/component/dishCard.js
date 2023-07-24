@@ -2,14 +2,25 @@ import React, { useContext } from "react";
 import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 
 import "../../styles/dishcard.css"
 
 export const DishCard = ({ key, dish }) => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const { id, image_url, restaurant_name, name, price, description } = dish
-   
+    const navigate = useNavigate();
+
+    const handleDelete = () => {
+        actions.deleteDish(dish.id);
+        console.log(dish.id);
+        actions.getAllDishes(dish.restaurant_id);
+        
+        navigate('/restaurant/menu');
+    }
+
+
     return (
         <div className="d-flex m-3 justify-content-center" key={id}>
             <div className="card col-11 p-0 m-0">
@@ -27,8 +38,8 @@ export const DishCard = ({ key, dish }) => {
                             {location.pathname === '/restaurant/menu' && (
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btns-container">
-                                        <Link to = {`/restaurant/menu/food/edit/${dish.id}`} className='btn btn-warning me-2'><strong>Editar</strong></Link>
-                                        <button className="btn btn-danger" onClick={() => actions.deleteDish(dish.id)}><strong>Borrar</strong></button>
+                                        <Link to={`/restaurant/menu/food/edit/${dish.id}`} className='btn btn-warning me-2'><strong>Editar</strong></Link>
+                                        <button className="btn btn-danger" onClick={() => {handleDelete()} }><strong>Borrar</strong></button>
                                     </div>
                                     <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
                                 </div>

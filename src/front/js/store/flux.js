@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
       requests: [],
+      dishes: [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -457,7 +458,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('restaurant');
-      }
+      },
+
+      getAllDishes: async (id) => {
+        const store = getStore();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}/food`);
+          console.log(id)
+          const data = await response.json();
+          setStore(
+            {
+              "dishes": data
+            }
+          );    
+        } catch (err) {
+          console.error(err);
+        }
+        console.log("showing dishes...")
+      } 
     }
   };
 }
