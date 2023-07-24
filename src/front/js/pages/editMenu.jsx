@@ -15,32 +15,32 @@ const initialState = [
 ];
 
 export const EditMenu = () => {
-  const [dishes, setDishes] = useState([]);
-  const { store } = useContext(Context)
-
-  const { user } = store
+  // const [dishes, setDishes] = useState([]);
+  const { store, actions } = useContext(Context);
+  const { user, dishes, restaurant } = store;
+  // const { user } = store
 
 
 
   //TRAER TODOS LOS PLATOS DE UN RESTAURANT
-  const getAllDishes = async (id) => {
-    try {
-      const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}/food`);
-      console.log(id)
-      const data = await response.json();
-      setDishes(data);
+  // const getAllDishes = async (id) => {
+  //   try {
+  //     const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}/food`);
+  //     console.log(id)
+  //     const data = await response.json();
+  //     setDishes(data);
 
-    } catch (err) {
-      console.error(err);
-    }
-    console.log("showing dishes...")
-  };
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  //   console.log("showing dishes...")
+  // };
 
   useEffect(() => {
     if (user != undefined && user.restaurant != undefined) {
-      getAllDishes(user.restaurant.id);
+      actions.getAllDishes(user.restaurant.id);
     }
-  }, []);
+  }, [user.index]);
 
 
   return (
@@ -55,7 +55,7 @@ export const EditMenu = () => {
           </div>
         </div>
         <div className="container col-12 px-0 m-0 mt-3">
-          {dishes.map((dish, index) => {
+          {restaurant.foods.map((dish, index) => {
             console.log(dish);
             return <DishCard
               key={index}
