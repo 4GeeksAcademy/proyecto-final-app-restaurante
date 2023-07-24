@@ -14,8 +14,8 @@ export const DishCard = ({ key, dish }) => {
 
     const handleDelete = () => {
         actions.deleteDish(dish.id);
-        console.log(dish.id);
-        actions.getAllDishes(dish.restaurant_id);
+        // console.log(dish.id);
+        // actions.getAllDishes(dish.restaurant_id);
         
         navigate('/restaurant/menu');
     }

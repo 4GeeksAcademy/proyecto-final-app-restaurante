@@ -17,7 +17,7 @@ const initialState = [
 export const EditMenu = () => {
   // const [dishes, setDishes] = useState([]);
   const { store, actions } = useContext(Context);
-  const { user, dishes } = store;
+  const { user, dishes, restaurant } = store;
   // const { user } = store
 
 
@@ -55,7 +55,7 @@ export const EditMenu = () => {
           </div>
         </div>
         <div className="container col-12 px-0 m-0 mt-3">
-          {dishes.map((dish, index) => {
+          {restaurant.foods.map((dish, index) => {
             console.log(dish);
             return <DishCard
               key={index}

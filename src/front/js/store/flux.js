@@ -397,6 +397,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteDish: async (id) => {
         const store = getStore();
+        const actions = getActions();
+        const { getOneRestaurant } = actions;
+        const { restaurant } = store;
 
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/food/${id}`, {
@@ -409,6 +412,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             successAlert('Tu plato ha sido eliminado');
+            getOneRestaurant(restaurant.id);
           }
           else {
             errorAlert(data.message);
