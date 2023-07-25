@@ -12,12 +12,13 @@ export const DishCard = ({ key, dish }) => {
     const { id, image_url, restaurant_name, name, price, description } = dish
     const navigate = useNavigate();
 
-    const handleDelete = () => {
-        actions.deleteDish(dish.id);
+    const handleDelete = async () => {
+        const response = await actions.deleteDish(dish.id);
         // console.log(dish.id);
         // actions.getAllDishes(dish.restaurant_id);
         
-        navigate('/restaurant/menu');
+        if(response)
+            navigate('/restaurant/menu');
     }
 
 

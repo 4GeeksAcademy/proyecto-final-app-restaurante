@@ -36,7 +36,7 @@ const EditProfile = () => {
         })
     }, []);
 
-    const handleEdit = (e) => {
+    const handleEdit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -52,8 +52,10 @@ const EditProfile = () => {
         formData.append("restaurantInstagram", restaurant.instagram);
         formData.append("restaurantTwitter", restaurant.twitter);
 
-        actions.editRestaurant(formData);
-        navigate(`/restaurant/${restaurantId}`)
+        const response = await actions.editRestaurant(formData);
+        
+        if (response)
+            navigate(`/restaurant/${restaurantId}`)
 
     }
 

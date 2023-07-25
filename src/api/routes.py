@@ -41,6 +41,14 @@ def register_restaurant():
         return jsonify({'message': "Form has a wrong property"}), 400
     user_name = form.get('restaurantRif')
 
+    restaurant_user = User.query.filter_by(email=user_email).one_or_none()
+    if restaurant_user is not None:
+        return jsonify({'message': 'Email is being used by another user.'}), 400
+
+    restaurant_user = User.query.filter_by(rif=restaurant_rif).one_or_none()
+    if restaurant_user is not None:
+        return jsonify({'message': 'Rif is being used by another user.'}), 400
+
     # is a valid password ? 
     if not is_valid_password(user_password):
         return jsonify({'message': 'Invalid password'}), 400

@@ -66,19 +66,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             successAlert('Registed successful');
+            return true;
           }
           else {
             errorAlert(data.message);
           }
 
-          return data;
+          // return data;
 
         } catch (error) {
           errorAlert('Some error ocurred');
           console.log(error);
         }
+        
+        return false;
 
-        return { 'message': 'Some error ocurred' };
+        // return { 'message': 'Some error ocurred' };
       },
 
       //PARA REGISTRO DE DISHES:
@@ -384,7 +387,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           else {
             successAlert('Plato editado correctamente');
-            getOneRestaurant(store.restaurant.id);
+            await getOneRestaurant(store.restaurant.id);
             return true;
           }
         } catch (error) {
@@ -412,7 +415,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             successAlert('Tu plato ha sido eliminado');
-            getOneRestaurant(restaurant.id);
+            await getOneRestaurant(restaurant.id);
           }
           else {
             errorAlert(data.message);
