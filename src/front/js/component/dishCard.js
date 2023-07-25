@@ -4,18 +4,15 @@ import { Link } from "react-router-dom";
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 
-
 import "../../styles/dishcard.css"
 
-export const DishCard = ({ key, dish }) => {
+export const DishCard = ({ dish }) => {
     const { actions, store } = useContext(Context);
-    const { id, image_url, restaurant_name, name, price, description } = dish
+    const { id, image_url, restaurant_name, name, price, description, tags } = dish
     const navigate = useNavigate();
 
     const handleDelete = async () => {
         const response = await actions.deleteDish(dish.id);
-        // console.log(dish.id);
-        // actions.getAllDishes(dish.restaurant_id);
         
         if(response)
             navigate('/restaurant/menu');
@@ -48,7 +45,17 @@ export const DishCard = ({ key, dish }) => {
                             {location.pathname === '/' && (
                                 <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
                             )}
-
+                            <div className='dishCard__tags-group'>
+                            {
+                                tags.split(',').map( (tag, index) => {
+                                    return(
+                                        <span className="badge bg-info dishCard__tag m-1" key={index}>
+                                            {tag.trim()}
+                                        </span>
+                                    )
+                                })
+                            }
+                            </div>
                         </div>
                     </div>
                 </div>
