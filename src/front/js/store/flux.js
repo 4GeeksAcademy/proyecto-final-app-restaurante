@@ -301,10 +301,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           if (!response.ok) {
             errorAlert(data.message);
-            return true;
           }
           else {
             successAlert('Restaurant edited');
+            return true;
           }
         } catch (error) {
           console.error(error);
