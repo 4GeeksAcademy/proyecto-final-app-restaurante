@@ -20,7 +20,7 @@ export const Home = () => {
 
 				{/* Muestra los platos */}
 				<div className="d-flex justify-content-center px-0 m-0 mt-4">
-					<div>
+					<div className="col-9">
 						{
 							results.map(dish => {
 								return (
