@@ -301,7 +301,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           if (!response.ok) {
             errorAlert(data.message);
-            console.log("No se pudo editar restaurante")
+            return true;
           }
           else {
             successAlert('Restaurant edited');
@@ -309,6 +309,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error(error);
         }
+        return false;
       },
 
       deletePlaceImage: async (imageId, restaurantId = null) => {
