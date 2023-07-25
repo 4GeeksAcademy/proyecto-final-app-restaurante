@@ -30,7 +30,7 @@ export const EditDish = () => {
             ...dish,
             name: currentDish.name,
             description: currentDish.description,
-            price: currentDish.price,
+            price: currentDish.price + '',
             tags: currentDish.tags,
             image: currentDish.image,
         })
