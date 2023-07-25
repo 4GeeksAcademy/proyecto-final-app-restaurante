@@ -4,7 +4,9 @@ import { Context } from '../store/appContext.js';
 import "../../styles/index.css"
 import ComeconLogo from "../../img/comecon-logo.png"
 import ComeconName from "../../img/comecon-nombre.png"
-
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -33,13 +35,13 @@ export const Navbar = () => {
               user == null &&
               <>
                 <Link to="/login">
-                  <button className="btn btn-success m-1">
-                    <strong>Login</strong>
+                  <button className="button--perfil m-1">
+                    <strong>Ingresar</strong> 
                   </button>
                 </Link>
                 <Link to="/register">
-                  <button className="btn btn-warning m-1">
-                    <strong>Regístrate</strong>
+                  <button className="button--menu m-1">
+                  <strong>Regístrarse</strong>
                   </button>
                 </Link>
               </>
@@ -48,17 +50,18 @@ export const Navbar = () => {
               user?.role == 'Restaurant' &&
               <>
                 <Link to={`/restaurant/${user?.restaurant?.id}`}>
-                  <button className="btn btn-success m-1">
-                    <strong>Perfil</strong>
+                  <button className="button--perfil m-1">
+                    <FontAwesomeIcon icon={faUser} className="me-2"/>
+                    {store.restaurant?.name}
                   </button>
                 </Link>
                 <Link to="/restaurant/menu">
-                  <button className="btn btn-success m-1">
-                    <strong>Menu</strong>
+                  <button className="button--menu m-1">
+                   Menú
                   </button>
                 </Link>
-                <button className='btn btn-danger m-1' onClick={logOutHandler}>
-                  <strong>Log out</strong>
+                <button className='button--logout m-1' onClick={logOutHandler}>
+                  <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
                 </button>
               </>
             }
