@@ -41,7 +41,7 @@ export const EditDish = () => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleEdit = (e) => {                                 
+    const handleEdit = async (e) => {                                 
         e.preventDefault()
         const err = onValidateDishes(dish)                  
         setErrors(err)                                             
@@ -56,7 +56,7 @@ export const EditDish = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            const success = actions.editDish(formData, dishId);
+            const success = await actions.editDish(formData, dishId);
 
             if(success)
                 navigate('/restaurant/menu');
