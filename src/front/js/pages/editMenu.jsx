@@ -55,7 +55,7 @@ export const EditMenu = () => {
           </div>
         </div>
         <div className="d-flex justify-content-center col-12 px-0 m-0 mt-3">
-          <div className="col-md-11 col-lg-10 justify-content-center">
+          <div className="col-md-12 col-lg-10 justify-content-center">
             {restaurant.foods.map((dish, index) => {
               console.log(dish);
               return <DishCard

@@ -23,7 +23,7 @@ export const DishCard = ({ dish }) => {
         <div className="d-flex m-3 justify-content-center" key={id}>
             <div className="card col-11 p-0 m-0">
                 <div className="row m-2">
-                    <div className="col-md-4 p-0">
+                    <div className="col-md-4">
                         <img src={image_url} className="img img-fluid rounded-1 border border-1" alt={`${name} image`} />
                     </div>
                     <div className="d-flex col-md-8 p-0 align-items-center">
