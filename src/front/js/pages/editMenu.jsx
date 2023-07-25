@@ -50,17 +50,19 @@ export const EditMenu = () => {
           <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
             <strong>Editar Menú</strong>
           </h2>
-          <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+          <div className="d-grid gap-2 d-md-flex justify-content-end">
             <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
           </div>
         </div>
-        <div className="container col-12 px-0 m-0 mt-3">
-          {restaurant.foods.map((dish, index) => {
-            console.log(dish);
-            return <DishCard
-              key={index}
-              dish={dish} />;
-          })}
+        <div className="d-flex justify-content-center col-12 px-0 m-0 mt-3">
+          <div className="col-md-12 col-lg-10 justify-content-center">
+            {restaurant.foods.map((dish, index) => {
+              console.log(dish);
+              return <DishCard
+                key={index}
+                dish={dish} />;
+            })}
+          </div>
         </div>
       </div>
     </>
