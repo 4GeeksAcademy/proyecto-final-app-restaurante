@@ -45,8 +45,8 @@ def register_restaurant():
     if restaurant_user is not None:
         return jsonify({'message': 'Email is being used by another user.'}), 400
 
-    restaurant_user = User.query.filter_by(rif=restaurant_rif).one_or_none()
-    if restaurant_user is not None:
+    restaurant = Restaurant.query.filter_by(rif=restaurant_rif).one_or_none()
+    if restaurant is not None:
         return jsonify({'message': 'Rif is being used by another user.'}), 400
 
     # is a valid password ? 
