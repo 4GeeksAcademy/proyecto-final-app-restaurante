@@ -417,7 +417,7 @@ def delete_food(food_id = None):
 @api.route('/food', methods=['GET'])
 def get_all_food():
     queryDescription = f'%{request.args.get("description")}%' if request.args.get('description') != '' else '%'
-    queryTag = f'%{request.args.get("tag")}%' if request.args.get('tag') != '' else '%'
+    queryTag = f'%{request.args.get("description")}%' if request.args.get('description') != '' else '%'
     queryPrice = request.args.get('price') if request.args.get('price') != '' else sys.maxsize
     queryLimit = request.args.get('limit') if request.args.get('limit') != '' else None
 
