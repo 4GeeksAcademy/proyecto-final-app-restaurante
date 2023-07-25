@@ -17,6 +17,9 @@ const Login = () => {
             const restaurantId = user.restaurant.id;
             nav(`/restaurant/${restaurantId}`);
         }
+        else if (user.role=='Admin') {
+            nav('/admin/restaurant');
+        }
     }
 
     const handleLogin = (event) => {
