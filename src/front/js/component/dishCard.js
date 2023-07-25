@@ -27,9 +27,20 @@ export const DishCard = ({ dish }) => {
                         <img src={image_url} className="img img-fluid rounded-1 border border-1" alt={`${name} image`} />
                     </div>
                     <div className="d-flex col-md-8 p-0 align-items-center">
-                        <div className="card-body">
+                        <div className="card-body p-2">
                             <div>
-                                <h5 className="card-title fs-2"><strong>{name}</strong></h5>
+                                <h5 className="card-title fs-2 m-0"><strong>{name}</strong></h5>
+                            <div className='dishCard__tags-group'>
+                            {
+                                tags.split(',').map( (tag, index) => {
+                                    return(
+                                        <span className="badge bg-info dishCard__tag ms-0 mx-1" key={index}>
+                                            {tag.trim()}
+                                        </span>
+                                    )
+                                })
+                            }
+                            </div>
                                 <Link to={`/restaurant/${dish.restaurant_id}`} className="">{dish.restaurant_name}</Link>
                                 <p className="card-text">{description}</p>
                             </div>
@@ -45,17 +56,6 @@ export const DishCard = ({ dish }) => {
                             {location.pathname === '/' && (
                                 <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
                             )}
-                            <div className='dishCard__tags-group'>
-                            {
-                                tags.split(',').map( (tag, index) => {
-                                    return(
-                                        <span className="badge bg-info dishCard__tag m-1" key={index}>
-                                            {tag.trim()}
-                                        </span>
-                                    )
-                                })
-                            }
-                            </div>
                         </div>
                     </div>
                 </div>
