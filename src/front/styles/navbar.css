@@ -1,0 +1,105 @@
+
+/*PRUEBA ICONO*/
+.logo--navbar {
+    width: 60px;
+    height: 40px;
+    padding: 0px 0px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 3px grey;
+  }
+  .logo--navbar:hover {
+    box-shadow: 0 3px #ff9900;
+    top: 1px;
+  }
+  .logo--navbar:active {
+    box-shadow: 0 0 #ff9900;
+    top: 5px;
+  }
+  
+  
+  
+  
+  /**/
+  .button--perfil {
+    min-width: 50px;
+    height: 40px;
+    color: black;
+    padding: 1px 10px;
+    font-weight:normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: #ff9900;
+    box-shadow: 1px 3px grey;
+  }
+  .button--perfil:hover {
+    box-shadow: 0 3px #57cc99;
+    top: 1px;
+  }
+  .button--perfil:active {
+    box-shadow: 0 0 #57cc99;
+    top: 5px;
+  }
+  
+  /**/
+  .button--menu {
+    min-width: 50px;
+    height: 40px;
+    color: black;
+    padding: 1px 10px;
+    font-weight:normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: #57cc99;
+    box-shadow: 1px 3px grey;
+  }
+  .button--menu:hover {
+    box-shadow: 0 3px #0056b3;
+    top: 1px;
+  }
+  .button--menu:active {
+    box-shadow: 0 0 #0056b3;
+    top: 5px;
+  }
+  
+  /**/
+  .button--logout {
+    /* min-width: 100px; */
+    height: 40px; 
+    color: #fff;
+    padding: 1px 10px;
+    font-weight:normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: #cc0000;
+    box-shadow: 0px 3px grey;
+  }
+  .button--logout:hover {
+    box-shadow: 0 3px #e35656;
+    top: 1px;
+  }
+  .button--logout:active {
+    box-shadow: 0 0 #e35656;
+    top: 5px;
+  }
+  

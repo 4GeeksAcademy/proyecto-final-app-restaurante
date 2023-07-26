@@ -1,37 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressCard, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
-import "../../styles/dishcard.css"
+import "../../styles/requestCard.css"
 import { Context } from "../store/appContext";
 
 export const RequestCard = ({ key, user }) => {
 
-    // const [locationState, setLocationState] = useState(true);
-    // const [phoneState, setPhoneState] = useState(true);
-    // const [rifState, setRifState] = useState(true);
-
-    // const handleCheckboxChange = ({target}) => {
-    //     if (target.name === "location") {
-    //         setLocationState(!checkbox1);
-    //     } else if (target.name === "phone") {
-    //         setPhoneState(!checkbox2);
-    //     } else if (target.name === "rif") {
-    //         setRifState(!checkbox3);
-    //     }
-    // };
-
     const [request, setRequest] = useState(false)
     const { restaurant } = user
     const { store, actions } = useContext(Context)
-
-    // const handleChange = ({ target }) => {
-    //     console.log(target.value, target.name)
-
-    //     setRequest({
-    //         ...request,
-    //         [target.name]: target.value
-    //     })
-    // }
 
     const sendRequest = (response) => {
         event.preventDefault();
@@ -55,60 +32,21 @@ export const RequestCard = ({ key, user }) => {
                         {restaurant?.description}
                     </p>
                 </div>
-                <form>
-                    <div className=" m-3 d-flex justify-content-around">
-                        <div className="form-check">
-                            <input className="form-check-input"
-                                type="checkbox"
-                                name="location"
-                            //checked={locationState}
-                            //onChange={}
-                            //value={request.location}
-                            />
-                            <label className="form-check-label" >
-                                Ubicacion
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input"
-                                type="checkbox"
-                                isChecked
-                                name="phone"
-                            //onChange={}
-                            //value={request.phone}
-                            />
-                            <label className="form-check-label">
-                                Numero verificado
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input"
-                                type="checkbox"
-                                name="rif"
-                            //onChange={}
-                            //value={request.rif}
-                            />
-                            <label className="form-check-label">
-                                RIF
-                            </label>
-                        </div>
-                    </div>
                     <div className="m-3 d-flex justify-content-between">
                         <button
-                            className="btn button-green w-50 me-1"
+                            className="button--green--edit-dish w-50 me-1"
                             name="accept"
                             onClick={(e) => sendRequest('valid')}
                         >
                             Accept
                         </button>
-                        <button className="btn button-orange w-50 ms-1"
+                        <button className="button--red--edit-dish w-50 ms-1"
                             name="reject"
                             onClick={(e) => sendRequest('invalid')}
                         >
                             Reject
                         </button>
                     </div>
-                </form>
             </div>
 
         </div>

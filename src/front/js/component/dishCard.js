@@ -38,9 +38,9 @@ export const DishCard = ({ dish }) => {
                                     <div className="btns-container">
                                         <Link to={`/restaurant/menu/food/edit/${dish.id}`} 
                                             className='me-2'>
-                                            <button className="button--orange" onClick={() => {handleDelete()} }><strong>Editar</strong></button>
+                                            <button className="button--orange--dish"><strong>Editar</strong></button>
                                         </Link>
-                                        <button className="button--red" onClick={() => {handleDelete()} }><strong>Borrar</strong></button>
+                                        <button className="button--red--dish" onClick={() => {handleDelete()} }><strong>Borrar</strong></button>
                                     </div>
                                     <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
                                 </div>

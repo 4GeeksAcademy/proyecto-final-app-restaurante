@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import { onValidateDishes } from "../util.js";
-
+import "../../styles/editDish.css"
 
 const initialState = {
     name: "",
@@ -165,14 +165,14 @@ export const EditDish = () => {
                             <div className="d-flex  mt-3 justify-content-between">
                                 <button
                                     type="button"
-                                    className="btn btn-success w-100 me-2"
+                                    className="button--green--edit-dish me-2"
                                     onClick={handleEdit}
                                 >
                                     <strong>Actualizar</strong>
                                 </button>
                                 <button
                                     type="button"
-                                    className="btn btn-danger bg-danger col-4 login_submit_button"
+                                    className="button--red--edit-dish col-4"
                                     onClick={() => navigate("/restaurant/menu")}>
                                     <strong>Cancelar</strong>
                                 </button>

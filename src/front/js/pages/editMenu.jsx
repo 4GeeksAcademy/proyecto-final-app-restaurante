@@ -35,7 +35,11 @@ export const EditMenu = () => {
             <strong>Editar Menú</strong>
           </h2>
           <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-            <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
+            <Link to="/restaurant/menu/food">
+              <button className="btn btn-success" type="button">
+                <strong>Agregar plato</strong>
+              </button>
+            </Link>
           </div>
         </div>
         <div className="container col-12 px-0 m-0 mt-3">

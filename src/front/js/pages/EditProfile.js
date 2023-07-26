@@ -116,13 +116,13 @@ const EditProfile = () => {
                     <div className="mb-3 mt-3 d-flex justify-content-around ">
                         <button
                             type="submit"
-                            className="btn btn-success bg-success col-4 login_submit_button"
+                            className="button--green--edit-profile col-4"
                         >
                             Actualizar
                         </button>
                         <button
                             type="button"
-                            className="btn btn-danger bg-danger col-4 login_submit_button"
+                            className="button--red--edit-profile col-4 login_submit_button"
                             onClick={() => navigate(`/restaurant/${restaurantId}`)}
                         >
                             Cancelar

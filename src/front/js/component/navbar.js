@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from '../store/appContext.js';
-import "../../styles/index.css"
+import "../../styles/navbar.css"
 import ComeconLogo from "../../img/comecon-logo.png"
 import ComeconName from "../../img/comecon-nombre.png"
 import { faUser, faBook, faBookOpen, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
