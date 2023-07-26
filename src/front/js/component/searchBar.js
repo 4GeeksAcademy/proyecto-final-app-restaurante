@@ -48,7 +48,7 @@ export const SearchBar = () => {
                 <div className="input-group">
                     <span className="input-group-text border-0 rounded-0"><strong>con</strong></span>
                     <input type="text"
-                        className="form-control d-inline w-25 "
+                        className="form-control d-inline "
                         placeholder="...el monto"
                         name="budget"
                         id="budget"
