@@ -668,3 +668,50 @@ def self_register_admin():
         return jsonify({'message': 'Something wrong ocurred'}), 500
 
     return jsonify({'message': 'ok'}), 200  
+
+@api.route('/restaurant/<int:restaurant_id>', methods=['DELETE'])
+@jwt_required()
+def delete_restaurant(restaurant_id = None):
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if restaurant_id is None:
+        return jsonify({'message': 'Restaurant not found.'}), 404
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    if user.role != Role.ADMIN and user.restaurant.id != restaurant_id:
+        return jsonify({'message': 'Enough permision.'}), 405
+    
+    restaurant_delete = None
+    if user.role == Role.ADMIN:
+        restaurant_delete = Restaurant.query.filter_by(id=restaurant_id).one_or_none()
+    else:
+        restaurant_delete = Restaurant.query.filter_by(id=user.restaurant.id).one_or_none()
+
+    if restaurant_delete is None:
+        return jsonify({'message': 'Restaurant not found.'}), 404
+
+    user_delete = None
+    if user.role == Role.ADMIN:
+        user_delete = User.query.filter_by(id=restaurant_delete.id).one_or_none()
+    else:
+        user_delete = user
+    
+    if user_delete is None:
+        return jsonify({'message': 'User not found.'}), 404
+
+    # delete all restaurant's data
+    try:
+        image_array = Restaurant_image.query.filter_by(restaurant_id=restaurant_delete.id).all()
+        for image in image_array:
+            db.session.delete(image)
+        food_array = Food.query.filter_by(restaurant_id=restaurant_delete.id).all()
+        for food in food_array:
+            db.session.delete(food)
+        db.session.delete(restaurant_delete)
+        db.session.delete(user_delete)
+
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'ok'}), 200
