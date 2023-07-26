@@ -249,9 +249,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       //BORRAR RESTAURANTE POR ID
       deleteRestaurant: async (id) => {
+        const { token } = getStore();
+        
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           });
           const data = await response.json();
 
@@ -266,6 +271,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           errorAlert('Some error ocurred.');
           console.log("deleting restaurant...");
+          console.log(error);
         }
       },
       getRequests: async () => {
