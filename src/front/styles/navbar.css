@@ -102,4 +102,39 @@
     box-shadow: 0 0 #e35656;
     top: 5px;
   }
-  
+
+  #tooltipText {
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    color: #000;
+    white-space: no-wrap;
+    padding: 5px 10px;
+    border-radius: 7px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+ 
+  .button--perfil:hover #tooltipText {
+    top: 130%;
+    visibility: visible;
+    opacity: 1;
+
+  }
+
+  .button--menu:hover #tooltipText {
+    top: 130%;
+    visibility: visible;
+    opacity: 1;
+
+  }
+
+  .button--logout:hover #tooltipText {
+    top: 130%;
+    visibility: visible;
+    opacity: 1;
+
+  }

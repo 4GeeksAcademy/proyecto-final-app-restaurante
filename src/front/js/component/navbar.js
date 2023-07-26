@@ -54,16 +54,19 @@ export const Navbar = () => {
                   <Link to={`/restaurant/${user?.restaurant?.id}`} className="">
                     {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
                     <button className="button--perfil m-1">
+                      <span id="tooltipText">Perfil</span>
                       <FontAwesomeIcon icon={faUser} size="lg" />
                     </button>
                   </Link>
                   <Link to="/restaurant/menu">
                     <button className="button--menu m-1">
+                      <span id="tooltipText">Menu</span>
                       <FontAwesomeIcon icon={faBookOpen} size="lg" />
                       {/* <FontAwesomeIcon icon={faBook} size="xl" /> */}
                     </button>
                   </Link>
                   <button className='button--logout m-1' onClick={logOutHandler}>
+                    <span id="tooltipText">logOut</span>
                     <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
                   </button>
                 </div>
