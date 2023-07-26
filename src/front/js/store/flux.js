@@ -141,10 +141,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       foodSearch: async (search) => {
-        const { budget, food } = search;
+        const { budget, food, tag } = search;
         const priceParameter = budget == '' ? "price" : `price=${budget}`;
         const descriptionParameter = food == '' ? "description" : `description=${food}`;
-        const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
+        const tagsParameter = tag == '' ? "tags" : `tags=${food}`;
+        console.log(tagsParameter);
+        const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&${tagsParameter}&${priceParameter}`;
+        console.log(url);
 
         try {
           let response = await fetch(url, {

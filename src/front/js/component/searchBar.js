@@ -5,7 +5,8 @@ import '../../styles/searchBar.css';
 
 const initialValue = {
     budget: '',
-    food: ''
+    food: '',
+    tags: '',
 }
 
 export const SearchBar = () => {
@@ -48,7 +49,7 @@ export const SearchBar = () => {
                 <div className="input-group">
                     <span className="input-group-text border-0 rounded-0"><strong>con</strong></span>
                     <input type="text"
-                        className="form-control d-inline "
+                        className="form-control d-inline w-25 "
                         placeholder="...el monto"
                         name="budget"
                         id="budget"
