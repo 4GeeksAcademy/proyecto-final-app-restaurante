@@ -15,9 +15,9 @@ body {
 }
 
 
-.button--orange {
-  background-color: #ff9900;
-  min-width: 50px;
+.button--login-register {
+  background-color: #007bff !important;
+  /* min-width: 50px; */
   height: 40px;
   padding: 1px 10px;
   font-weight:normal;
@@ -30,11 +30,11 @@ body {
   border: none;
   box-shadow: 1px 3px grey;
 }
-.button--orange:hover {
+.button--login-register:hover {
   box-shadow: 0 3px #00FFA3;
   top: 1px;
 }
-.button--orange:active {
+.button--login-register:active {
   box-shadow: 0 0 #00FFA3;
   top: 5px;
 }
