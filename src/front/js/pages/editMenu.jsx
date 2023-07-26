@@ -20,22 +20,6 @@ export const EditMenu = () => {
   const { user, dishes, restaurant } = store;
   // const { user } = store
 
-
-
-  //TRAER TODOS LOS PLATOS DE UN RESTAURANT
-  // const getAllDishes = async (id) => {
-  //   try {
-  //     const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}/food`);
-  //     console.log(id)
-  //     const data = await response.json();
-  //     setDishes(data);
-
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  //   console.log("showing dishes...")
-  // };
-
   useEffect(() => {
     if (user != undefined && user.restaurant != undefined) {
       actions.getAllDishes(user.restaurant.id);

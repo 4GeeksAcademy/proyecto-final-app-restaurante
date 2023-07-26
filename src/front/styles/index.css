@@ -12,13 +12,31 @@ body {
 
 .panel {
   box-shadow: 5px 5px 15px black;
-
 }
 
-.button-red {
+.button--red {
   background-color: var(--main_color);
+  min-width: 50px;
+  height: 40px;
   color: white;
-  border: 1px solid black;
+  padding: 1px 10px;
+  font-weight:normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 3px grey;
+}
+.button--red:hover {
+  box-shadow: 0 3px #00FFA3;
+  top: 1px;
+}
+.button--red:active {
+  box-shadow: 0 0 #00FFA3;
+  top: 5px;
 }
 
 .button-green {
@@ -26,9 +44,28 @@ body {
   border: 1px solid black;
 }
 
-.button-orange {
+.button--orange {
   background-color: #ff9900;
-  border: 1px solid black;
+  min-width: 50px;
+  height: 40px;
+  padding: 1px 10px;
+  font-weight:normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 3px grey;
+}
+.button--orange:hover {
+  box-shadow: 0 3px #00FFA3;
+  top: 1px;
+}
+.button--orange:active {
+  box-shadow: 0 0 #00FFA3;
+  top: 5px;
 }
 
 nav {
@@ -81,9 +118,33 @@ footer {
   width: 100%;
 
 }
+/*PRUEBA ICONO*/
+.logo--navbar {
+  width: 60px;
+  height: 40px;
+  padding: 0px 0px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 3px grey;
+}
+.logo--navbar:hover {
+  box-shadow: 0 3px #ff9900;
+  top: 1px;
+}
+.logo--navbar:active {
+  box-shadow: 0 0 #ff9900;
+  top: 5px;
+}
+
 
 /*PRUEBA BOTONES*/
 .button--find {
+  font-size: 20px;
   min-width: 130px;
   height: 40px;
   color: #fff;
@@ -97,7 +158,7 @@ footer {
   border-radius: 5px;
   border: none;
   background: #57cc99 !important;
-  box-shadow: 1px 5px 15px gray;
+  box-shadow: 1px 3px 15px gray;
 }
 .button--find:hover {
   box-shadow: 0 3px grey;
@@ -110,8 +171,8 @@ footer {
 
 /**/
 .button--perfil {
-  min-width: 100px;
-  height: 30px;
+  min-width: 50px;
+  height: 40px;
   color: black;
   padding: 1px 10px;
   font-weight:normal;
@@ -122,22 +183,22 @@ footer {
   outline: none;
   border-radius: 5px;
   border: none;
-  background: #57cc99;
+  background: #ff9900;
   box-shadow: 1px 3px grey;
 }
 .button--perfil:hover {
-  box-shadow: 0 3px #ff9900;
+  box-shadow: 0 3px #57cc99;
   top: 1px;
 }
 .button--perfil:active {
-  box-shadow: 0 0 #ff9900;
+  box-shadow: 0 0 #57cc99;
   top: 5px;
 }
 
 /**/
 .button--menu {
-  min-width: 100px;
-  height: 30px;
+  min-width: 50px;
+  height: 40px;
   color: black;
   padding: 1px 10px;
   font-weight:normal;
@@ -163,7 +224,7 @@ footer {
 /**/
 .button--logout {
   /* min-width: 100px; */
-  height: 30px; 
+  height: 40px; 
   color: #fff;
   padding: 1px 10px;
   font-weight:normal;

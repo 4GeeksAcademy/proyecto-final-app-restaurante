@@ -4,9 +4,8 @@ import { Context } from '../store/appContext.js';
 import "../../styles/index.css"
 import ComeconLogo from "../../img/comecon-logo.png"
 import ComeconName from "../../img/comecon-nombre.png"
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faBook, faBookOpen, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -18,6 +17,8 @@ export const Navbar = () => {
     logOut();
     navigate("/");
   }
+
+  //
 
   return (
     <>
@@ -36,12 +37,12 @@ export const Navbar = () => {
               <>
                 <Link to="/login">
                   <button className="button--perfil m-1">
-                    <strong>Ingresar</strong> 
+                    <strong>Ingresar</strong>
                   </button>
                 </Link>
                 <Link to="/register">
                   <button className="button--menu m-1">
-                  <strong>Regístrarse</strong>
+                    <strong>Regístrarse</strong>
                   </button>
                 </Link>
               </>
@@ -49,20 +50,23 @@ export const Navbar = () => {
             {
               user?.role == 'Restaurant' &&
               <>
-                <Link to={`/restaurant/${user?.restaurant?.id}`}>
-                  <button className="button--perfil m-1">
-                    <FontAwesomeIcon icon={faUser} className="me-2"/>
-                    {store.restaurant?.name}
+                <div className="d-flex justify-content-beetwen">
+                  <Link to={`/restaurant/${user?.restaurant?.id}`} className="">
+                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
+                    <button className="button--perfil m-1">
+                      <FontAwesomeIcon icon={faUser} size="lg" />
+                    </button>
+                  </Link>
+                  <Link to="/restaurant/menu">
+                    <button className="button--menu m-1">
+                      <FontAwesomeIcon icon={faBookOpen} size="lg" />
+                      {/* <FontAwesomeIcon icon={faBook} size="xl" /> */}
+                    </button>
+                  </Link>
+                  <button className='button--logout m-1' onClick={logOutHandler}>
+                    <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
                   </button>
-                </Link>
-                <Link to="/restaurant/menu">
-                  <button className="button--menu m-1">
-                   Menú
-                  </button>
-                </Link>
-                <button className='button--logout m-1' onClick={logOutHandler}>
-                  <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
-                </button>
+                </div>
               </>
             }
             {
