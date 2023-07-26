@@ -422,8 +422,10 @@ def get_all_food():
     queryLimit = request.args.get('limit') if request.args.get('limit') != '' else None
 
     query_filter = and_(
-                        Food.description.ilike(queryDescription), 
-                        Food.tags.ilike(queryTag),
+                        or_(
+                            Food.description.ilike(queryDescription),
+                            Food.tags.ilike(queryTag)
+                        ),
                         Food.price <= queryPrice
                     )
 
