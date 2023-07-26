@@ -691,7 +691,7 @@ def delete_restaurant(restaurant_id = None):
 
     user_delete = None
     if user.role == Role.ADMIN:
-        user_delete = User.query.filter_by(id=restaurant_delete.id).one_or_none()
+        user_delete = User.query.filter_by(id=restaurant_delete.user_id).one_or_none()
     else:
         user_delete = user
     
