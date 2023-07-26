@@ -58,7 +58,7 @@ export const SearchBar = () => {
                 </div>
             </div>
             <div className="d-flex mt-4 mx-3">
-                <button type="submit" className="btn btn-success w-100 bg-success"><strong>Buscar </strong><FaSearch /></button>
+                <button type="submit" className="button--find w-100">Buscar<FaSearch className="ms-1"/></button>
             </div>
         </form>
     );

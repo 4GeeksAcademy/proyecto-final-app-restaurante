@@ -81,14 +81,18 @@ const Restaurant = () => {
                 <div className='d-flex mt-3 justify-content-end'>
                   {
                     isOwner &&
-                    <Link to={`edit`} className='col-4 me-2 btn btn-warning'>
-                      <strong>Editar Perfil</strong>
+                    <Link to={`edit`} className='col-4 me-2'>
+                      <button className="button--orange--restaurant">
+                        <strong>Editar perfil</strong>
+                      </button>
                     </Link>
                   }
                   {
                     isOwner &&
-                    <Link to='/restaurant/menu' className='col-4 btn btn-warning'>
-                      <strong>Editar Menú</strong>
+                    <Link to='/restaurant/menu' className='col-4'>
+                      <button className="button--orange--restaurant">
+                        <strong>Editar menu</strong>
+                      </button>
                     </Link>
                   }
                 </div>

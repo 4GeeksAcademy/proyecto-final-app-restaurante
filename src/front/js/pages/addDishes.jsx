@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { onValidateDishes } from "../util.js";
+import "../../styles/addDish.css"
 
 const initialState = {                                              //ESTADO INICIAL
     name: "",
@@ -144,13 +145,19 @@ export const AddDishes = () => {
                             </div>
 
                             {/* BOTON DE ENVIO */}
-                            <div>
+                            <div className="d-flex justify-content-between">
                                 <button
                                     type="button"
-                                    className="btn btn-success w-100 mt-3"
+                                    className="button--save-dish mt-3"
                                     onClick={(e) => handleRegister(e)}
                                 >
-                                    <strong>Guardar</strong>
+                                    Guardar
+                                </button>
+                                <button
+                                    type="button"
+                                    className="button--cancel-dish mt-3 col-4"
+                                    onClick={() => navigate("/restaurant/menu")}>
+                                    Cancelar
                                 </button>
                             </div>
                         </form>

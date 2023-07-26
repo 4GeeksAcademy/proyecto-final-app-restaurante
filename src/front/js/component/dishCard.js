@@ -47,8 +47,11 @@ export const DishCard = ({ dish }) => {
                             {location.pathname === '/restaurant/menu' && (
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="btns-container">
-                                        <Link to={`/restaurant/menu/food/edit/${dish.id}`} className='btn btn-warning me-2'><strong>Editar</strong></Link>
-                                        <button className="btn btn-danger" onClick={() => {handleDelete()} }><strong>Borrar</strong></button>
+                                        <Link to={`/restaurant/menu/food/edit/${dish.id}`} 
+                                            className='me-2'>
+                                            <button className="button--orange--dish"><strong>Editar</strong></button>
+                                        </Link>
+                                        <button className="button--red--dish" onClick={() => {handleDelete()} }><strong>Borrar</strong></button>
                                     </div>
                                     <div className="fs-1 text-end"><strong>{`${price}$`}</strong></div>
                                 </div>

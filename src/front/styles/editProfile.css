@@ -34,7 +34,53 @@
   justify-content: center;
 }
 
-.login_submit_button {
-  text-align: center;
-  justify-content: center;
+.button--green--edit-profile {
+  background-color: #00FFA3 !important;
+  color: #000000 !important;
+  width: 50%;
+  height: 40px;
+  padding: 1px 10px;
+  font-weight:bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 3px grey;
+}
+.button--green--edit-profile:hover {
+  box-shadow: 0 3px #00FFA3;
+  top: 1px;
+}
+.button--green--edit-profile:active {
+  box-shadow: 0 0 #00FFA3;
+  top: 5px;
+}
+
+/**/
+.button--red--edit-profile {
+  /* min-width: 100px; */
+  height: 40px; 
+  color: black;
+  padding: 1px 10px;
+  font-weight:bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  background: #e35656;
+  box-shadow: 0px 3px grey;
+}
+.button--red--edit-profile:hover {
+  box-shadow: 0 3px #cc0000;
+  top: 1px;
+}
+.button--red--edit-profile:active {
+  box-shadow: 0 0 #cc0000;
+  top: 5px;
 }

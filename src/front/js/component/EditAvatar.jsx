@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
+import "../../styles/editAvatar.css"
 
 const EditAvatar = ({ restaurantId }) => {
   const [image, setImage] = useState(null)
@@ -31,8 +32,8 @@ const EditAvatar = ({ restaurantId }) => {
   return (
     <>
       {/* button */}
-      <button type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editAvatar">
-        <strong>Editar Avatar</strong>
+      <button type="button" className="button--orange--avatar" data-bs-toggle="modal" data-bs-target="#editAvatar">
+        <strong>Editar avatar</strong>
       </button>
       {/* modal */}
       <div className="modal fade" id="editAvatar" tabIndex="-1" aria-labelledby="editAvatarLabel" aria-hidden="true">
