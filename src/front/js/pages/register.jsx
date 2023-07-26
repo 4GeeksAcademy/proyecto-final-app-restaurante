@@ -16,8 +16,8 @@ const initialState = {                                              //ESTADO INI
 export const Register = () => {
     const { actions, store } = useContext(Context);
     const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
-    const [errors, setErrors] = useState({}); 
-    const navigate = useNavigate();                      //GUARDA ERRORES DE VALIDACION
+    const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
+    const navigate = useNavigate();
 
     const handleChange = (e) => {                                   //MANEJA LOS CAMBIOS EN LOS CAMPOS DEL FORM REGISTER
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -44,7 +44,9 @@ export const Register = () => {
             formData.append("userPassword", user.password);
 
             const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
-            console.log(response);
+            
+            if (response)
+                navigate('/login');
         }
     }
 

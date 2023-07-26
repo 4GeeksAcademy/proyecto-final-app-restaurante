@@ -41,6 +41,14 @@ def register_restaurant():
         return jsonify({'message': "Form has a wrong property"}), 400
     user_name = form.get('restaurantRif')
 
+    restaurant_user = User.query.filter_by(email=user_email).one_or_none()
+    if restaurant_user is not None:
+        return jsonify({'message': 'Email is being used by another user.'}), 400
+
+    restaurant = Restaurant.query.filter_by(rif=restaurant_rif).one_or_none()
+    if restaurant is not None:
+        return jsonify({'message': 'Rif is being used by another user.'}), 400
+
     # is a valid password ? 
     if not is_valid_password(user_password):
         return jsonify({'message': 'Invalid password'}), 400
@@ -444,6 +452,14 @@ def add_user():
     if None in [user_name, user_email, user_role, user_password, user_status]:
         return jsonify({'message': "Form has a wrong property"}), 400
 
+    user = User.query.filter_by(name=user_name).one_or_none()
+    if user is not None:
+        return jsonify({'message': "Name is being used by another user"}), 400
+    
+    user = User.query.filter_by(email=user_email).one_or_none()
+    if user is not None:
+        return jsonify({'message': "Email is being used by another user"}), 400
+
     # is a valid password ? 
     if not is_valid_password(user_password):
         return jsonify({'message': 'Invalid password'}), 400
@@ -590,13 +606,17 @@ def send_email_register_admin():
     if None in [email_to]:
         return jsonify({'message': 'wrong property'}), 400
 
+    user = User.query.filter_by(email=email_to).one_or_none()
+    if user is not None:
+        return jsonify({'message': 'Email is being used by another user'}), 400
+
     new_user = User()
     new_user.name = email_to
     new_user.email = email_to
     new_user.role = Role.ADMIN
     new_user.status = UserStatus.INVALID
     new_user.salt = b64encode(os.urandom(32)).decode('utf-8')
-    new_user.password = password_hash(email_to, user.salt)
+    new_user.password = password_hash(email_to, new_user.salt)
 
     db.session.add(new_user)
     try:

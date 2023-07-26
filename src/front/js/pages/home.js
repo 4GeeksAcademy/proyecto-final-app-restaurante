@@ -20,7 +20,11 @@ export const Home = () => {
 
 				{/* Muestra los platos */}
 				<div className="d-flex justify-content-center px-0 m-0 mt-4">
+<<<<<<< HEAD
 					<div>
+=======
+					<div className="col-md-11 col-lg-8">
+>>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
 						{
 							results.map(dish => {
 								return (

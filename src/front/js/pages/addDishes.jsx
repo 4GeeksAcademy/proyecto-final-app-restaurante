@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
+=======
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext.js";
+>>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
 import { onValidateDishes } from "../util.js";
 
 
@@ -96,6 +102,7 @@ export const AddDishes = () => {
                                         ></textarea>
                                         {errors.description && <div className="alert p-0 m-0 bg-none text-danger">{errors.description}</div>}
 
+<<<<<<< HEAD
                                     </div>
 
                                     <div className="form-group mt-3">
@@ -115,6 +122,25 @@ export const AddDishes = () => {
                                             <span className="input-group-text">$</span>
                                         </div>
                                         {errors.price && <div className="alert p-0 m-0 bg-none text-danger">{errors.price}</div>}
+=======
+                            <div className="form-group mt-3">
+                                <label htmlFor="price">Precio</label>
+                                <div className="input-group border rounded-3">
+                                    <input
+                                        type="number"
+                                        className="form-control border border-dark"
+                                        id="price"
+                                        name="price"
+                                        aria-label="Amount (to the nearest dollar)"
+                                        placeholder="Monto en dólares"
+                                        onChange={handleChange}
+                                        value={dish.price}
+                                        required
+                                    />
+                                    <span className="input-group-text">$</span>
+                                </div>
+                                {errors.price && <div className="alert p-0 m-0 bg-none text-danger">{errors.price}</div>}
+>>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
 
                             </div>
 

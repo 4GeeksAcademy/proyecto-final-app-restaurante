@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext.js';
 import '../../styles/registerAdmin.css';
 
@@ -15,6 +15,7 @@ const RegisterAdmin = () => {
   const { validateAdmin } = actions;
   const { token } = useParams();
   const [user, setUser] = useState(initialValues);
+  const navigate = useNavigate();
 
   const changeHandler = ({ target }) => {
     setUser({
@@ -33,7 +34,9 @@ const RegisterAdmin = () => {
     formData.append("password", user.password);
 
     const response = await validateAdmin(token, formData);
-    console.log(response);
+    
+    if (response)
+      navigate('/login')
   }
 
   return (

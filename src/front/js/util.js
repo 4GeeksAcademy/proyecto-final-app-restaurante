@@ -100,8 +100,12 @@ export const onValidateDishes = (user) => {
     let errors = {};
     let regexName = /^.{1,20}$/;
     let regexComment = /^.{1,100}$/; 
+<<<<<<< HEAD
     let regexNumber = /^([0-9])*$/;                         
 
+=======
+    let regexNumber = /^([0-9])*$/;                        
+>>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
 
     //VALIDACIONES PARA REGISTRO DE DISHES
 
