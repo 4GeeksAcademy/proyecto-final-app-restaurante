@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
-from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin
+from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin, aproved_email, rejected_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
 from sqlalchemy import and_, or_
@@ -41,6 +41,14 @@ def register_restaurant():
         return jsonify({'message': "Form has a wrong property"}), 400
     user_name = form.get('restaurantRif')
 
+    restaurant_user = User.query.filter_by(email=user_email).one_or_none()
+    if restaurant_user is not None:
+        return jsonify({'message': 'Email is being used by another user.'}), 400
+
+    restaurant = Restaurant.query.filter_by(rif=restaurant_rif).one_or_none()
+    if restaurant is not None:
+        return jsonify({'message': 'Rif is being used by another user.'}), 400
+
     # is a valid password ? 
     if not is_valid_password(user_password):
         return jsonify({'message': 'Invalid password'}), 400
@@ -79,6 +87,11 @@ def register_restaurant():
     except Exception as err:
         db.session.rollback()
         return jsonify({'message': err.args}), 500
+
+    # sending email
+    email_to = restaurant_user.email
+    title =  'You have registered on Comecon'
+    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
 
     return jsonify({'message': 'ok'}), 201
 
@@ -206,44 +219,32 @@ def edit_restaurant():
 
     data = request.form
 
-    user_email = data.get('userEmail')
-    if user_email is not None:
-        user.email = user_email
     user_password = data.get('userPassword')
-    if user_password is not None:
+    if user_password is not None and user_password != '':
         user.salt = b64encode(os.urandom(32)).decode('utf-8')
         user.password = password_hash(user_password, user.salt)  
-    user_avatar = request.files['userAvatar']
-    if user_avatar is not None:
-        result = cloudinary.uploader.upload(user_avatar)
-        image_url = result['secure_url']
-        user.avatar_url = image_url
     
     restaurant = user.restaurant
     restaurant_name = data.get('restaurantName')
-    if restaurant_name is not None:
+    if restaurant_name is not None and restaurant_name != '':
         restaurant.name = restaurant_name
-    restaurant_rif = data.get('restaurantRif')
-    if restaurant_rif is not None:
-        restaurant.rif = restaurant_rif
-        user.name = restaurant_rif
     restaurant_phone = data.get('restaurantPhone')
-    if restaurant_phone is not None:
+    if restaurant_phone is not None and restaurant_phone != '':
         restaurant.phone = restaurant_phone
     restaurant_location = data.get('restaurantLocation')
-    if restaurant_location is not None:
+    if restaurant_location is not None and restaurant_location != '':
         restaurant.location = restaurant_location
     restaurant_description = data.get('restaurantDescription')
-    if restaurant_description is not None:
+    if restaurant_description is not None and restaurant_description != '':
         restaurant.description = restaurant_description
     restaurant_facebook = data.get('restaurantFacebook')
-    if  restaurant_facebook is not None:
+    if  restaurant_facebook is not None and restaurant_facebook != '':
         restaurant.facebook_url =  restaurant_facebook
     restaurant_instagram = data.get('restaurantInstagram')
-    if restaurant_instagram is not None:
+    if restaurant_instagram is not None and restaurant_instagram != '':
         restaurant.instagram_url = restaurant_instagram
     restaurant_twitter = data.get('restaurantTwitter')
-    if restaurant_twitter is not None:
+    if restaurant_twitter is not None and restaurant_twitter != '':
         restaurant.twitter_url = restaurant_twitter
 
     try:
@@ -315,8 +316,8 @@ def add_dish():
     food.restaurant_id = user.restaurant.id
     food.name = food_name
     food.price = food_price
-    food.description = food_description
-    food.tags = food_tags
+    food.description = str.lower(food_description)
+    food.tags = str.lower(food_tags)
     food.image_url = food_image
 
     db.session.add(food)
@@ -416,13 +417,15 @@ def delete_food(food_id = None):
 @api.route('/food', methods=['GET'])
 def get_all_food():
     queryDescription = f'%{request.args.get("description")}%' if request.args.get('description') != '' else '%'
-    queryTag = f'%{request.args.get("tag")}%' if request.args.get('tag') != '' else '%'
+    queryTag = f'%{request.args.get("tags")}%' if request.args.get('tags') != '' else '%'
     queryPrice = request.args.get('price') if request.args.get('price') != '' else sys.maxsize
     queryLimit = request.args.get('limit') if request.args.get('limit') != '' else None
 
     query_filter = and_(
-                        Food.description.like(str.lower(queryDescription)), 
-                        Food.tags.like(str.lower(queryTag)),
+                        or_(
+                            Food.description.ilike(queryDescription),
+                            Food.tags.ilike(queryTag)
+                        ),
                         Food.price <= queryPrice
                     )
 
@@ -450,6 +453,14 @@ def add_user():
     user_status = form.get('status')
     if None in [user_name, user_email, user_role, user_password, user_status]:
         return jsonify({'message': "Form has a wrong property"}), 400
+
+    user = User.query.filter_by(name=user_name).one_or_none()
+    if user is not None:
+        return jsonify({'message': "Name is being used by another user"}), 400
+    
+    user = User.query.filter_by(email=user_email).one_or_none()
+    if user is not None:
+        return jsonify({'message': "Email is being used by another user"}), 400
 
     # is a valid password ? 
     if not is_valid_password(user_password):
@@ -491,13 +502,13 @@ def add_user():
 
     return jsonify(user.serialize()), 201
 
-
+#Get all requests
 @api.route('/user', methods=['GET'])
 @jwt_required()
 def get_user_filtered():
     user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-    if user.role != Role.ADMIN:
-        return jsonify({'message': 'not permise'}), 200
+    # if user.role != Role.ADMIN:
+    #     return jsonify({'message': 'not permise'}), 200
 
     user_role = request.args.get('role')
     user_role = Role.get_role(user_role)
@@ -540,29 +551,6 @@ def delete_user(user_id):
 
     return jsonify({'message': 'ok'}), 200
 
-@api.route('/send-email-register', methods=['POST'])
-@jwt_required()
-def send_email_register():
-    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
-    if user is None:
-        return jsonify({'message': 'Wrong user.'}), 400
-    if user.role != Role.ADMIN:
-        return jsonify({'message': 'Enough permision.'}), 405
-
-    form = request.form
-    if(form is None):
-        return jsonify({'message': "Request must be a form"}), 400
-
-    email_to =  form.get('to')
-    title =  'You have registered on Comecon'
-
-    if None in [email_to]:
-        return jsonify({'message': 'wrong property'})
-
-    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
-
-    return jsonify({'message': 'ok'}), 200
-
 #Change status 
 @api.route('/user/<int:user_id>', methods=['PUT'])
 @jwt_required()
@@ -574,15 +562,26 @@ def change_status_restaurant(user_id = None):
     #     return jsonify({'message': 'Enough permision.'}), 405
 
     form = request.form
+    print(form, user)
     
+    if(form is None):
+        return jsonify({'message': "Request must be a form"}), 400
+
+    email_to =  form.get('email')
+
+    if None in [email_to]:
+        return jsonify({'message': 'wrong property'})
+
     user_to_change = User.query.filter_by(id=user_id).one_or_none()
     if user_to_change is None:
         return jsonify({'message': "There isn't user valid!."}), 400
-
-    if form.get('status') != "valid":
-        return jsonify({'message': "Invalid."}), 400
-
-    user_to_change.status = UserStatus.VALID
+    
+    if form.get('status') == "valid":   
+        user_to_change.status = UserStatus.VALID
+        send_a_email(to=email_to, title='Has sido aprobado en Comecon', html=aproved_email())
+    elif form.get('status') == "invalid":
+        user_to_change.status = UserStatus.INVALID
+        send_a_email(to=email_to, title='Has sido rechazado en Comecon', html=rejected_email())
 
     try:
         db.session.commit()
@@ -609,13 +608,17 @@ def send_email_register_admin():
     if None in [email_to]:
         return jsonify({'message': 'wrong property'}), 400
 
+    user = User.query.filter_by(email=email_to).one_or_none()
+    if user is not None:
+        return jsonify({'message': 'Email is being used by another user'}), 400
+
     new_user = User()
     new_user.name = email_to
     new_user.email = email_to
     new_user.role = Role.ADMIN
     new_user.status = UserStatus.INVALID
     new_user.salt = b64encode(os.urandom(32)).decode('utf-8')
-    new_user.password = password_hash(email_to, user.salt)
+    new_user.password = password_hash(email_to, new_user.salt)
 
     db.session.add(new_user)
     try:
@@ -632,8 +635,6 @@ def send_email_register_admin():
 
     return jsonify({'message': 'ok'}), 200
 
-
-#Change status 
 @api.route('/self-register-admin', methods=['PUT'])
 @jwt_required()
 def self_register_admin(): 
@@ -669,3 +670,50 @@ def self_register_admin():
         return jsonify({'message': 'Something wrong ocurred'}), 500
 
     return jsonify({'message': 'ok'}), 200  
+
+@api.route('/restaurant/<int:restaurant_id>', methods=['DELETE'])
+@jwt_required()
+def delete_restaurant(restaurant_id = None):
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+    if restaurant_id is None:
+        return jsonify({'message': 'Restaurant not found.'}), 404
+    if user is None:
+        return jsonify({'message': 'Wrong user.'}), 400
+    if user.role != Role.ADMIN and user.restaurant.id != restaurant_id:
+        return jsonify({'message': 'Enough permision.'}), 405
+    
+    restaurant_delete = None
+    if user.role == Role.ADMIN:
+        restaurant_delete = Restaurant.query.filter_by(id=restaurant_id).one_or_none()
+    else:
+        restaurant_delete = Restaurant.query.filter_by(id=user.restaurant.id).one_or_none()
+
+    if restaurant_delete is None:
+        return jsonify({'message': 'Restaurant not found.'}), 404
+
+    user_delete = None
+    if user.role == Role.ADMIN:
+        user_delete = User.query.filter_by(id=restaurant_delete.user_id).one_or_none()
+    else:
+        user_delete = user
+    
+    if user_delete is None:
+        return jsonify({'message': 'User not found.'}), 404
+
+    # delete all restaurant's data
+    try:
+        image_array = Restaurant_image.query.filter_by(restaurant_id=restaurant_delete.id).all()
+        for image in image_array:
+            db.session.delete(image)
+        food_array = Food.query.filter_by(restaurant_id=restaurant_delete.id).all()
+        for food in food_array:
+            db.session.delete(food)
+        db.session.delete(restaurant_delete)
+        db.session.delete(user_delete)
+
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'ok'}), 200

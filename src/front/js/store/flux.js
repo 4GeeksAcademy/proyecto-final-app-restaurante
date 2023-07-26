@@ -1,4 +1,5 @@
-import { successAlert, errorAlert } from "../util";
+import { useRef } from "react";
+import { successAlert, errorAlert, warningAlert } from "../util";
 
 const getState = ({ getStore, getActions, setStore }) => {
 
@@ -6,15 +7,10 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       user: JSON.parse(sessionStorage.getItem("user")) || null,
       token: JSON.parse(sessionStorage.getItem("token")) || null,
+      restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
-      restaurant: null,
-      requests: [{
-        name: "Hong Kong",
-        phone: "010242655",
-        rif: "J123556",
-        location: "calle q",
-        description: "Business es un restaiurante de comida asiatica con fusion latina que destaca por su pizza"
-      }],
+      requests: [],
+      dishes: [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -70,24 +66,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             successAlert('Registed successful');
+            return true;
           }
           else {
             errorAlert(data.message);
           }
 
-          return data;
+          // return data;
 
         } catch (error) {
           errorAlert('Some error ocurred');
           console.log(error);
         }
+        
+        return false;
 
-        return { 'message': 'Some error ocurred' };
+        // return { 'message': 'Some error ocurred' };
       },
 
       //PARA REGISTRO DE DISHES:
       dishesRegister: async (dish) => {
         const store = getStore();
+        const actions = getActions();
+        const { getOneRestaurant } = actions;
+
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food`, {
             method: "POST",
@@ -101,6 +103,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (response.ok) {
             successAlert('Dish added');
+            await getOneRestaurant(store.restaurant.id);
+            return true;
           }
           else {
             errorAlert(data.message);
@@ -110,30 +114,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           errorAlert('Some error ocurred');
           console.log(error);
         }
+
+        return false;
       },
-
-
       getOneRestaurant: async (id) => {
         //fetch to the api
         const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`)
+
         if (response.ok) {
           const restaurant = await response.json();
+
           setStore({
             'restaurant': restaurant
           });
+          sessionStorage.setItem("restaurant", JSON.stringify(restaurant));
+
           return restaurant;
         }
+
         setStore({
           'restaurant': null
         });
+        sessionStorage.setItem("restaurant", JSON.stringify(null));
+
         return null;
       },
 
       foodSearch: async (search) => {
-        const { budget, food } = search;
+        const { budget, food, tag } = search;
         const priceParameter = budget == '' ? "price" : `price=${budget}`;
         const descriptionParameter = food == '' ? "description" : `description=${food}`;
-        const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
+        const tagsParameter = tag == '' ? "tags" : `tags=${food}`;
+        console.log(tagsParameter);
+        const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&${tagsParameter}&${priceParameter}`;
         console.log(url);
 
         try {
@@ -239,9 +252,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       //BORRAR RESTAURANTE POR ID
       deleteRestaurant: async (id) => {
+        const { token } = getStore();
+        
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           });
           const data = await response.json();
 
@@ -256,41 +274,32 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           errorAlert('Some error ocurred.');
           console.log("deleting restaurant...");
+          console.log(error);
         }
       },
-      getRequests: async (request) => {
+      getRequests: async () => {
         const store = getStore()
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${store.token}` // Agrega el token en el encabezado Authorization
-            }						//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+              Authorization: `Bearer ${store.token}`
+            }
           })
           if (response.ok) {
-            const allRequests = await response.json();
-            console.log(allRequests)
-            const allRestaurantRequest = []
-            {
-              allRequests.map((item, index) => {
-                allRestaurantRequest.push(item.restaurant)
-              })
-            }
-            console.log(allRestaurantRequest)
-            setStore(
-              {
-                requests: allRestaurantRequest
-              }
-            )
+            const restaurants = await response.json();
+            const allRequests = restaurants.filter((item) => {
+              return item.status == 'invalid'
+            })
+            setStore({ requests: allRequests })
           }
         } catch (error) {
           console.log(error)
         }
       },
-      editRestaurant: async (data) => {
-        console.log(data);
-        const store = getStore();
 
+      editRestaurant: async (data) => {
+        const store = getStore();
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "PUT",
@@ -301,15 +310,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           if (!response.ok) {
             errorAlert(data.message);
-            console.log("No se pudo editar restaurante")
           }
           else {
             successAlert('Restaurant edited');
+            return true;
           }
         } catch (error) {
           console.error(error);
         }
+        return false;
       },
+
       deletePlaceImage: async (imageId, restaurantId = null) => {
         const store = getStore();
 
@@ -342,6 +353,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return true;
       },
+
       validateAdmin: async (specialToken, userData) => {
         console.log(userData);
 
@@ -355,7 +367,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         const data = await response.json();
 
-        if(response.ok) {
+        if (response.ok) {
+          successAlert('You have validated your account successful')
           console.log(data.message);
           return true;
         }
@@ -363,7 +376,124 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(response.message);
         return false;
 
-      }
+      },
+      editDish: async (data, id) => {
+        const store = getStore();
+        const actions = getActions();
+        const { getOneRestaurant } = actions;
+
+        try {
+          let response = await fetch(`${process.env.BACKEND_URL}/restaurant/food/${id}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: data
+          });
+
+          if (!response.ok) {
+            errorAlert(data.message);
+            console.log("No se pudo editar el plato")
+          }
+          else {
+            successAlert('Plato editado correctamente');
+            await getOneRestaurant(store.restaurant.id);
+            return true;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
+        return false;
+      },
+
+
+      deleteDish: async (id) => {
+        const store = getStore();
+        const actions = getActions();
+        const { getOneRestaurant } = actions;
+        const { restaurant } = store;
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/restaurant/food/${id}`, {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            successAlert('Tu plato ha sido eliminado');
+            await getOneRestaurant(restaurant.id);
+          }
+          else {
+            errorAlert(data.message);
+          }
+          return data;
+
+        } catch (error) {
+          errorAlert('Un error ha ocurrido!');
+          console.log(error)
+        }
+      },
+
+      manageRequest: async (form) => {
+        const store = getStore();
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/user/${form.get('user_id')}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`
+            },
+            body: form
+          });
+
+          if (response.ok) {
+            if (form.get('status') === 'valid')
+              successAlert('Restaurante aceptado');
+            else
+              warningAlert('Restaurante rechazado')
+          } else {
+            errorAlert(data.message);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      clearResults: () => {
+        setStore({
+          results: []
+        })
+      },
+      logOut: () => {
+        setStore({
+          user: null,
+          restaurant: null,
+          token: null
+        });
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('restaurant');
+      },
+
+      getAllDishes: async (id) => {
+        const store = getStore();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}/food`);
+          console.log(id)
+          const data = await response.json();
+          setStore(
+            {
+              "dishes": data
+            }
+          );    
+        } catch (err) {
+          console.error(err);
+        }
+        console.log("showing dishes...")
+      } 
     }
   };
 }

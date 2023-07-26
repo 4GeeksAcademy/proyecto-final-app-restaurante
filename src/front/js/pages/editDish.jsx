@@ -1,10 +1,10 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.js";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
+import { Context } from "../store/appContext";
 import { onValidateDishes } from "../util.js";
-import "../../styles/addDish.css"
+import "../../styles/editDish.css"
 
-const initialState = {                                              //ESTADO INICIAL
+const initialState = {
     name: "",
     description: "",
     price: "",
@@ -12,25 +12,43 @@ const initialState = {                                              //ESTADO INI
     image: "",
 };
 
-export const AddDishes = () => {
-    const { actions } = useContext(Context);
-    const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
-    const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
+export const EditDish = () => {
+    const { actions, store } = useContext(Context);
+    const [dish, setDish] = useState(initialState);
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+    const { dishId } = useParams();
 
+
+    useEffect(() => {
+        let arrayDish = store.restaurant.foods;
+
+        arrayDish = arrayDish.filter(dish => dish.id == dishId);
+        const currentDish = arrayDish[0]
+        
+        setDish({
+            ...dish,
+            name: currentDish.name,
+            description: currentDish.description,
+            price: currentDish.price + '',
+            tags: currentDish.tags,
+            image: currentDish.image,
+        })
+        
+    }, []);
+    
     const handleChange = (e) => {
-        //MANEJA LOS CAMBIOS EN LOS FORM FIELDS
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = async(e) => {                                 //MANEJA EL ENVIO DEL FORM
+    const handleEdit = async (e) => {                                 
         e.preventDefault()
-        const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
-        setErrors(err)                                              //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
+        const err = onValidateDishes(dish)                  
+        setErrors(err)                                             
 
-        if (Object.keys(err).length === 0) {                            //SI NO HAY ERRORES...
+        if (Object.keys(err).length === 0) {                
 
-            const formData = new FormData();                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
+            const formData = new FormData();                      
 
             formData.append("foodName", dish.name);
             formData.append("foodDescription", dish.description);
@@ -38,26 +56,26 @@ export const AddDishes = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-            const success = await actions.dishesRegister(formData); //FUNCION FLUX
+            const success = await actions.editDish(formData, dishId);
 
-            if (success)
+            if(success)
                 navigate('/restaurant/menu');
         };
     }
 
+
     return (
         <>
-            {/* AGREGAR PLATOS */}
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
                     <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
-                        <strong>Agregar Plato</strong>
+                        <strong>Editar Plato</strong>
                     </h2>
                     <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
                         <form
                             className="needs-validation"
                             noValidate
-                            onSubmit={handleRegister}
+                            onSubmit={handleEdit}
                         >
                             <div className="form-group mt-4">
                                 <label htmlFor="name">Nombre:</label>
@@ -95,10 +113,10 @@ export const AddDishes = () => {
                             </div>
 
                             <div className="form-group mt-3">
-                                <label htmlFor="price">Precio</label>
+                                <label htmlFor="name">Precio</label>
                                 <div className="input-group border rounded-3">
                                     <input
-                                        type="number"
+                                        type="text"
                                         className="form-control border border-dark"
                                         id="price"
                                         name="price"
@@ -144,20 +162,19 @@ export const AddDishes = () => {
                                 {/* {errors.image && <div className="alert p-0 m-0 bg-none text-danger">{errors.image}</div>} */}
                             </div>
 
-                            {/* BOTON DE ENVIO */}
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex  mt-3 justify-content-between">
                                 <button
                                     type="button"
-                                    className="button--save-dish mt-3"
-                                    onClick={(e) => handleRegister(e)}
+                                    className="button--green--edit-dish me-2"
+                                    onClick={handleEdit}
                                 >
-                                    Guardar
+                                    <strong>Actualizar</strong>
                                 </button>
                                 <button
                                     type="button"
-                                    className="button--cancel-dish mt-3 col-4"
+                                    className="button--red--edit-dish col-4"
                                     onClick={() => navigate("/restaurant/menu")}>
-                                    Cancelar
+                                    <strong>Cancelar</strong>
                                 </button>
                             </div>
                         </form>
@@ -166,4 +183,4 @@ export const AddDishes = () => {
             </div>
         </>
     );
-};
+}

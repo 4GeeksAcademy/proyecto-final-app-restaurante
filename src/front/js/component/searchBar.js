@@ -5,12 +5,13 @@ import '../../styles/searchBar.css';
 
 const initialValue = {
     budget: '',
-    food: ''
+    food: '',
+    tags: '',
 }
 
 export const SearchBar = () => {
     const { actions } = useContext(Context);
-    const { foodSearch } = actions;
+    const { foodSearch, clearResults } = actions;
     const [search, setSearch] = useState(initialValue)
 
     const handleOnChange = ({ target }) => {
@@ -22,7 +23,12 @@ export const SearchBar = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        foodSearch(search);
+
+        if(search.budget != '' || search.food != '')
+            foodSearch(search);
+        else
+            clearResults();
+
     }
 
     return (
@@ -53,7 +59,7 @@ export const SearchBar = () => {
                 </div>
             </div>
             <div className="d-flex mt-4 mx-3">
-                <button type="submit" className="btn btn-success w-100 bg-success"><strong>Buscar </strong><FaSearch /></button>
+                <button type="submit" className="button--find w-100">Buscar<FaSearch className="ms-1"/></button>
             </div>
         </form>
     );

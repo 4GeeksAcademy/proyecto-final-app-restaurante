@@ -17,6 +17,9 @@ const Login = () => {
             const restaurantId = user.restaurant.id;
             nav(`/restaurant/${restaurantId}`);
         }
+        else if (user.role=='Admin') {
+            nav('/admin/restaurant');
+        }
     }
 
     const handleLogin = (event) => {
@@ -39,7 +42,7 @@ const Login = () => {
                         <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={(event) => handleUser(event)} />
                     </div>
                     <div>
-                    <button type="submit" className="btn btn-success w-100 m-0 login_submit_button"><strong>Submit</strong></button>
+                    <button type="submit" className="w-100 m-0 button--login-register"><strong>Submit</strong></button>
                     </div>
                 </form>
             </div>

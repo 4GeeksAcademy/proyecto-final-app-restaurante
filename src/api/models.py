@@ -127,7 +127,7 @@ class Restaurant_image(db.Model):
             "restaurant_id": self.restaurant_id,
             "image_url": self.image_url
         }
-
+    
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)

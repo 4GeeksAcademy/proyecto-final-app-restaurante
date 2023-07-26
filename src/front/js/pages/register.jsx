@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { onValidateRegister } from "../util.js"
@@ -16,6 +17,7 @@ export const Register = () => {
     const { actions } = useContext(Context);
     const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
+    const navigate = useNavigate();
 
     const handleChange = (e) => {                                   //MANEJA LOS CAMBIOS EN LOS CAMPOS DEL FORM REGISTER
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -42,7 +44,9 @@ export const Register = () => {
             formData.append("userPassword", user.password);
 
             const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
-            console.log(response);
+            
+            if (response)
+                navigate('/login');
         }
     }
 
@@ -154,7 +158,7 @@ export const Register = () => {
                             <div>
                                 <button
                                     type="submit"
-                                    className="btn btn-success text-white w-100 mt-3"
+                                    className="button--login-register w-100 mt-3"
                                 >
                                     <strong>Únete a nosotros!</strong>
                                 </button>
