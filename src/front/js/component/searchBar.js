@@ -5,7 +5,8 @@ import '../../styles/searchBar.css';
 
 const initialValue = {
     budget: '',
-    food: ''
+    food: '',
+    tags: '',
 }
 
 export const SearchBar = () => {

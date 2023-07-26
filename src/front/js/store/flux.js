@@ -144,7 +144,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { budget, food, tag } = search;
         const priceParameter = budget == '' ? "price" : `price=${budget}`;
         const descriptionParameter = food == '' ? "description" : `description=${food}`;
-        const tagsParameter = tag == '' ? "tags" : `tags=${tag}`;
+        const tagsParameter = tag == '' ? "tags" : `tags=${food}`;
         console.log(tagsParameter);
         const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&${tagsParameter}&${priceParameter}`;
         console.log(url);
