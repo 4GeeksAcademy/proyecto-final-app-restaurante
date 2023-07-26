@@ -25,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
 import { EditDish } from "./pages/editDish.jsx";
+import AccessDeniedPage from "./pages/AccessDeniedPage.jsx";
 
 
 
@@ -44,8 +45,8 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        {/* "exclusive-for-restaurant": editMenu[DONE], addDishes, editProfile[DONE]} */}
-                        {/* "exclusive-for-admin": {controlPanel[DONE] */}
+                        {/* "exclusive-for-restaurant": EditMenu[DONE], AddDishes[DONE], EditProfile[DONE], EditDish[DONE] */}
+                        {/* "exclusive-for-admin": controlPanel[DONE], RestaurantRequest[DONE] */}
                         <Route element={<Home />} path="/" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Register />} path="/register" />
@@ -58,6 +59,7 @@ const Layout = () => {
                         <Route element={<ControlPanel />} path="/admin/restaurant" />
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
+                        <Route element={<AccessDeniedPage/>} path="/access-denied" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                         <Route path="*" element={<div>Not Found</div>} />
                     </Routes>

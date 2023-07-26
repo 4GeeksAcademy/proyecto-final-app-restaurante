@@ -1,7 +1,8 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { onValidateRegister } from "../util.js"
+import { useNavigate } from "react-router-dom";
 
 const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
     restaurantName: "",
@@ -13,9 +14,10 @@ const initialState = {                                              //ESTADO INI
 }
 
 export const Register = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
-    const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
+    const [errors, setErrors] = useState({}); 
+    const navigate = useNavigate();                      //GUARDA ERRORES DE VALIDACION
 
     const handleChange = (e) => {                                   //MANEJA LOS CAMBIOS EN LOS CAMPOS DEL FORM REGISTER
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -46,6 +48,10 @@ export const Register = () => {
         }
     }
 
+    useEffect(() => {
+        if(store.token != null) navigate("/access-denied")
+    })
+    
     return (
         <>
             {/* FORMULARIO DE REGISTRO */}

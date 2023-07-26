@@ -1,6 +1,6 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import { useNavigate } from "react-router-dom";
 import { onValidateDishes } from "../util.js";
 
 
@@ -14,6 +14,7 @@ const initialState = {                                              //ESTADO INI
 
 export const AddDishes = () => {
     const { actions } = useContext(Context);
+    const {store} = useContext(Context);
     const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -44,12 +45,13 @@ export const AddDishes = () => {
                 navigate('/restaurant/menu');
         };
     }
-
+    useEffect(() => {
+        if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
+    },[])
     return (
         <>
-            {/* {store.user?.role == "Restaurant" } */}
-            
-                    {/* AGREGAR PLATOS */}
+              
+                    // {/* AGREGAR PLATOS */}
                     <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                         <div className="row justify-content-center">
                             <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
@@ -159,7 +161,9 @@ export const AddDishes = () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> 
+
+           
         </>
     );
 };

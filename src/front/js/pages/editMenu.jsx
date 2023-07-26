@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { DishCard } from "../component/dishCard";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const initialState = [
   {
@@ -18,7 +18,7 @@ const initialState = [
 export const EditMenu = () => {
   const [dishes, setDishes] = useState([]);
   const { store } = useContext(Context)
-
+  const navigate = useNavigate();
   const { user } = store
 
 
@@ -44,10 +44,12 @@ export const EditMenu = () => {
   }, []);
 
 
+  useEffect(() => {
+    if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
+  })
   return (
     <>
-      
-        <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
+        <><div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
           <div className="row justify-content-center">
             <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
               <strong>Editar Menú</strong>
@@ -56,16 +58,14 @@ export const EditMenu = () => {
               <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
             </div>
           </div>
-        </div>
-        <div className="container col-12 px-0 m-0 mt-3">
-          {dishes.map((dish, index) => {
-            console.log(dish);
-            return <DishCard
-              key={index}
-              dish={dish} />;
-          })}
-        </div>
-        
+        </div><div className="container col-12 px-0 m-0 mt-3">
+            {dishes.map((dish, index) => {
+              console.log(dish);
+              return <DishCard
+                key={index}
+                dish={dish} />;
+            })}
+          </div></>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
-import { RestaurantCard } from "../component/restaurantCard.jsx";
 import { useNavigate } from "react-router-dom";
+import { RestaurantCard } from "../component/restaurantCard.jsx";
 
 const initialState = [
   {
@@ -34,10 +34,12 @@ export const ControlPanel = () => {
     getAllRestaurants();
   }, []);
 
+  useEffect(() => {
+    if(store.user.role != "Admin") navigate("/access-denied")
+  })
 
   return (
     <>
-      {store.user?.role == "admin" ?
         <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
           <div className="row justify-content-center">
             <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
@@ -49,8 +51,7 @@ export const ControlPanel = () => {
             console.log(restaurant);
             return <RestaurantCard key={index} restaurant={restaurant} />;
           })}
-        </div> : navigate("/access-denied")
-      }
+        </div>
     </>
   );
 };
