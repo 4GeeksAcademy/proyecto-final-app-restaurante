@@ -26,60 +26,43 @@ def server_status():
 
 
 @api.route('/restaurant', methods=['POST'])
+@jwt_required()
 def register_restaurant():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': "User not found"}), 404
+    if user.role is not Role.USER:
+        return jsonify({'message': "User can't create a restaurant"}), 400
+    if user.restaurant is not None:
+        return jsonify({'message': "User has a restaurant already"}), 400
+    
     form = request.form
     if(form is None):
         return jsonify({'message': "Request must be a form"}), 400
-    # are there corrects properties?
-    restaurant_name = form.get('restaurantName')
-    restaurant_rif = form.get('restaurantRif')
-    restaurant_location = form.get('restaurantLocation')
-    restaurant_phone = form.get('restaurantPhone')
-    user_password = form.get('userPassword')
-    user_email = form.get('userEmail')
-    if None in [restaurant_name, restaurant_rif, restaurant_location, restaurant_phone, user_password, user_email]:
-        return jsonify({'message': "Form has a wrong property"}), 400
-    user_name = form.get('restaurantRif')
-
-    restaurant_user = User.query.filter_by(email=user_email).one_or_none()
-    if restaurant_user is not None:
-        return jsonify({'message': 'Email is being used by another user.'}), 400
-
-    restaurant = Restaurant.query.filter_by(rif=restaurant_rif).one_or_none()
-    if restaurant is not None:
-        return jsonify({'message': 'Rif is being used by another user.'}), 400
-
-    # is a valid password ? 
-    if not is_valid_password(user_password):
-        return jsonify({'message': 'Invalid password'}), 400
-
-    # is a valid email ?
-    if not is_valid_email(user_email):
-        return jsonify({'message': 'Invalid email'}), 400
-
-    # Creating user
-    restaurant_user = User()
-    restaurant_user.name = user_name
-    restaurant_user.email = user_email
-    restaurant_user.role = Role.RESTAURANT
-    restaurant_user.status = UserStatus.INVALID
-    restaurant_user.salt = b64encode(os.urandom(32)).decode('utf-8')
-    restaurant_user.password = password_hash(user_password, restaurant_user.salt)
     
-    db.session.add(restaurant_user)
-    try:
-        db.session.commit()
-    except Exception as err:
-        db.session.rollback()
-        return jsonify({'message': err.args}), 500
+    # Tengo que validar la data
+    
+    # are there corrects properties?
+    nickname = form.get('userName')
+    name = form.get('restaurantName')
+    rif = form.get('restaurantRif')
+    location = form.get('restaurantLocation')
+    phone = form.get('restaurantPhone')
+    if None in [name, rif, location, phone, nickname]:
+        return jsonify({'message': "Form has a wrong property"}), 400
+
+    user.name = nickname
+    user.role = Role.RESTAURANT
+    user.status = UserStatus.INVALID
     
     # Creating restaurant
     restaurant = Restaurant()
-    restaurant.user_id = restaurant_user.id
-    restaurant.name = restaurant_name
-    restaurant.rif = restaurant_rif
-    restaurant.phone = restaurant_phone
-    restaurant.location = restaurant_location
+    restaurant.user_id = user.id
+    restaurant.name = name
+    restaurant.rif = rif
+    restaurant.phone = phone
+    restaurant.location = location
 
     db.session.add(restaurant)
     try:
@@ -89,9 +72,9 @@ def register_restaurant():
         return jsonify({'message': err.args}), 500
 
     # sending email
-    email_to = restaurant_user.email
+    email_to = user.email
     title =  'You have registered on Comecon'
-    send_a_email(to=email_to, title='You have registered to Comecon', html=get_register_email())
+    send_a_email(to=email_to, title=title, html=get_register_email())
 
     return jsonify({'message': 'ok'}), 201
 
