@@ -20,8 +20,6 @@ const Restaurant = () => {
     getOneRestaurant(restaurantId);
   }, []);
 
-  console.log(user)
-
   return (
     <>
       {
