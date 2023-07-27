@@ -743,3 +743,33 @@ def set_favorite():
         return jsonify({'message': error.args}), 500
 
     return jsonify(favorite.serialize()), 201
+
+@api.route('/favorite', methods=['DELETE'])
+@jwt_required()
+def delete_favorite():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    form = request.form
+    if form is None:
+        return jsonify({'message': "Request must be a form"}), 400
+
+    food_id = form.get('foodId')
+    if food_id is None:
+        return jsonify({'message': "You have to specify a food id"}), 400
+
+    favorite = Favorite.query.filter_by(user_id=user.id, food_id=food_id).first()
+    if favorite is None:
+        return jsonify({'message': "Favorite not found"}), 404
+
+    try:
+        db.session.delete(favorite)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error.args)
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'Favorite deleted successful'}), 200
