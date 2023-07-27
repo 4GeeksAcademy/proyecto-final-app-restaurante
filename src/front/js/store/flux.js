@@ -493,7 +493,37 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(err);
         }
         console.log("showing dishes...")
-      } 
+      },
+
+      //PARA REGISTRO DE USUARIO:
+      userRegister: async (user) => {
+        try {
+          let response = await fetch(`${process.env.BACKEND_URL}/user`, {
+            method: "POST",
+            body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+          })
+
+          let data = await response.json();
+
+          if (response.ok) {
+            successAlert('Se registró el usuario');
+            return true;
+          }
+          else {
+            errorAlert(data.message);
+          }
+
+          // return data;
+
+        } catch (error) {
+          errorAlert('Some error ocurred');
+          console.log(error);
+        }
+        
+        return false;
+
+        // return { 'message': 'Some error ocurred' };
+      },
     }
   };
 }
