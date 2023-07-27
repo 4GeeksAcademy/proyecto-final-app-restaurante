@@ -705,3 +705,41 @@ def get_favorite():
     favorite_list = list(map(lambda food: food.serialize(), Favorite.query.filter_by(user_id = user.id).all()))
 
     return jsonify(favorite_list), 200
+
+@api.route('/favorite', methods=['POST'])
+@jwt_required()
+def set_favorite():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    form = request.form
+    if form is None:
+        return jsonify({'message': "Request must be a form"}), 400
+
+    food_id = form.get('foodId')
+    if food_id is None:
+        return jsonify({'message': "You have to specify a food id"}), 400
+
+    food_exist = Food.query.filter_by(id=food_id).one_or_none()
+    if food_exist is None:
+        return jsonify({'message': "Food not found"}), 404
+
+    favorite_exist = Favorite.query.filter_by(user_id=user.id, food_id=food_id).first()
+    if favorite_exist is not None:
+        return jsonify({'message': "Food is favorite already"}), 400
+
+    favorite = Favorite()
+    favorite.user_id = user.id
+    favorite.food_id = food_id
+
+    try:
+        db.session.add(favorite)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error.args)
+        return jsonify({'message': error.args}), 500
+
+    return jsonify(favorite.serialize()), 201
