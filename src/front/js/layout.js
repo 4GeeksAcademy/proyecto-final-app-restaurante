@@ -7,7 +7,6 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import Restaurant from './pages/Restaurant.jsx';
-import { Register } from './pages/register.jsx';
 import { UserRegister } from "./pages/userRegister.jsx";
 import { RegisterRestaurant } from './pages/registerRestaurant.jsx';
 // import { DeleteRest } from "./pages/deleteRest.jsx";
