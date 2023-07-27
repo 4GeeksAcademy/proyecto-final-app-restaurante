@@ -684,7 +684,8 @@ def delete_restaurant(restaurant_id = None):
         for food in food_array:
             db.session.delete(food)
         db.session.delete(restaurant_delete)
-        db.session.delete(user_delete)
+        
+        user_delete.role = Role.USER
 
         db.session.commit()
     except Exception as error:
