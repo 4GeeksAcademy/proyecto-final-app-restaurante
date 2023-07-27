@@ -5,7 +5,8 @@ import '../../styles/searchBar.css';
 
 const initialValue = {
     budget: '',
-    food: ''
+    food: '',
+    tags: '',
 }
 
 export const SearchBar = () => {
@@ -48,7 +49,7 @@ export const SearchBar = () => {
                 <div className="input-group">
                     <span className="input-group-text border-0 rounded-0"><strong>con</strong></span>
                     <input type="text"
-                        className="form-control d-inline "
+                        className="form-control d-inline w-25 "
                         placeholder="...el monto"
                         name="budget"
                         id="budget"
@@ -58,7 +59,7 @@ export const SearchBar = () => {
                 </div>
             </div>
             <div className="d-flex mt-4 mx-3">
-                <button type="submit" className="btn btn-success w-100 bg-success"><strong>Buscar </strong><FaSearch /></button>
+                <button type="submit" className="button--find w-100">Buscar<FaSearch className="ms-1"/></button>
             </div>
         </form>
     );

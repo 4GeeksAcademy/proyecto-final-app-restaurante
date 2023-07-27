@@ -28,3 +28,52 @@
 a:link, a:visited, a:active {
   text-decoration:none;
 }
+
+.button--red--dish {
+  background-color: #e35656;
+  min-width: 50px;
+  height: 40px;
+  color: black;
+  padding: 1px 10px;
+  font-weight:normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 3px grey;
+}
+.button--red--dish:hover {
+  box-shadow: 0 3px #00FFA3;
+  top: 1px;
+}
+.button--red--dish:active {
+  box-shadow: 0 0 #00FFA3;
+  top: 5px;
+}
+
+.button--orange--dish {
+  background-color: #ff9900;
+  min-width: 50px;
+  height: 40px;
+  padding: 1px 10px;
+  font-weight:normal;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 1px 3px grey;
+}
+.button--orange--dish:hover {
+  box-shadow: 0 3px #00FFA3;
+  top: 1px;
+}
+.button--orange--dish:active {
+  box-shadow: 0 0 #00FFA3;
+  top: 5px;
+}

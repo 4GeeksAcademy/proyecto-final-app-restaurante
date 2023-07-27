@@ -162,7 +162,7 @@ export const Register = () => {
                             <div>
                                 <button
                                     type="submit"
-                                    className="btn btn-success text-white w-100 mt-3"
+                                    className="button--login-register w-100 mt-3"
                                 >
                                     <strong>Únete a nosotros!</strong>
                                 </button>

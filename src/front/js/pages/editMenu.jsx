@@ -21,22 +21,6 @@ export const EditMenu = () => {
   const navigate = useNavigate();
   // const { user } = store
 
-
-
-  //TRAER TODOS LOS PLATOS DE UN RESTAURANT
-  // const getAllDishes = async (id) => {
-  //   try {
-  //     const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}/food`);
-  //     console.log(id)
-  //     const data = await response.json();
-  //     setDishes(data);
-
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  //   console.log("showing dishes...")
-  // };
-
   useEffect(() => {
     if (user != undefined && user.restaurant != undefined) {
       actions.getAllDishes(user.restaurant.id);
@@ -55,7 +39,11 @@ export const EditMenu = () => {
             <strong>Editar Menú</strong>
           </h2>
           <div className="d-grid gap-2 d-md-flex justify-content-end">
-            <Link to="/restaurant/menu/food"><button className="btn btn-success" type="button"><strong>Agregar plato</strong></button></Link>
+            <Link to="/restaurant/menu/food">
+              <button className="btn btn-success" type="button">
+                <strong>Agregar plato</strong>
+              </button>
+            </Link>
           </div>
         </div>
         <div className="d-flex justify-content-center col-12 px-0 m-0 mt-3">

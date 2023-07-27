@@ -30,7 +30,7 @@ const AddRestaurantImage = ({restaurantId}) => {
   return (
     <>
       {/* button */}
-      <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#addRestaurantImage">
+      <button type="button" className="button--blue--galeria w-100" data-bs-toggle="modal" data-bs-target="#addRestaurantImage">
         <strong>Agregar imágen</strong>
       </button>
       {/* modal */}

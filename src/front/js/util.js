@@ -2,35 +2,35 @@ import { toast } from 'react-toastify';
 
 export const successAlert = (text) => {
     toast.success(text, {
-        position: "bottom-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "colored",
     });
 }
 export const warningAlert = (text) => {
     toast.warning(text, {
-        position: "bottom-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "colored",
     });
 }
 export const errorAlert = (text) => {
     toast.error(text, {
-        position: "bottom-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "colored",
     });
 }
 

@@ -144,10 +144,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       foodSearch: async (search) => {
-        const { budget, food } = search;
+        const { budget, food, tag } = search;
         const priceParameter = budget == '' ? "price" : `price=${budget}`;
         const descriptionParameter = food == '' ? "description" : `description=${food}`;
-        const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&tag&${priceParameter}`;
+        const tagsParameter = tag == '' ? "tags" : `tags=${food}`;
+        console.log(tagsParameter);
+        const url = `${process.env.BACKEND_URL}/food?${descriptionParameter}&${tagsParameter}&${priceParameter}`;
+        console.log(url);
 
         try {
           let response = await fetch(url, {
@@ -252,9 +255,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       //BORRAR RESTAURANTE POR ID
       deleteRestaurant: async (id) => {
+        const { token } = getStore();
+        
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           });
           const data = await response.json();
 
@@ -269,6 +277,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           errorAlert('Some error ocurred.');
           console.log("deleting restaurant...");
+          console.log(error);
         }
       },
       getRequests: async () => {

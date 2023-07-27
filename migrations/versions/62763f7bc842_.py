@@ -1,20 +1,8 @@
 """empty message
 
-<<<<<<< HEAD
-<<<<<<<< HEAD:migrations/versions/39e9e17ccb08_.py
-Revision ID: 39e9e17ccb08
+Revision ID: 62763f7bc842
 Revises: 
-Create Date: 2023-07-21 19:24:13.833076
-========
-Revision ID: 1bcbdc7b25e4
-Revises: 
-Create Date: 2023-07-22 12:31:52.972789
->>>>>>>> f08e830686b7cbc7506e14daa13705bccfe88fad:migrations/versions/1bcbdc7b25e4_.py
-=======
-Revision ID: 1bcbdc7b25e4
-Revises: 
-Create Date: 2023-07-22 12:31:52.972789
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
+Create Date: 2023-07-27 08:51:31.636804
 
 """
 from alembic import op
@@ -22,15 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD
-<<<<<<<< HEAD:migrations/versions/39e9e17ccb08_.py
-revision = '39e9e17ccb08'
-========
-revision = '1bcbdc7b25e4'
->>>>>>>> f08e830686b7cbc7506e14daa13705bccfe88fad:migrations/versions/1bcbdc7b25e4_.py
-=======
-revision = '1bcbdc7b25e4'
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
+revision = '62763f7bc842'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -45,8 +25,8 @@ def upgrade():
     sa.Column('salt', sa.String(length=50), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('avatar_url', sa.String(length=250), nullable=True),
-    sa.Column('role', sa.Enum('ADMIN', 'RESTAURANT', name='role'), nullable=False),
-    sa.Column('status', sa.Enum('INVALID', 'VALID', 'DELETED', name='userstatus'), nullable=False),
+    sa.Column('role', sa.Enum('ADMIN', 'RESTAURANT', 'USER', name='role'), nullable=False),
+    sa.Column('status', sa.Enum('INVALID', 'VALID', name='userstatus'), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
