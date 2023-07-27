@@ -56,6 +56,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       //PARA REGISTRO DE RESTAURANT:
       restaurantRegister: async (user) => {
+        const { token } = getStore();
+        
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "POST",
