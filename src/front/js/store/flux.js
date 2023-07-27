@@ -59,7 +59,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "POST",
-            body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+            body: user,							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           })
 
           let data = await response.json();

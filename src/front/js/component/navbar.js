@@ -48,7 +48,21 @@ export const Navbar = () => {
               </>
             }
             {
-              user?.role == 'Restaurant' &&
+              user?.role == 'User' || (user?.role == 'Restaurant' && user?.status == 'invalid') &&
+              <>
+                <div className="d-flex justify-content-beetwen">
+                  <Link to={`/register-restaurant`} className="">
+                    Vender
+                  </Link>
+                  <button className='button--logout m-1' onClick={logOutHandler}>
+                    <span id="tooltipText">logOut</span>
+                    <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+                  </button>
+                </div>
+              </>
+            }
+            {
+              (user?.role == 'Restaurant' && user?.status == 'valid') &&
               <>
                 <div className="d-flex justify-content-beetwen">
                   <Link to={`/restaurant/${user?.restaurant?.id}`} className="">

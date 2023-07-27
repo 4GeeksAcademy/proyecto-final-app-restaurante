@@ -7,7 +7,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import Restaurant from './pages/Restaurant.jsx';
-import { Register } from './pages/register.jsx';
+import { RegisterRestaurant } from './pages/registerRestaurant.jsx';
 // import { DeleteRest } from "./pages/deleteRest.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -44,7 +44,7 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Register />} path="/register" />
+                        <Route element={<RegisterRestaurant />} path="/register-restaurant" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<RequiereAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" />
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />

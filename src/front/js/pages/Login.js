@@ -20,6 +20,9 @@ const Login = () => {
         else if (user.role=='Admin') {
             nav('/admin/restaurant');
         }
+        else if (user.role=='User') {
+            nav('/');
+        }
     }
 
     const handleLogin = (event) => {
