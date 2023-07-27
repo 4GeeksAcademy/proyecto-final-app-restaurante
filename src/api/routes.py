@@ -456,16 +456,8 @@ def add_user():
     user = User()
     user.name = user_name
     user.email = user_email
-    if str.lower(user_role) == 'admin':
-        user_role = Role.ADMIN
-    elif str.lower(user_role) == 'restaurant':
-        user_role = Role.RESTAURANT
-    user.role = user_role
-    if str.lower(user_status) == 'valid':
-        user_status = UserStatus.VALID
-    elif str.lower(user_status) == 'invalid':
-        user_status = UserStatus.INVALID
-    user.status = user_status
+    user.role = Role.get_role(user_role)
+    user.status = UserStatus.get_status(user_status)
     user.salt = b64encode(os.urandom(32)).decode('utf-8')
     user.password = password_hash(user_password, user.salt)
 
@@ -476,11 +468,11 @@ def add_user():
         user.avatar_url = image_url
 
     db.session.add(user)
-
     try:
         db.session.commit()
     except Exception as error:
         db.session.rollback()
+        print(error.args)
         return jsonify(error.args), 500
 
     return jsonify(user.serialize()), 201

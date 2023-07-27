@@ -8,6 +8,8 @@ const initialState = {                                              //ESTADO INI
     username: "",
     email: "",
     password: "",
+    status: "valid",
+    role: "User"
 }
 
 export const UserRegister = () => {
@@ -33,9 +35,11 @@ export const UserRegister = () => {
 
             const formData = new FormData()                            //AGREGA Y ENVIA LOS VALORES DEL FORMULARIO
 
-            formData.append("userName", user.username);
-            formData.append("userEmail", user.email);
-            formData.append("userPassword", user.password);
+            formData.append("name", user.username);
+            formData.append("email", user.email);
+            formData.append("password", user.password);
+            formData.append("status", user.status);
+            formData.append("role", user.role);
 
             const response = await actions.userRegister(formData);      //FUNCION FLUX
             
