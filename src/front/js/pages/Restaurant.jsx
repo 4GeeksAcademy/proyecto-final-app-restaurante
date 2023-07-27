@@ -74,7 +74,7 @@ const Restaurant = () => {
                   </span>
                   {
                     restaurant.phone
-                  }
+                  } 
                 </p>
                 <p className='information-group'>
                   <span className='restaurant__label'>
@@ -111,7 +111,9 @@ const Restaurant = () => {
             <div className='container mt-4 p-4 bg-white rounded-3'>
               
                 {
-                  !restaurant?.image &&
+                  restaurant?.image ?
+                  <div> </div>
+                  :
                   <div>
                     <div>
                       <h3 className='text-center'>
@@ -144,6 +146,20 @@ const Restaurant = () => {
                       <h3 className='text-center'>
                         Galeria de imágenes
                       </h3>
+                    </div>
+                    <div className='column col-11'>
+                      {
+                        restaurant.image.map(
+                          image => {
+                            return (
+                              <PlaceImage
+                                key={image.id}
+                                image={image}
+                                deleteable={isOwner}
+                                restaurantId={restaurantId} />)
+                          }
+                        )
+                      }
                     </div>
                     <AddRestaurantImage
                       restaurantId={restaurantId} />
