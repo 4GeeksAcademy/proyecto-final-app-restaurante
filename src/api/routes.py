@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food
+from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food, Favorite
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin, aproved_email, rejected_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
@@ -693,3 +693,15 @@ def delete_restaurant(restaurant_id = None):
         return jsonify({'message': error.args}), 500
 
     return jsonify({'message': 'ok'}), 200
+
+@api.route('/favorite', methods=['GET'])
+@jwt_required()
+def get_favorite():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    favorite_list = list(map(lambda food: food.serialize(), Favorite.query.filter_by(user_id = user.id).all()))
+
+    return jsonify(favorite_list), 200

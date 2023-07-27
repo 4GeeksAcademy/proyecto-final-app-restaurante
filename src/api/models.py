@@ -55,7 +55,7 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # relationship
     restaurant = db.relationship('Restaurant', backref='user', uselist=False)
-    favorite = db.relationship('Favorite', backref='user', uselist=False)
+    favorite = db.relationship('Favorite', backref='user')
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -173,5 +173,5 @@ class Favorite(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "food_id": self.food_id
+            "food_id": self.food.serialize()
         }
