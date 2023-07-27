@@ -48,7 +48,7 @@ export const Navbar = () => {
               </>
             }
             {
-              user?.role == 'User' || (user?.role == 'Restaurant' && user?.status == 'invalid') &&
+              (user?.role == 'User' || (user?.role == 'Restaurant' && user?.status == 'invalid')) &&
               <>
                 <div className="d-flex justify-content-beetwen">
                   <Link to={`/register-restaurant`} className="">
