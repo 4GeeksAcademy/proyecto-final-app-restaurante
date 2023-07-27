@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
-import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import "../../styles/dishcard.css"
 
