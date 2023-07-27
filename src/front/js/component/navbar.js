@@ -48,6 +48,20 @@ export const Navbar = () => {
               </>
             }
             {
+              user?.role == 'User' &&
+              <>
+                <div className="d-flex justify-content-beetwen">
+                  <Link to={`/register-restaurant`} className="">
+                    Vender
+                  </Link>
+                  <button className='button--logout m-1' onClick={logOutHandler}>
+                    <span id="tooltipText">logOut</span>
+                    <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
+                  </button>
+                </div>
+              </>
+            }
+            {
               user?.role == 'Restaurant' &&
               <>
                 <div className="d-flex justify-content-beetwen">
