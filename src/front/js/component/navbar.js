@@ -28,11 +28,7 @@ export const Navbar = () => {
             <img src={ComeconName} alt="comecon-logo" position="fixed" width="270px" />
           </Link>
 
-<<<<<<< HEAD
-          <div className="d-fle</strong>x">
-=======
           <div className="d-flex">
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
             {
               user == null &&
               <>

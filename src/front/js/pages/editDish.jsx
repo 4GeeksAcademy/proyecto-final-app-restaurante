@@ -30,11 +30,7 @@ export const EditDish = () => {
             ...dish,
             name: currentDish.name,
             description: currentDish.description,
-<<<<<<< HEAD
-            price: currentDish.price,
-=======
             price: currentDish.price + '',
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
             tags: currentDish.tags,
             image: currentDish.image,
         })
@@ -45,11 +41,7 @@ export const EditDish = () => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-<<<<<<< HEAD
-    const handleEdit = (e) => {                                 
-=======
     const handleEdit = async (e) => {                                 
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
         e.preventDefault()
         const err = onValidateDishes(dish)                  
         setErrors(err)                                             
@@ -64,23 +56,16 @@ export const EditDish = () => {
             formData.append("foodTags", dish.tags);
             formData.append("image", dish.image);
 
-<<<<<<< HEAD
-            const success = actions.editDish(formData, dishId);
-=======
             const success = await actions.editDish(formData, dishId);
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
 
             if(success)
                 navigate('/restaurant/menu');
         };
     }
 
-<<<<<<< HEAD
     useEffect(() =>{
        if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
     },[])
-=======
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
 
     return (
         <>

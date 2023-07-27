@@ -26,7 +26,6 @@ import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
 import { EditDish } from "./pages/editDish.jsx";
 import AccessDeniedPage from "./pages/AccessDeniedPage.jsx";
-import { EditDish } from "./pages/editDish.jsx";
 
 
 
