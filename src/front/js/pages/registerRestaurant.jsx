@@ -44,7 +44,7 @@ export const RegisterRestaurant = () => {
             const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
 
             if (response)
-                navigate('/login');
+                navigate('/');
         }
     }
 
