@@ -68,11 +68,11 @@ export const onValidateRegister = (user) => {
     }
 
 
-    if (!user.email.trim()) {
-        errors.email = "Este campo no debe estar vacío"
-    } else if (!regexEmail.test(user.email)) {
-        errors.email = "Este campo debe llevar los caracteres '@' y '.DOM'"
-    }
+    // if (!user.email.trim()) {
+    //     errors.email = "Este campo no debe estar vacío"
+    // } else if (!regexEmail.test(user.email)) {
+    //     errors.email = "Este campo debe llevar los caracteres '@' y '.DOM'"
+    // }
 
 
     if (!user.location.trim()) {
@@ -82,11 +82,11 @@ export const onValidateRegister = (user) => {
     }
 
 
-    if (!user.password.trim()) {
-        errors.password = "Este campo no debe estar vacío"
-    } else if (!regexPassword.test(user.password)) {
-        errors.password = "Este campo debe llevar entre 8 y 20 caracteres"
-    }
+    // if (!user.password.trim()) {
+    //     errors.password = "Este campo no debe estar vacío"
+    // } else if (!regexPassword.test(user.password)) {
+    //     errors.password = "Este campo debe llevar entre 8 y 20 caracteres"
+    // }
 
 
 
