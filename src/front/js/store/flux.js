@@ -17,6 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     actions: {
 
       handleLogin: async (body) => {
+        const { getUserFavorites } = getActions();
+
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/login`, {
             method: "POST",
@@ -35,6 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             sessionStorage.setItem("user", JSON.stringify(data.user));
             sessionStorage.setItem("token", JSON.stringify(data.token));
+            await getUserFavorites();
 
             successAlert('Loged successful');
 
@@ -476,11 +479,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({
           user: null,
           restaurant: null,
-          token: null
+          token: null,
+          favorites: []
         });
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('restaurant');
+        sessionStorage.removeItem('favorites');
       },
 
       getAllDishes: async (id) => {
