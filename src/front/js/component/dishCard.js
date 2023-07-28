@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { FavBtn } from "./favBtn.jsx";
-import { LkBtn } from "./lkBtn.jsx";
+import { faHeart, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import "../../styles/dishcard.css"
 
 export const DishCard = ({ dish }) => {
     const { actions, store } = useContext(Context);
+    const { favorites, setFavorites } = store
     const { id, image_url, restaurant_name, name, price, description, tags } = dish
     const navigate = useNavigate();
 
@@ -17,6 +18,17 @@ export const DishCard = ({ dish }) => {
 
         if (response)
             navigate('/restaurant/menu');
+    }
+
+    const handleFav = async () => {
+        const response = await actions.addFavorite(dish.id);
+        console.log(dish.id)
+
+        if (response.ok)
+            setStore({
+                favorites: [...favorites, dish]
+            })
+
     }
 
 
@@ -30,7 +42,9 @@ export const DishCard = ({ dish }) => {
                     <div className="d-flex col-md-8 p-0 align-items-center">
                         <div className="card-body p-2">
                             <div className="d-flex justify-content-end">
-                                <FavBtn />
+                                <button onClick={handleFav}>
+                                    <span className="fav-btn"><FontAwesomeIcon icon={faHeart} /></span>
+                                </button>
                             </div>
                             <div>
                                 <h5 className="card-title fs-2 m-0"><strong>{name}</strong></h5>
@@ -61,7 +75,12 @@ export const DishCard = ({ dish }) => {
 
                                     <div className="d-flex fs-1 text-end">
                                         <div className="d-flex justify-content-start align-items-center">
-                                            <LkBtn />
+                                            <button onClick={"like"}>
+                                                <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} /></span>
+                                            </button>
+                                            <button onClick={"dislike"}>
+                                                <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} /></span>
+                                            </button>
                                         </div>
                                         <strong>{`${price}$`}</strong>
                                     </div>
@@ -71,7 +90,12 @@ export const DishCard = ({ dish }) => {
 
                                 <div className="d-flex justify-content-between align-items-center fs-1 text-end">
                                     <div>
-                                        <LkBtn />
+                                        <button onClick={"like"}>
+                                            <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} /></span>
+                                        </button>
+                                        <button onClick={"dislike"}>
+                                            <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} /></span>
+                                        </button>
                                     </div>
                                     <strong>{`${price}$`}</strong>
                                 </div>
@@ -80,7 +104,12 @@ export const DishCard = ({ dish }) => {
 
                                 <div className="d-flex justify-content-between align-items-center fs-1 text-end">
                                     <div>
-                                        <LkBtn />
+                                        <button onClick={"like"}>
+                                            <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} /></span>
+                                        </button>
+                                        <button onClick={"dislike"}>
+                                            <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} /></span>
+                                        </button>
                                     </div>
                                     <strong>{`${price}$`}</strong>
                                 </div>

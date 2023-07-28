@@ -4,7 +4,7 @@ import { Context } from '../store/appContext.js';
 import "../../styles/navbar.css"
 import ComeconLogo from "../../img/comecon-logo.png"
 import ComeconName from "../../img/comecon-nombre.png"
-import { faUser, faBook, faBookOpen, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faBook, faBookOpen, faRightFromBracket, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Navbar = () => {
@@ -72,9 +72,16 @@ export const Navbar = () => {
                       <FontAwesomeIcon icon={faUser} size="lg" />
                     </button>
                   </Link>
+                  <Link to={`/favorite/${user?.restaurant?.id}`} className="">
+                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
+                    <button className="button--favorito m-1">
+                      <span id="tooltipText">Favoritos</span>
+                      <FontAwesomeIcon icon={faHeart} size="lg" />
+                    </button>
+                  </Link>
                   <Link to="/restaurant/menu">
                     <button className="button--menu m-1">
-                      <span id="tooltipText">Menu</span>
+                      <span id="tooltipText">Menú</span>
                       <FontAwesomeIcon icon={faBookOpen} size="lg" />
                       {/* <FontAwesomeIcon icon={faBook} size="xl" /> */}
                     </button>
