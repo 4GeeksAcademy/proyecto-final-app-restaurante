@@ -37,8 +37,8 @@ export const DishCard = ({ dish }) => {
                     <div className="d-flex col-md-8 p-0 align-items-center">
                         <div className="card-body p-2">
                             <div className="d-flex justify-content-end">
-                                <button onClick={handleFav}>
-                                    <span className="fav-btn"><FontAwesomeIcon icon={faHeart} /></span>
+                                <button className="user-btn" onClick={handleFav}>
+                                    <span className="fav-btn"><FontAwesomeIcon icon={faHeart} size="xl" /></span>
                                 </button>
                             </div>
                             <div>
@@ -68,16 +68,11 @@ export const DishCard = ({ dish }) => {
                                         <button className="button--red--dish text-white" onClick={() => { handleDelete() }}><strong>Borrar</strong></button>
                                     </div>
 
-                                    <div className="d-flex fs-1 text-end">
-                                        <div className="d-flex justify-content-start align-items-center">
-                                            <button onClick={"like"}>
-                                                <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} /></span>
-                                            </button>
-                                            <button onClick={"dislike"}>
-                                                <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} /></span>
-                                            </button>
+                                    <div className="d-flex align-items-center fs-1 text-end">
+                                        
+                                        <div>
+                                            <strong>{`${price}$`}</strong>
                                         </div>
-                                        <strong>{`${price}$`}</strong>
                                     </div>
                                 </div>
                             )}
@@ -85,11 +80,11 @@ export const DishCard = ({ dish }) => {
 
                                 <div className="d-flex justify-content-between align-items-center fs-1 text-end">
                                     <div>
-                                        <button onClick={"like"}>
-                                            <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} /></span>
+                                        <button className="user-btn" onClick={"like"}>
+                                            <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} size="2xs" /></span>
                                         </button>
-                                        <button onClick={"dislike"}>
-                                            <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} /></span>
+                                        <button className="user-btn" onClick={"dislike"}>
+                                            <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} size="2xs" /></span>
                                         </button>
                                     </div>
                                     <strong>{`${price}$`}</strong>
@@ -99,11 +94,11 @@ export const DishCard = ({ dish }) => {
 
                                 <div className="d-flex justify-content-between align-items-center fs-1 text-end">
                                     <div>
-                                        <button onClick={"like"}>
-                                            <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} /></span>
+                                        <button className="user-btn" onClick={"like"}>
+                                            <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} size="2xs" /></span>
                                         </button>
-                                        <button onClick={"dislike"}>
-                                            <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} /></span>
+                                        <button className="user-btn" onClick={"dislike"}>
+                                            <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} size="2xs" /></span>
                                         </button>
                                     </div>
                                     <strong>{`${price}$`}</strong>
