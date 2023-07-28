@@ -11,11 +11,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       results: [],
       requests: [],
       dishes: [],
+      favorites: JSON.parse(sessionStorage.getItem("favorites")) || [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
 
       handleLogin: async (body) => {
+        const { getUserFavorites } = getActions();
+
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/login`, {
             method: "POST",
@@ -34,6 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             sessionStorage.setItem("user", JSON.stringify(data.user));
             sessionStorage.setItem("token", JSON.stringify(data.token));
+            await getUserFavorites();
 
             successAlert('Loged successful');
 
@@ -57,7 +61,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //PARA REGISTRO DE RESTAURANT:
       restaurantRegister: async (user) => {
         const { token } = getStore();
-        
+
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "POST",
@@ -83,7 +87,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           errorAlert('Some error ocurred');
           console.log(error);
         }
-        
+
         return false;
 
         // return { 'message': 'Some error ocurred' };
@@ -258,7 +262,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //BORRAR RESTAURANTE POR ID
       deleteRestaurant: async (id) => {
         const { token } = getStore();
-        
+
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
             method: 'DELETE',
@@ -474,11 +478,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({
           user: null,
           restaurant: null,
-          token: null
+          token: null,
+          favorites: []
         });
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('restaurant');
+        sessionStorage.removeItem('favorites');
       },
 
       getAllDishes: async (id) => {
@@ -492,7 +498,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               "dishes": data
             }
-          );    
+          );
         } catch (err) {
           console.error(err);
         }
@@ -523,11 +529,110 @@ const getState = ({ getStore, getActions, setStore }) => {
           errorAlert('Some error ocurred');
           console.log(error);
         }
-        
+
         return false;
 
         // return { 'message': 'Some error ocurred' };
       },
+
+      addFavorite: async (dish) => {
+        const { token } = getStore();
+        const { deleteFavorite, getUserFavorites } = getActions();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(dish)
+          });
+
+          const data = await response.json();
+
+          if (response.status==201) {
+            successAlert('Dish added to fav');
+            await getUserFavorites();
+          }
+          else if (response.status==208) {
+            console.log('delete');
+            deleteFavorite(dish);
+          }
+          else {
+            console.log(data.message);
+            errorAlert(data.message);
+            return false;
+          }
+        }
+        catch (error) {
+          errorAlert('Some error ocurred');
+          console.log(error);
+          return false;
+        }
+
+        return true;
+      },
+
+      deleteFavorite: async (dish) => {
+        const { token } = getStore();
+        const { getUserFavorites } = getActions();
+
+        try{
+          const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(dish)
+          })
+
+          const data = await response.json();
+
+          if(response.ok) {
+            successAlert('Dish deleted from favorite');
+            await getUserFavorites();
+          }
+          else {
+            errorAlert(data.amessage);
+          }
+        }
+        catch (error) {
+          console.log(error);
+          errorAlert(error.message);
+        }
+      },
+      getUserFavorites: async () => {
+        const { token } = getStore();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+
+          const data = await response.json();
+
+          if (response.ok) {
+            setStore({
+              'favorites': data
+            })
+            sessionStorage.setItem("favorites", JSON.stringify(data));
+          }
+          else {
+            errorAlert(data.amessage);
+          }
+
+        }
+        catch (error) {
+          console.log(error);
+          errorAlert(error.message);
+        }
+      }
+
+      
     }
   };
 }
