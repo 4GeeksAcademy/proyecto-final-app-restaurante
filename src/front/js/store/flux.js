@@ -538,6 +538,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
             method: 'POST',
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(dish)

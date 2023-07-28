@@ -714,11 +714,9 @@ def set_favorite():
     if user is None:
         return jsonify({'message': 'User not found'}), 404
 
-    form = request.form
-    if form is None:
-        return jsonify({'message': "Request must be a form"}), 400
+    body = request.get_json()
 
-    food_id = form.get('foodId')
+    food_id = body.get('foodId')
     if food_id is None:
         return jsonify({'message': "You have to specify a food id"}), 400
 
