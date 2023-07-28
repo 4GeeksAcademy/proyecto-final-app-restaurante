@@ -68,11 +68,11 @@ export const onValidateRegister = (user) => {
     }
 
 
-    if (!user.email.trim()) {
-        errors.email = "Este campo no debe estar vacío"
-    } else if (!regexEmail.test(user.email)) {
-        errors.email = "Este campo debe llevar los caracteres '@' y '.DOM'"
-    }
+    // if (!user.email.trim()) {
+    //     errors.email = "Este campo no debe estar vacío"
+    // } else if (!regexEmail.test(user.email)) {
+    //     errors.email = "Este campo debe llevar los caracteres '@' y '.DOM'"
+    // }
 
 
     if (!user.location.trim()) {
@@ -82,11 +82,11 @@ export const onValidateRegister = (user) => {
     }
 
 
-    if (!user.password.trim()) {
-        errors.password = "Este campo no debe estar vacío"
-    } else if (!regexPassword.test(user.password)) {
-        errors.password = "Este campo debe llevar entre 8 y 20 caracteres"
-    }
+    // if (!user.password.trim()) {
+    //     errors.password = "Este campo no debe estar vacío"
+    // } else if (!regexPassword.test(user.password)) {
+    //     errors.password = "Este campo debe llevar entre 8 y 20 caracteres"
+    // }
 
 
 
@@ -99,13 +99,8 @@ export const onValidateRegister = (user) => {
 export const onValidateDishes = (user) => {
     let errors = {};
     let regexName = /^.{1,20}$/;
-    let regexComment = /^.{1,100}$/; 
-<<<<<<< HEAD
-    let regexNumber = /^([0-9])*$/;                         
-
-=======
-    let regexNumber = /^([0-9])*$/;                        
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
+    let regexComment = /^.{1,100}$/;
+    let regexNumber = /^([0-9])*$/;
 
     //VALIDACIONES PARA REGISTRO DE DISHES
 
@@ -131,4 +126,35 @@ export const onValidateDishes = (user) => {
 
     return errors
 
+}
+
+
+export const onValidateUserName = (user) => {
+    let errors = {};
+    let regexUserName = /^.{1,20}$/;
+    let regexEmail = /^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$/;
+    let regexPassword = /^[^-\s]{8,20}$/;
+
+
+    if (!user.username.trim()) {
+        errors.username = "Este campo no debe estar vacío"
+    } else if (!regexUserName.test(user.username)) {
+        errors.username = "Este campo no debe tener mas de 20 caracteres"
+    }
+
+    if (!user.email.trim()) {
+        errors.email = "Este campo no debe estar vacío"
+    } else if (!regexEmail.test(user.email)) {
+        errors.email = "Este campo debe llevar los caracteres '@' y '.DOM'"
+    }
+
+    if (!user.password.trim()) {
+        errors.password = "Este campo no debe estar vacío"
+    } else if (!regexPassword.test(user.password)) {
+        errors.password = "Este campo debe llevar entre 8 y 20 caracteres"
+    }
+
+
+
+    return errors
 }

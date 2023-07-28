@@ -25,11 +25,7 @@ export const RestaurantRequest = () => {
             {requests.map((item, index) => {
                 return (
                     <>
-<<<<<<< HEAD
-                            <RequestCard key={index} user={item} />
-=======
                         <RequestCard key={index} user={item} />
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
                     </>
                 )}
             )}

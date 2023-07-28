@@ -53,8 +53,9 @@ class User(db.Model):
     status = db.Column(db.Enum(UserStatus), nullable=False, default=UserStatus.VALID)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
+    # relationship
     restaurant = db.relationship('Restaurant', backref='user', uselist=False)
+    favorite = db.relationship('Favorite', backref='user')
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -139,6 +140,8 @@ class Food(db.Model):
     image_url = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    # relationship
+    favorite = db.relationship('Favorite', backref='food', uselist=False)
 
     def __repr__(self):
         return f'<Food {self.id}>'
@@ -155,4 +158,20 @@ class Food(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "restaurant_name": self.restaurant.name
+        }
+
+
+class Favorite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    food_id = db.Column(db.Integer, db.ForeignKey('food.id'), nullable=False)
+    
+    def __repr__(self):
+        return f'<Favorite {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "food_id": self.food.serialize()
         }

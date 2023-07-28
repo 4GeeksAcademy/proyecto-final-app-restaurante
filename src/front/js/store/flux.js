@@ -10,10 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       restaurant: JSON.parse(sessionStorage.getItem("restaurant")) || null,
       results: [],
       requests: [],
-<<<<<<< HEAD
-=======
       dishes: [],
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -59,10 +56,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       //PARA REGISTRO DE RESTAURANT:
       restaurantRegister: async (user) => {
+        const { token } = getStore();
+        
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "POST",
-            body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+            body: user,							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           })
 
           let data = await response.json();
@@ -286,13 +288,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           let response = await fetch(`${process.env.BACKEND_URL}/user`, {
             method: "GET",
             headers: {
-<<<<<<< HEAD
-              Authorization: `Bearer ${store.token}` 
-            }						
-=======
               Authorization: `Bearer ${store.token}`
             }
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
           })
           if (response.ok) {
             const restaurants = await response.json();
@@ -375,11 +372,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         const data = await response.json();
 
-<<<<<<< HEAD
-        if(response.ok) {
-=======
         if (response.ok) {
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
           successAlert('You have validated your account successful')
           console.log(data.message);
           return true;
@@ -402,22 +395,13 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: data
           });
-<<<<<<< HEAD
-          
-=======
-
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
           if (!response.ok) {
             errorAlert(data.message);
             console.log("No se pudo editar el plato")
           }
           else {
             successAlert('Plato editado correctamente');
-<<<<<<< HEAD
-            getOneRestaurant(store.restaurant.id);
-=======
             await getOneRestaurant(store.restaurant.id);
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
             return true;
           }
         } catch (error) {
@@ -426,9 +410,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return false;
       },
-<<<<<<< HEAD
-      
-=======
 
 
       deleteDish: async (id) => {
@@ -461,7 +442,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
       manageRequest: async (form) => {
         const store = getStore();
         try {
@@ -474,19 +454,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
 
           if (response.ok) {
-<<<<<<< HEAD
-            if (form.get('status')==='valid')
-              successAlert('Restaurante aceptado');
-            else 
-              warningAlert('Restaurante rechazado')
-          }else{
-=======
             if (form.get('status') === 'valid')
               successAlert('Restaurante aceptado');
             else
               warningAlert('Restaurante rechazado')
           } else {
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
             errorAlert(data.message);
           }
         } catch (error) {
@@ -507,9 +479,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         sessionStorage.removeItem('user');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('restaurant');
-<<<<<<< HEAD
-      }
-=======
       },
 
       getAllDishes: async (id) => {
@@ -528,8 +497,37 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(err);
         }
         console.log("showing dishes...")
-      } 
->>>>>>> 374ab93187d7bf30c98b71646e3045bddc622493
+      },
+
+      //PARA REGISTRO DE USUARIO:
+      userRegister: async (user) => {
+        try {
+          let response = await fetch(`${process.env.BACKEND_URL}/user`, {
+            method: "POST",
+            body: user							//NO SE ENVIA HEADERS NI JSON.STRINGIFY XQ USAMOS FORMDATA
+          })
+
+          let data = await response.json();
+
+          if (response.ok) {
+            successAlert('Se registró el usuario');
+            return true;
+          }
+          else {
+            errorAlert(data.message);
+          }
+
+          // return data;
+
+        } catch (error) {
+          errorAlert('Some error ocurred');
+          console.log(error);
+        }
+        
+        return false;
+
+        // return { 'message': 'Some error ocurred' };
+      },
     }
   };
 }

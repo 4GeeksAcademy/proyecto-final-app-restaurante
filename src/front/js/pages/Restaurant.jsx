@@ -30,10 +30,19 @@ const Restaurant = () => {
             </h2>
             <div className='row border border-1 m-4 restaurant__content'>
               <div className='restaurant__image col-12 col-sm-3 order-sm-0'>
-                <img
-                  src={restaurant.user_avatar}
-                  alt="restaurant_avatar"
-                  className='restaurant_avatar' />
+                {
+                  restaurant?.user_avatar == null ?
+                    <img
+                      src="https://i.ibb.co/3s8jPQZ/Tu-logo-aqui.png"
+                      alt="restaurant_avatar"
+                      className='restaurant_avatar' />
+                    :
+                    <img
+                      src={restaurant?.user_avatar}
+                      alt="restaurant_avatar"
+                      className='restaurant_avatar' />
+                }
+
                 {
                   isOwner &&
                   <EditAvatar
@@ -61,11 +70,11 @@ const Restaurant = () => {
                 </p>
                 <p className='information-group'>
                   <span className='restaurant__label'>
-                    Teléfono de contacto::
+                    Teléfono de contacto:
                   </span>
                   {
                     restaurant.phone
-                  }
+                  } 
                 </p>
                 <p className='information-group'>
                   <span className='restaurant__label'>
@@ -98,31 +107,65 @@ const Restaurant = () => {
                 </div>
               </div>
             </div>
+
             <div className='container mt-4 p-4 bg-white rounded-3'>
-              <div>
-                <h3 className='text-center'>
-                  Galeria de imágenes
-                </h3>
-              </div>
-              <div className='column col-11'>
+              
                 {
-                  restaurant.image && restaurant.image.map(
-                    image => {
-                      return (
-                        <PlaceImage
-                          key={image.id}
-                          image={image}
-                          deleteable={isOwner}
-                          restaurantId={restaurantId} />)
-                    }
-                  )
-                }</div>
+                  restaurant?.image ?
+                  <div> </div>
+                  :
+                  <div>
+                    <div>
+                      <h3 className='text-center'>
+                        Galeria de imágenes
+                      </h3>
+                    </div>
+
+                    <div className='column col-11'>
+                      {
+                        restaurant.image.map(
+                          image => {
+                            return (
+                              <PlaceImage
+                                key={image.id}
+                                image={image}
+                                deleteable={isOwner}
+                                restaurantId={restaurantId} />)
+                          }
+                        )
+                      }
+                    </div>
+                  </div>
+                }
+              
               <div className='w-100'>
                 {
                   isOwner &&
-                  <AddRestaurantImage
-                    restaurantId={restaurantId} />
-                }</div>
+                  <>
+                    <div>
+                      <h3 className='text-center'>
+                        Galeria de imágenes
+                      </h3>
+                    </div>
+                    <div className='column col-11'>
+                      {
+                        restaurant.image.map(
+                          image => {
+                            return (
+                              <PlaceImage
+                                key={image.id}
+                                image={image}
+                                deleteable={isOwner}
+                                restaurantId={restaurantId} />)
+                          }
+                        )
+                      }
+                    </div>
+                    <AddRestaurantImage
+                      restaurantId={restaurantId} />
+                  </>
+                }
+              </div>
             </div>
           </div >
           : <h1>Restaurant not found</h1>

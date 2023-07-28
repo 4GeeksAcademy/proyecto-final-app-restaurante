@@ -8,7 +8,8 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import Restaurant from './pages/Restaurant.jsx';
-import { Register } from './pages/register.jsx';
+import { UserRegister } from "./pages/userRegister.jsx";
+import { RegisterRestaurant } from './pages/registerRestaurant.jsx';
 // import { DeleteRest } from "./pages/deleteRest.jsx";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
@@ -49,7 +50,8 @@ const Layout = () => {
                         {/* "exclusive-for-admin": controlPanel[DONE], RestaurantRequest[DONE] */}
                         <Route element={<Home />} path="/" />
                         <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Register />} path="/register" />
+                        <Route element={<UserRegister />} path="/register" />
+                        <Route element={<RegisterRestaurant />} path="/register-restaurant" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<RequeireAuth child={<EditProfile />} />} path="/restaurant/:restaurantId/edit" /> {/* adds authorization requirements */}
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
