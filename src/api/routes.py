@@ -790,11 +790,11 @@ def get_user_like():
 
 @api.route('/like/food', methods=['GET'])
 def get_food_like():
-    form = request.form
-    if form is None:
-        return jsonify({'message': "Request must be a form"}), 400
+    body = request.get_json()
+    if body is None:
+        return jsonify({'message': "Body is empty"}), 400
 
-    food_id = form.get('foodId')
+    food_id = body.get('foodId')
     if food_id is None:
         return jsonify({'message': "Wrong property"}), 400
 
