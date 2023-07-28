@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       results: [],
       requests: [],
       dishes: [],
+      favorites: [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -531,7 +532,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       addFavorite: async (dish) => {
-        const { token } = getStore();
+        const { token, favorites } = getStore();
 
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
@@ -539,12 +540,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: {
               Authorization: `Bearer ${token}`
             },
-            body: dish
+            body: JSON.stringify(dish)
           });
 
           const data = await response.json();
 
           if (response.ok) {
+            setStore({
+                favorites: [...favorites, dish]
+            })
             successAlert('Dish added to fav');
           }
           else {

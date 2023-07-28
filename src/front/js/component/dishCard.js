@@ -9,7 +9,7 @@ import "../../styles/dishcard.css"
 
 export const DishCard = ({ dish }) => {
     const { actions, store } = useContext(Context);
-    const { favorites, setFavorites } = store
+    const { favorites } = store
     const { id, image_url, restaurant_name, name, price, description, tags } = dish
     const navigate = useNavigate();
 
@@ -21,13 +21,8 @@ export const DishCard = ({ dish }) => {
     }
 
     const handleFav = async () => {
-        const response = await actions.addFavorite(dish.id);
-        console.log(dish.id)
-
-        if (response.ok)
-            setStore({
-                favorites: [...favorites, dish]
-            })
+        const response = await actions.addFavorite({ "foodId": dish.id });
+        console.log("foodId")
 
     }
 
