@@ -149,6 +149,9 @@ class Food(db.Model):
         return f'<Food {self.id}>'
 
     def serialize(self):
+        like_count = len(self.like.query.filter_by(food_id=self.id ,liked=True).all())
+        dislike_count = len(self.like.query.filter_by(food_id=self.id ,liked=False).all())
+
         return {
             "id": self.id,
             "restaurant_id": self.restaurant_id,
@@ -159,7 +162,9 @@ class Food(db.Model):
             "image_url": self.image_url,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "restaurant_name": self.restaurant.name
+            "restaurant_name": self.restaurant.name,
+            "like_count": like_count,
+            "dislike_count": dislike_count
         }
 
 
