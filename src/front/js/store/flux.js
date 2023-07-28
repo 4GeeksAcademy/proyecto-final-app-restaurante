@@ -532,10 +532,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       addFavorite: async (dish) => {
-        const { token, favorites } = getStore();
-        const { deleteFavorite } = getActions();
-
-        console.log(dish);
+        const { token } = getStore();
+        const { deleteFavorite, getUserFavorites } = getActions();
 
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
@@ -550,11 +548,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.status==201) {
-            console.log('nice');
-            setStore({
-                favorites: [...favorites, dish]
-            })
             successAlert('Dish added to fav');
+            await getUserFavorites();
           }
           else if (response.status==208) {
             console.log('delete');
@@ -576,7 +571,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       deleteFavorite: async (dish) => {
-        const { token, favorites } = getStore();
+        const { token } = getStore();
+        const { getUserFavorites } = getActions();
 
         try{
           const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
@@ -591,15 +587,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if(response.ok) {
-            console.log(data);
             successAlert('Dish deleted from favorite');
+            await getUserFavorites();
+          }
+          else {
+            errorAlert(data.amessage);
+          }
+        }
+        catch (error) {
+          console.log(error);
+          errorAlert(error.message);
+        }
+      },
+      getUserFavorites: async () => {
+        const { token } = getStore();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+
+          const data = await response.json();
+
+          if (response.ok) {
+            setStore({
+              'favorites': data
+            })
           }
           else {
             errorAlert(data.amessage);
           }
 
-          console.log('deleted?');
-          console.log(response);
         }
         catch (error) {
           console.log(error);
