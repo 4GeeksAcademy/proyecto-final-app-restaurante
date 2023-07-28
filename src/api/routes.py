@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food, Favorite
+from api.models import db, User, Restaurant, Role, UserStatus, Restaurant_image, Food, Favorite, Like
 from api.utils import generate_sitemap, APIException, password_hash, is_valid_password, is_valid_email, check_password, get_register_email, send_a_email, get_register_admin, aproved_email, rejected_email
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from base64 import b64encode
@@ -773,3 +773,114 @@ def delete_favorite():
         return jsonify({'message': error.args}), 500
 
     return jsonify({'message': 'Favorite deleted successful'}), 200
+
+
+@api.route('/like/user', methods=['GET'])
+@jwt_required()
+def get_user_like():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    like = list(map(lambda like: like.serialize(), Like.query.filter_by(user_id=user.id).all()))
+
+    return jsonify(like), 200
+
+
+@api.route('/like/food', methods=['GET'])
+def get_food_like():
+    form = request.form
+    if form is None:
+        return jsonify({'message': "Request must be a form"}), 400
+
+    food_id = form.get('foodId')
+    if food_id is None:
+        return jsonify({'message': "Wrong property"}), 400
+
+    food = Food.query.filter_by(id=food_id).one_or_none()
+
+    if food is None:
+        return jsonify({'message': 'Food not found'}), 404
+
+    like = list(map(lambda like: {'like': like.liked, 'user_id': like.user_id}, Like.query.filter_by(food_id=food.id).all()))
+
+    return jsonify(like), 200
+
+
+@api.route('/like', methods=['POST'])
+@jwt_required()
+def post_like():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    form = request.form
+    if form is None:
+        return jsonify({'message': "Request must be a form"}), 400
+
+    food_id = form.get('foodId')
+    liked = form.get('like')
+    if None in [food_id, liked]:
+        return jsonify({'message': "Wrong property"}), 400
+
+    liked = liked == 1
+
+    food = Food.query.filter_by(id=food_id).one_or_none()
+    if food is None:
+        return jsonify({'message': "Food no found"}), 404
+
+    is_liked = Like.query.filter_by(food_id=food.id, user_id=user.id).first()
+    if is_liked is not None:
+        return jsonify({'message': "Is liked already"}), 400
+
+    like = Like()
+    like.user_id = user.id
+    like.food_id = food.id
+    like.liked = liked
+
+    try:
+        db.session.add(like)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error.args)
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': 'ok'}), 201
+
+
+@api.route('/like', methods=['DELETE'])
+@jwt_required()
+def delete_like():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    form = request.form
+    if form is None:
+        return jsonify({'message': "Request must be a form"}), 400
+
+    food_id = form.get('foodId')
+    if None in [food_id]:
+        return jsonify({'message': "Wrong property"}), 400
+    
+    food = Food.query.filter_by(id=food_id).one_or_none()
+    if food is None:
+        return jsonify({'message': "Food not found"}), 404
+
+    like = Like.query.filter_by(user_id=user.id, food_id=food_id).first()
+    if like is None:
+        return jsonify({'message': "like not found"}), 404
+
+    try:
+        db.session.delete(like)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error.args)
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': "ok"}), 200
