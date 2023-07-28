@@ -850,10 +850,31 @@ def post_like():
 
     return jsonify({'message': 'ok'}), 201
 
-# form = request.form
-# if form is None:
-#     return jsonify({'message': "Request must be a form"}), 400
-# food_id = form.get('foodId')
-# like_type = form.get('like')
-# if None in [food_id, like_type]:
-#     return jsonify({'message': "Wrong property"}), 400
+
+@api.route('/like', methods=['DELETE'])
+@jwt_required()
+def delete_like():
+    user = User.query.filter_by(id=get_jwt_identity()).one_or_none()
+
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    form = request.form
+    if form is None:
+        return jsonify({'message': "Request must be a form"}), 400
+
+    food_id = form.get('foodId')
+    if None in [food_id, liked]:
+        return jsonify({'message': "Wrong property"}), 400
+
+    like = Like.query.filter_by(user_id=user.id, food_id=food_id).first()
+
+    try:
+        db.session.delete(like)
+        db.session.commit()
+    except Exception as error:
+        db.session.rollback()
+        print(error.args)
+        return jsonify({'message': error.args}), 500
+
+    return jsonify({'message': "ok"}), 200
