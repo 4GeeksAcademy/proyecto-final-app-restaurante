@@ -25,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
 import { EditDish } from "./pages/editDish.jsx";
+import { Favorites } from "./pages/favorites.jsx";
 
 
 
@@ -52,6 +53,7 @@ const Layout = () => {
                         <Route element={<Restaurant />} path="/restaurant/:restaurantId" />
                         <Route element={<AddDishes />} path="/restaurant/menu/food" />
                         <Route element={<EditDish />} path="/restaurant/menu/food/edit/:dishId" />
+                        <Route element={<Favorites />} path="/favorite" />
                         <Route element={<RestaurantRequest />} path="/requests" />
                         <Route element={<ControlPanel />} path="/admin/restaurant" />
                         <Route element={<EditMenu />} path="/restaurant/menu" />
