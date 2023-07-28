@@ -50,6 +50,31 @@
     box-shadow: 0 0 #57cc99;
     top: 5px;
   }
+
+  .button--favorito {
+    min-width: 50px;
+    height: 40px;
+    color: black;
+    padding: 1px 10px;
+    font-weight:normal;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: #00d0ff;
+    box-shadow: 1px 3px grey;
+  }
+  .button--favorito:hover {
+    box-shadow: 0 3px #57cc99;
+    top: 1px;
+  }
+  .button--favorito:active {
+    box-shadow: 0 0 #57cc99;
+    top: 5px;
+  }
   
   /**/
   .button--menu {
@@ -119,6 +144,13 @@
   }
  
   .button--perfil:hover #tooltipText {
+    top: 130%;
+    visibility: visible;
+    opacity: 1;
+
+  }
+
+  .button--favorito:hover #tooltipText {
     top: 130%;
     visibility: visible;
     opacity: 1;

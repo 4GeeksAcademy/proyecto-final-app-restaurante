@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       results: [],
       requests: [],
       dishes: [],
+      favorites: [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -57,7 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //PARA REGISTRO DE RESTAURANT:
       restaurantRegister: async (user) => {
         const { token } = getStore();
-        
+
         try {
           let response = await fetch(`${process.env.BACKEND_URL}/restaurant`, {
             method: "POST",
@@ -83,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           errorAlert('Some error ocurred');
           console.log(error);
         }
-        
+
         return false;
 
         // return { 'message': 'Some error ocurred' };
@@ -258,7 +259,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //BORRAR RESTAURANTE POR ID
       deleteRestaurant: async (id) => {
         const { token } = getStore();
-        
+
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/${id}`, {
             method: 'DELETE',
@@ -493,7 +494,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             {
               "dishes": data
             }
-          );    
+          );
         } catch (err) {
           console.error(err);
         }
@@ -524,11 +525,47 @@ const getState = ({ getStore, getActions, setStore }) => {
           errorAlert('Some error ocurred');
           console.log(error);
         }
-        
+
         return false;
 
         // return { 'message': 'Some error ocurred' };
       },
+
+      addFavorite: async (dish) => {
+        const { token, favorites } = getStore();
+
+        try {
+          const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(dish)
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            setStore({
+                favorites: [...favorites, dish]
+            })
+            successAlert('Dish added to fav');
+          }
+          else {
+            errorAlert(data.message);
+            return false;
+          }
+        }
+        catch (error) {
+          errorAlert('Some error ocurred');
+          console.log(error);
+          return false;
+        }
+
+        return true;
+      },
+
+      
     }
   };
 }
