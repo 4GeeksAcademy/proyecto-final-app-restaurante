@@ -55,7 +55,8 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # relationship
     restaurant = db.relationship('Restaurant', backref='user', uselist=False)
-    favorite = db.relationship('Favorite', backref='user')
+    favorite = db.relationship('Favorite', backref='user', uselist=False)
+    like = db.relationship('Like', backref='user', uselist=False)
 
     def __repr__(self):
         return f'<User {self.name}>'
@@ -142,6 +143,7 @@ class Food(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # relationship
     favorite = db.relationship('Favorite', backref='food', uselist=False)
+    like = db.relationship('Like', backref='food', uselist=False)
 
     def __repr__(self):
         return f'<Food {self.id}>'
@@ -173,5 +175,23 @@ class Favorite(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "food_id": self.food.serialize()
+            "food": self.food.serialize()
+        }
+
+
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    food_id = db.Column(db.Integer, db.ForeignKey('food.id'), nullable=False)
+    liked = db.Column(db.Boolean, nullable=False)
+
+    def __repr__(self):
+        return f'<Like {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "food": self.food.serialize(),
+            "liked": self.liked
         }
