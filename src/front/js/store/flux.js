@@ -11,7 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       results: [],
       requests: [],
       dishes: [],
-      favorites: [],
+      favorites: JSON.parse(sessionStorage.getItem("favorites")) || [],
       BASEURL: process.env.BACKEND_URL
     },
     actions: {
@@ -615,6 +615,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({
               'favorites': data
             })
+            sessionStorage.setItem("favorites", JSON.stringify(data));
           }
           else {
             errorAlert(data.amessage);
