@@ -65,7 +65,7 @@ const EditProfile = () => {
 
     useEffect(() => {
         if(store.user.role !="Restaurant" && store.user.role !="Admin") navigate("/access-denied")
-    });
+    },[]);
 
     return (
         <div className="container mt-3 profileEdit-main-container">

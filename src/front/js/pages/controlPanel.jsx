@@ -36,7 +36,7 @@ export const ControlPanel = () => {
 
   useEffect(() => {
     if(store.user.role != "Admin") navigate("/access-denied")
-  })
+  },[])
 
   return (
     <>

@@ -19,7 +19,7 @@ export const EditMenu = () => {
   // const [dishes, setDishes] = useState([]);
   const { store } = useContext(Context)
   const navigate = useNavigate();
-  // const { user } = store
+  const { user } = store
 
   useEffect(() => {
     if (user != undefined && user.restaurant != undefined) {
@@ -30,7 +30,8 @@ export const EditMenu = () => {
 
   useEffect(() => {
     if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
-  })
+  },[])
+
   return (
     <>
       <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">

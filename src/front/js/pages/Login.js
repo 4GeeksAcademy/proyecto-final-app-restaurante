@@ -34,6 +34,7 @@ const Login = () => {
 
     useEffect(() => {
         if(store.token != null) navigate("/access-denied")
+        ,[]
     })
 
     return (
