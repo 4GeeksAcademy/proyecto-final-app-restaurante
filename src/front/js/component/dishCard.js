@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { faHeart, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FavBtn } from "./favBtn.jsx";
 import { LkBtn } from "./lkBtn.jsx";
 

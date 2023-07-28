@@ -14,16 +14,14 @@ const initialState = [
 ];
 
 export const Favorites = () => {
-    // const [dishes, setDishes] = useState([]);
     const { store, actions } = useContext(Context);
-    const { user, dishes, restaurant } = store;
-    // const { user } = store
+    const { user, favorites } = store;
 
     useEffect(() => {
         if (user != undefined && user.restaurant != undefined) {
-            actions.getAllDishes(user.restaurant.id);
+            actions.getAllDishes(user.dish.id);
         }
-    }, [user.index]);
+    },[]);
 
 
     return (
