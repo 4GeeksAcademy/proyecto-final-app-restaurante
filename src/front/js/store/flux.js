@@ -533,6 +533,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       addFavorite: async (dish) => {
         const { token, favorites } = getStore();
+        const { deleteFavorite } = getActions();
+
+        console.log(dish);
 
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
@@ -546,13 +549,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const data = await response.json();
 
-          if (response.ok) {
+          if (response.status==201) {
+            console.log('nice');
             setStore({
                 favorites: [...favorites, dish]
             })
             successAlert('Dish added to fav');
           }
+          else if (response.status==208) {
+            console.log('delete');
+            deleteFavorite(dish);
+          }
           else {
+            console.log(data.message);
             errorAlert(data.message);
             return false;
           }
@@ -565,6 +574,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         return true;
       },
+
+      deleteFavorite: async (dish) => {
+        const { token, favorites } = getStore();
+
+        try{
+          const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(dish)
+          })
+
+          const data = await response.json();
+
+          if(response.ok) {
+            console.log(data);
+            successAlert('Dish deleted from favorite');
+          }
+          else {
+            errorAlert(data.amessage);
+          }
+
+          console.log('deleted?');
+          console.log(response);
+        }
+        catch (error) {
+          console.log(error);
+          errorAlert(error.message);
+        }
+      }
 
       
     }

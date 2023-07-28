@@ -715,6 +715,8 @@ def set_favorite():
         return jsonify({'message': 'User not found'}), 404
 
     body = request.get_json()
+    if body is None:
+        return jsonify({'message': 'Wrong body'}), 400
 
     food_id = body.get('foodId')
     if food_id is None:
@@ -726,7 +728,7 @@ def set_favorite():
 
     favorite_exist = Favorite.query.filter_by(user_id=user.id, food_id=food_id).first()
     if favorite_exist is not None:
-        return jsonify({'message': "Food is favorite already"}), 400
+        return jsonify({'message': "Food is favorite already"}), 208
 
     favorite = Favorite()
     favorite.user_id = user.id
@@ -750,11 +752,11 @@ def delete_favorite():
     if user is None:
         return jsonify({'message': 'User not found'}), 404
 
-    form = request.form
-    if form is None:
-        return jsonify({'message': "Request must be a form"}), 400
+    body = request.get_json()
+    if body is None:
+        return jsonify({'message': 'Wrong body'}), 400
 
-    food_id = form.get('foodId')
+    food_id = body.get('foodId')
     if food_id is None:
         return jsonify({'message': "You have to specify a food id"}), 400
 
