@@ -864,10 +864,16 @@ def delete_like():
         return jsonify({'message': "Request must be a form"}), 400
 
     food_id = form.get('foodId')
-    if None in [food_id, liked]:
+    if None in [food_id]:
         return jsonify({'message': "Wrong property"}), 400
+    
+    food = Food.query.filter_by(id=food_id).one_or_none()
+    if food is None:
+        return jsonify({'message': "Food not found"}), 404
 
     like = Like.query.filter_by(user_id=user.id, food_id=food_id).first()
+    if like is None:
+        return jsonify({'message': "like not found"}), 404
 
     try:
         db.session.delete(like)
