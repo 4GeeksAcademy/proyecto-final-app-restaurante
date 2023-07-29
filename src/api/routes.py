@@ -60,7 +60,7 @@ def register_restaurant():
 
     restaurant_exist = Restaurant.query.filter_by(rif=rif).one_or_none()
     if restaurant_exist is not None:
-        return jsonify({'message': "Rif is already chosen"}), 400
+        return jsonify({'message': "Restaurant already exist"}), 400
 
     # Creating restaurant
     restaurant = Restaurant()
