@@ -41,11 +41,14 @@ export const ControlPanel = () => {
             <strong>Control Panel</strong>
           </h2>
         </div>
-
-        {restaurants.map((restaurant, index) => {
-          console.log(restaurant);
-          return <RestaurantCard key={index} restaurant={restaurant} />;
-        })}
+        <div className="d-flex justify-content-center px-0 m-0 mt-4">
+					<div className="col-md-11 col-lg-10">
+            {restaurants.map((restaurant, index) => {
+              console.log(restaurant);
+              return <RestaurantCard key={index} restaurant={restaurant} />;
+            })}
+          </div>
+        </div>
       </div>
     </>
   );

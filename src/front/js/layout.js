@@ -58,7 +58,7 @@ const Layout = () => {
                         <Route element={<ControlPanel />} path="/admin/restaurant" />
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
-                        <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route element={<h1 className="text-center mt-4"><strong>Not found!</strong></h1>} path="*" />
                         <Route path="*" element={<div>Not found</div>} />
                     </Routes>
                     <ToastContainer

@@ -50,11 +50,13 @@ const Restaurant = () => {
                 }
               </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
-                <h3 className='restaurant__name'>
-                  {
-                    restaurant.name
-                  }
-                </h3>
+                <h2 className='restaurant__name'>
+                  <strong>
+                    {
+                      restaurant.name
+                    }
+                  </strong>
+                </h2>
                 <div className='information-group'>
                   <a className='restaurant__social' href={restaurant.facebook_url} target='_blank'><i className="bi bi-facebook"></i></a>
                   <a className='restaurant__social' href={restaurant.twitter_url} target='_blank'><i className="bi bi-twitter"></i></a>
@@ -74,7 +76,7 @@ const Restaurant = () => {
                   </span>
                   {
                     restaurant.phone
-                  } 
+                  }
                 </p>
                 <p className='information-group'>
                   <span className='restaurant__label'>
@@ -109,9 +111,9 @@ const Restaurant = () => {
             </div>
 
             <div className='container mt-4 p-4 bg-white rounded-3'>
-              
-                {
-                  restaurant?.image ?
+
+              {
+                restaurant?.image ?
                   <div> </div>
                   :
                   <div>
@@ -136,8 +138,8 @@ const Restaurant = () => {
                       }
                     </div>
                   </div>
-                }
-              
+              }
+
               <div className='w-100'>
                 {
                   isOwner &&
