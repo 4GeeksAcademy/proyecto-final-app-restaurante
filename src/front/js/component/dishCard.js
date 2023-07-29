@@ -13,6 +13,13 @@ export const DishCard = ({ dish }) => {
     const { id, image_url, restaurant_name, name, price, description, tags } = dish
     const navigate = useNavigate();
 
+    //CAMBIO DE COLOR EN FAVORITO
+    const isFavorite = favorites.some(fav => fav.food.id == dish.id);
+
+    const icon = isFavorite ? <FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} size="xl" />
+        : <FontAwesomeIcon icon={faHeart} size="xl" />
+
+
     const handleDelete = async () => {
         const response = await actions.deleteDish(dish.id);
 
@@ -38,7 +45,7 @@ export const DishCard = ({ dish }) => {
                         <div className="card-body p-2">
                             <div className="d-flex justify-content-end">
                                 <button className="user-btn" onClick={handleFav}>
-                                    <span className="fav-btn"><FontAwesomeIcon icon={faHeart} size="xl" /></span>
+                                    <span className="fav-btn">{icon}</span>
                                 </button>
                             </div>
                             <div>
@@ -69,7 +76,7 @@ export const DishCard = ({ dish }) => {
                                     </div>
 
                                     <div className="d-flex align-items-center fs-1 text-end">
-                                        
+
                                         <div>
                                             <strong>{`${price}$`}</strong>
                                         </div>
