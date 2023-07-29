@@ -4,7 +4,16 @@ import { Context } from '../store/appContext.js';
 import "../../styles/navbar.css"
 import ComeconLogo from "../../img/comecon-logo.png"
 import ComeconName from "../../img/comecon-nombre.png"
-import { faUser, faBook, faBookOpen, faRightFromBracket, faHeart, faCommentsDollar } from '@fortawesome/free-solid-svg-icons'
+import {
+  faClipboardList,
+  faClipboardCheck,
+  faUser,
+  faBook,
+  faBookOpen,
+  faRightFromBracket,
+  faHeart,
+  faCommentsDollar
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Navbar = () => {
@@ -102,18 +111,18 @@ export const Navbar = () => {
                 <Link to='/admin/restaurant'>
                   <button className="button--menu m-1">
                     <span id="tooltipText">Restaurants</span>
-                    <FontAwesomeIcon icon={faUser} size="lg" />
+                    <FontAwesomeIcon icon={faClipboardList} size="lg" />
                   </button>
                 </Link>
                 <Link to="/requests">
                   <button className="button--perfil m-1">
                     <span id="tooltipText">Solicitudes</span>
-                    <FontAwesomeIcon icon={faUser} size="lg" />
+                    <FontAwesomeIcon icon={faClipboardCheck} size="lg" />
                   </button>
                 </Link>
                 <button className='button--logout m-1' onClick={logOutHandler}>
                   <span id="tooltipText">LogOut</span>
-                  <FontAwesomeIcon icon={faUser} size="lg" />
+                  <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
                 </button>
               </>
             }
