@@ -552,7 +552,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.status==201) {
-            successAlert('Dish added to fav');
             await getUserFavorites();
           }
           else if (response.status==208) {
@@ -591,11 +590,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if(response.ok) {
-            successAlert('Dish deleted from favorite');
             await getUserFavorites();
           }
           else {
-            errorAlert(data.amessage);
+            errorAlert(data.message);
           }
         }
         catch (error) {

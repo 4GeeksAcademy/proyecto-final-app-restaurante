@@ -41,8 +41,6 @@ def register_restaurant():
     if(form is None):
         return jsonify({'message': "Request must be a form"}), 400
     
-    # Tengo que validar la data
-    
     # are there corrects properties?
     nickname = form.get('userName')
     name = form.get('restaurantName')
@@ -52,10 +50,18 @@ def register_restaurant():
     if None in [name, rif, location, phone, nickname]:
         return jsonify({'message': "Form has a wrong property"}), 400
 
+    user_exist = User.query.filter_by(name=nickname).one_or_none()
+    if user_exist is not None:
+        return jsonify({'message': "Nickname already chosen"}), 400
+
     user.name = nickname
     user.role = Role.RESTAURANT
     user.status = UserStatus.INVALID
-    
+
+    restaurant_exist = Restaurant.query.filter_by(rif=rif).one_or_none()
+    if restaurant_exist is not None:
+        return jsonify({'message': "Restaurant already exist"}), 400
+
     # Creating restaurant
     restaurant = Restaurant()
     restaurant.user_id = user.id
@@ -419,7 +425,7 @@ def get_all_food():
 #Trae todos los platos de un restaurant
 @api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
 def get_allrest_food(restaurant_id = None):
-    restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).one_or_none()
     return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
 
 
@@ -790,11 +796,11 @@ def get_user_like():
 
 @api.route('/like/food', methods=['GET'])
 def get_food_like():
-    form = request.form
-    if form is None:
-        return jsonify({'message': "Request must be a form"}), 400
+    body = request.get_json()
+    if body is None:
+        return jsonify({'message': "Body is empty"}), 400
 
-    food_id = form.get('foodId')
+    food_id = body.get('foodId')
     if food_id is None:
         return jsonify({'message': "Wrong property"}), 400
 
@@ -803,9 +809,9 @@ def get_food_like():
     if food is None:
         return jsonify({'message': 'Food not found'}), 404
 
-    like = list(map(lambda like: {'like': like.liked, 'user_id': like.user_id}, Like.query.filter_by(food_id=food.id).all()))
+    like_list = Like.query.all()
 
-    return jsonify(like), 200
+    return jsonify(list(map(lambda like: like.serialize(), like_list))), 200
 
 
 @api.route('/like', methods=['POST'])

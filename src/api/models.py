@@ -191,7 +191,6 @@ class Like(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "food": self.food.serialize(),
+            "food": self.food_id,
             "liked": self.liked
         }
