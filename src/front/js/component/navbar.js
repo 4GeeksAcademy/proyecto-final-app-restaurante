@@ -100,17 +100,20 @@ export const Navbar = () => {
               user?.role == 'Admin' &&
               <>
                 <Link to='/admin/restaurant'>
-                  <button className="btn btn-success m-1">
-                    <strong>Restaurantes</strong>
+                  <button className="button--menu m-1">
+                    <span id="tooltipText">Restaurants</span>
+                    <FontAwesomeIcon icon={faUser} size="lg" />
                   </button>
                 </Link>
                 <Link to="/requests">
-                  <button className="btn btn-success m-1">
-                    <strong>Request</strong>
+                  <button className="button--perfil m-1">
+                    <span id="tooltipText">Solicitudes</span>
+                    <FontAwesomeIcon icon={faUser} size="lg" />
                   </button>
                 </Link>
-                <button className='btn btn-danger m-1' onClick={logOutHandler}>
-                  <strong>Log out</strong>
+                <button className='button--logout m-1' onClick={logOutHandler}>
+                  <span id="tooltipText">LogOut</span>
+                  <FontAwesomeIcon icon={faUser} size="lg" />
                 </button>
               </>
             }

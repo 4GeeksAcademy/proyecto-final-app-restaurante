@@ -23,8 +23,8 @@ export const RequestCard = ({ key, user }) => {
     return (
         // <div className="container d-flex justify-content-center ">
         //     <div className="border border-dark border-2 rounded w-50 mt-3 bg-light">
-        <div class="d-flex justify-content-center">
-            <div class="col-md-11 col-lg-6 m-2">
+        <div className="d-flex justify-content-center">
+            <div className="card px-4 py-2 col-md-11 col-lg-6 m-2">
                 <div className="ms-4 me-4 mb-2 mt-2">
                     <h2><strong>{restaurant?.name}</strong></h2>
                     <h5><FontAwesomeIcon icon={faAddressCard} className="me-2" />{restaurant?.rif}</h5>
