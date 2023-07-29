@@ -419,7 +419,7 @@ def get_all_food():
 #Trae todos los platos de un restaurant
 @api.route('/restaurant/<int:restaurant_id>/food', methods=['GET'])
 def get_allrest_food(restaurant_id = None):
-    restaurant = Restaurant.query.filter_by(id = restaurant_id).one_or_none()
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).one_or_none()
     return jsonify(list(map(lambda item: item.serialize(), restaurant.foods))), 200
 
 

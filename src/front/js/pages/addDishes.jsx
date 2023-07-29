@@ -25,6 +25,7 @@ export const AddDishes = () => {
 
     const handleRegister = async(e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
+        console.log('adding');
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
         setErrors(err)                                              //IMPRESION DE QTY DE ERRORES EN EL FORMULARIO
 
