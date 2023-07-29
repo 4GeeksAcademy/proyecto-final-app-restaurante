@@ -41,8 +41,6 @@ def register_restaurant():
     if(form is None):
         return jsonify({'message': "Request must be a form"}), 400
     
-    # Tengo que validar la data
-    
     # are there corrects properties?
     nickname = form.get('userName')
     name = form.get('restaurantName')
@@ -52,10 +50,18 @@ def register_restaurant():
     if None in [name, rif, location, phone, nickname]:
         return jsonify({'message': "Form has a wrong property"}), 400
 
+    user_exist = User.query.filter_by(name=nickname).one_or_none()
+    if user_exist is not None:
+        return jsonify({'message': "Nickname already chosen"}), 400
+
     user.name = nickname
     user.role = Role.RESTAURANT
     user.status = UserStatus.INVALID
-    
+
+    restaurant_exist = Restaurant.query.filter_by(rif=rif).one_or_none()
+    if restaurant_exist is not None:
+        return jsonify({'message': "Rif is already chosen"}), 400
+
     # Creating restaurant
     restaurant = Restaurant()
     restaurant.user_id = user.id
@@ -803,9 +809,9 @@ def get_food_like():
     if food is None:
         return jsonify({'message': 'Food not found'}), 404
 
-    like = list(map(lambda like: {'like': like.liked, 'user_id': like.user_id}, Like.query.filter_by(food_id=food.id).all()))
+    like_list = Like.query.all()
 
-    return jsonify(like), 200
+    return jsonify(list(map(lambda like: like.serialize(), like_list))), 200
 
 
 @api.route('/like', methods=['POST'])
