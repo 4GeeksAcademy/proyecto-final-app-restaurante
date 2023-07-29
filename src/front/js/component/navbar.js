@@ -4,7 +4,7 @@ import { Context } from '../store/appContext.js';
 import "../../styles/navbar.css"
 import ComeconLogo from "../../img/comecon-logo.png"
 import ComeconName from "../../img/comecon-nombre.png"
-import { faUser, faBook, faBookOpen, faRightFromBracket, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faBook, faBookOpen, faRightFromBracket, faHeart, faCommentsDollar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const Navbar = () => {
@@ -23,7 +23,7 @@ export const Navbar = () => {
   return (
     <>
       <nav className="navbar p-0">
-        <div className="container">
+        <div className="container-fluid">
           <Link to="/">
             <img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px" />
           </Link>
@@ -52,7 +52,10 @@ export const Navbar = () => {
               <>
                 <div className="d-flex justify-content-beetwen">
                   <Link to={`/register-restaurant`} className="">
-                    Vender
+                    <button className="button--perfil m-1">
+                      <span id="tooltipText">Quiero vender!</span>
+                      <FontAwesomeIcon icon={faCommentsDollar} size="lg" />
+                    </button>
                   </Link>
                   <button className='button--logout m-1' onClick={logOutHandler}>
                     <span id="tooltipText">logOut</span>

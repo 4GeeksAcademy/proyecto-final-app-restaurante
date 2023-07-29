@@ -21,10 +21,12 @@ export const RequestCard = ({ key, user }) => {
     }
 
     return (
-        <div className="container d-flex justify-content-center ">
-            <div className="border border-dark border-2 rounded w-50 mt-3 bg-light">
+        // <div className="container d-flex justify-content-center ">
+        //     <div className="border border-dark border-2 rounded w-50 mt-3 bg-light">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-11 col-lg-6 m-2">
                 <div className="ms-4 me-4 mb-2 mt-2">
-                    <h2>{restaurant?.name}</h2>
+                    <h2><strong>{restaurant?.name}</strong></h2>
                     <h5><FontAwesomeIcon icon={faAddressCard} className="me-2" />{restaurant?.rif}</h5>
                     <h5><FontAwesomeIcon icon={faPhone} className="me-2" />{restaurant?.phone}</h5>
                     <h5><FontAwesomeIcon icon={faLocationDot} className="me-2" /> <a href='${location}'> {restaurant?.location}</a> </h5>
@@ -32,21 +34,21 @@ export const RequestCard = ({ key, user }) => {
                         {restaurant?.description}
                     </p>
                 </div>
-                    <div className="m-3 d-flex justify-content-between">
-                        <button
-                            className="button--green--edit-dish w-50 me-1"
-                            name="accept"
-                            onClick={(e) => sendRequest('valid')}
-                        >
-                            Accept
-                        </button>
-                        <button className="button--red--edit-dish w-50 ms-1"
-                            name="reject"
-                            onClick={(e) => sendRequest('invalid')}
-                        >
-                            Reject
-                        </button>
-                    </div>
+                <div className="m-3 d-flex justify-content-between">
+                    <button
+                        className="button--green--edit-dish w-50 me-1"
+                        name="accept"
+                        onClick={(e) => sendRequest('valid')}
+                    >
+                        Validar
+                    </button>
+                    <button className="button--red--edit-dish w-50 ms-1"
+                        name="reject"
+                        onClick={(e) => sendRequest('invalid')}
+                    >
+                        Rechazar
+                    </button>
+                </div>
             </div>
 
         </div>
