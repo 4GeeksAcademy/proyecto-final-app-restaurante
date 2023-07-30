@@ -399,7 +399,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             body: data
           });
-
           if (!response.ok) {
             errorAlert(data.message);
             console.log("No se pudo editar el plato")

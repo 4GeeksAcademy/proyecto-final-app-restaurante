@@ -63,6 +63,10 @@ const EditProfile = () => {
         setRestaurant({ ...restaurant, [event.target.name]: event.target.value });
     }
 
+    useEffect(() => {
+        if(store.user.role !="Restaurant" && store.user.role !="Admin") navigate("/access-denied")
+    },[]);
+
     return (
         <div className="container mt-3 profileEdit-main-container">
             <div className="col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 p-4 bg-white profileEdit_form_container border border-1 rounded-3">

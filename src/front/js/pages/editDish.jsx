@@ -63,6 +63,9 @@ export const EditDish = () => {
         };
     }
 
+    useEffect(() =>{
+       if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
+    },[])
 
     return (
         <>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
@@ -8,12 +8,13 @@ const initialState = {                                              //ESTADO INI
     restaurantName: "",
     restaurantRif: "",
     phone: "",
+    email: "",
     location: "",
-    userName: '',
+    password: "",
 }
 
-export const RegisterRestaurant = () => {
-    const { actions } = useContext(Context);
+export const RegisterRestaurant  = () => {
+    const { actions, store } = useContext(Context);
     const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -39,14 +40,20 @@ export const RegisterRestaurant = () => {
             formData.append("restaurantRif", user.restaurantRif);
             formData.append("restaurantPhone", user.phone);
             formData.append("restaurantLocation", user.location);
-            formData.append("userName", user.userName);
+            formData.append("userEmail", user.email);
+            formData.append("userPassword", user.password);
 
             const response = await actions.restaurantRegister(formData);      //FUNCION FLUX
-
+            
             if (response)
-                navigate('/');
+                navigate('/login');
         }
     }
+
+    useEffect(()=>{
+        if(store.token == null) navigate("/access-denied")
+        
+    },[])
 
     return (
         <>
@@ -61,22 +68,7 @@ export const RegisterRestaurant = () => {
                         <form className="needs-validation" noValidate onSubmit={handleRegister}>
 
                             <div className="form-group mt-4">
-                                <label htmlFor="userName">Nombre usuario</label>
-                                <input
-                                    type="text"
-                                    className="form-control border"
-                                    id="userName"
-                                    name="userName"
-                                    placeholder="Ingresa el nombre del usuario"
-                                    onChange={handleChange}
-                                    value={user.userName}
-                                    required
-                                ></input>
-                                {errors.userName && <div className="alert p-0 m-0 bg-none text-danger">{errors.restaurantName}</div>}
-                            </div>
-
-                            <div className="form-group mt-4">
-                                <label htmlFor="restaurantName">Nombre Restaurant</label>
+                                <label htmlFor="restaurantName">Nombre</label>
                                 <input
                                     type="text"
                                     className="form-control border"
@@ -121,6 +113,22 @@ export const RegisterRestaurant = () => {
                                 {errors.phone && <div className="alert p-0 m-0 bg-none text-danger">{errors.phone}</div>}
                             </div>
 
+                            <div className="form-group mt-3">
+                                <label htmlFor="email">Email:</label>
+                                <input
+                                    type="email"
+                                    className="form-control"
+                                    id="email"
+                                    name="email"
+                                    placeholder="nombre@ejemplo.com"
+                                    onChange={handleChange}
+                                    value={user.email}
+                                    required
+                                ></input>
+                                {errors.email && <div className="alert p-0 m-0 bg-none text-danger">{errors.email}</div>}
+
+                            </div>
+
                             <div className="form-group mt-4">
                                 <label htmlFor="location">Link de ubicación</label>
                                 <input
@@ -134,6 +142,21 @@ export const RegisterRestaurant = () => {
                                     required
                                 ></input>
                                 {errors.location && <div className="alert p-0 m-0 bg-none text-danger">{errors.location}</div>}
+                            </div>
+
+                            <div className="form-group mt-3">
+                                <label htmlFor="password">Password:</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Escoge una contraseña..."
+                                    onChange={handleChange}
+                                    value={user.password}
+                                    required
+                                ></input>
+                                {errors.password && <div className="alert p-0 m-0 bg-none text-danger">{errors.password}</div>}
                             </div>
 
                             {/* BOTON DE ENVIO */}
@@ -152,7 +175,6 @@ export const RegisterRestaurant = () => {
         </>
     );
 };
-
 
 
 

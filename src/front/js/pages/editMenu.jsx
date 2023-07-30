@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { DishCard } from "../component/dishCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const initialState = [
   {
@@ -16,9 +17,9 @@ const initialState = [
 
 export const EditMenu = () => {
   // const [dishes, setDishes] = useState([]);
-  const { store, actions } = useContext(Context);
-  const { user, dishes, restaurant } = store;
-  // const { user } = store
+  const { store } = useContext(Context)
+  const navigate = useNavigate();
+  const { user } = store
 
   useEffect(() => {
     if (user != undefined && user.restaurant != undefined) {
@@ -26,6 +27,10 @@ export const EditMenu = () => {
     }
   }, [user.index]);
 
+
+  useEffect(() => {
+    if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
+  },[])
 
   return (
     <>

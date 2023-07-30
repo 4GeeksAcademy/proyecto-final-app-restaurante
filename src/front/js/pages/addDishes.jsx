@@ -1,8 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { onValidateDishes } from "../util.js";
 import "../../styles/addDish.css"
+
 
 const initialState = {                                              //ESTADO INICIAL
     name: "",
@@ -14,6 +15,7 @@ const initialState = {                                              //ESTADO INI
 
 export const AddDishes = () => {
     const { actions } = useContext(Context);
+    const {store} = useContext(Context);
     const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -45,56 +47,57 @@ export const AddDishes = () => {
                 navigate('/restaurant/menu');
         };
     }
-
+    useEffect(() => {
+        if(store.user.role != "Restaurant" && store.user.role != "Admin") navigate("/access-denied")
+    },[])
     return (
         <>
-            {/* AGREGAR PLATOS */}
-            <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
-                <div className="row justify-content-center">
-                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
-                        <strong>Agregar Plato</strong>
-                    </h2>
-                    <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
-                        <form
-                            className="needs-validation"
-                            noValidate
-                            onSubmit={handleRegister}
-                        >
-                            <div className="form-group mt-4">
-                                <label htmlFor="name">Nombre:</label>
-                                <input
-                                    type="text"
-                                    className="form-control border border-dark"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Ingresa el nombre del plato"
-                                    onChange={handleChange}
-                                    value={dish.name}
-                                    required
-                                ></input>
-                                {errors.name && <div className="alert p-0 m-0 bg-none text-danger">{errors.name}</div>}
-                            </div>
-
-                            <div className="form-group mt-3">
-                                <label
-                                    htmlFor="description"
+              
+                    // {/* AGREGAR PLATOS */}
+                    <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
+                        <div className="row justify-content-center">
+                            <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+                                <strong>Agregar Plato</strong>
+                            </h2>
+                            <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
+                                <form
+                                    className="needs-validation"
+                                    noValidate
+                                    onSubmit={handleRegister}
                                 >
-                                    Descripción
-                                </label>
-                                <textarea
-                                    className="form-control border border-dark"
-                                    id="description"
-                                    name="description"
-                                    rows="3"
-                                    placeholder="Una breve descripción de tu plato"
-                                    onChange={handleChange}
-                                    value={dish.description}
-                                    required
-                                ></textarea>
-                                {errors.description && <div className="alert p-0 m-0 bg-none text-danger">{errors.description}</div>}
+                                    <div className="form-group mt-4">
+                                        <label htmlFor="name">Nombre:</label>
+                                        <input
+                                            type="text"
+                                            className="form-control border border-dark"
+                                            id="name"
+                                            name="name"
+                                            placeholder="Ingresa el nombre del plato"
+                                            onChange={handleChange}
+                                            value={dish.name}
+                                            required
+                                        ></input>
+                                        {errors.name && <div className="alert p-0 m-0 bg-none text-danger">{errors.name}</div>}
+                                    </div>
 
-                            </div>
-
+                                    <div className="form-group mt-3">
+                                        <label
+                                            htmlFor="description"
+                                        >
+                                            Descripción
+                                        </label>
+                                        <textarea
+                                            className="form-control border border-dark"
+                                            id="description"
+                                            name="description"
+                                            rows="3"
+                                            placeholder="Una breve descripción de tu plato"
+                                            onChange={handleChange}
+                                            value={dish.description}
+                                            required
+                                        ></textarea>
+                                        {errors.description && <div className="alert p-0 m-0 bg-none text-danger">{errors.description}</div>}
+                                    </div>
                             <div className="form-group mt-3">
                                 <label htmlFor="price">Precio</label>
                                 <div className="input-group border rounded-3">
@@ -164,7 +167,9 @@ export const AddDishes = () => {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> 
+
+           
         </>
     );
 };

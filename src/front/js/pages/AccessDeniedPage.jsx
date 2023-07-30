@@ -3,7 +3,7 @@ import "../../styles/accessDeniedPage.css"
 import { Link } from "react-router-dom";
 
 
-const accessDeniedPage = () => {
+const AccessDeniedPage = () => {
     return(
         <div className="main_container container-fluid vh-100">
             <div className="message_container mt-5 text-center"> 
@@ -16,4 +16,4 @@ const accessDeniedPage = () => {
 }
 
 
-export default accessDeniedPage;
+export default AccessDeniedPage;

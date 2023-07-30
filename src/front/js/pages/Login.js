@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css"
 
 const Login = () => {
     const nav = useNavigate();
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [user, setUser] = useState({ email: "", password: "" }); 
+    const navigate = useNavigate();
 
     const handleUser = (event) => {
         setUser({ ...user, [event.target.name]: event.target.value })
@@ -30,6 +31,11 @@ const Login = () => {
         actions.handleLogin(user)
         .then(response => response&&redirect(response.user));
     } 
+
+    useEffect(() => {
+        if(store.token != null) navigate("/access-denied")
+        ,[]
+    })
 
     return (
         <div className="container login_page_main_container mt-5">
