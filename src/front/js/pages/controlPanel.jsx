@@ -40,18 +40,21 @@ export const ControlPanel = () => {
 
   return (
     <>
-        <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
-          <div className="row justify-content-center">
-            <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
-              <strong>Control Panel</strong>
-            </h2>
-          </div>
-
-          {restaurants.map((restaurant, index) => {
-            console.log(restaurant);
-            return <RestaurantCard key={index} restaurant={restaurant} />;
-          })}
+      <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
+        <div className="row justify-content-center">
+          <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+            <strong>Control Panel</strong>
+          </h2>
         </div>
+        <div className="d-flex justify-content-center px-0 m-0 mt-4">
+					<div className="col-md-11 col-lg-10">
+            {restaurants.map((restaurant, index) => {
+              console.log(restaurant);
+              return <RestaurantCard key={index} restaurant={restaurant} />;
+            })}
+          </div>
+        </div>
+      </div>
     </>
   );
 };
