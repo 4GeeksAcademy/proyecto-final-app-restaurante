@@ -160,7 +160,7 @@ export const AddDishes = () => {
                                 </button>
                                 <button
                                     type="button"
-                                    className="button--cancel-dish mt-3 col-4"
+                                    className="button--cancel-dish mt-3 col-4 text-white"
                                     onClick={() => navigate("/restaurant/menu")}>
                                     Cancelar
                                 </button>

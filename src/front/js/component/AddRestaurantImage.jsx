@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
-import { Loader } from "../component/loader.jsx";
 
 const AddRestaurantImage = ({ restaurantId }) => {
   const [image, setImage] = useState(null)
@@ -30,7 +29,6 @@ const AddRestaurantImage = ({ restaurantId }) => {
 
   return (
     <>
-      <Loader />
       {/* button */}
       <button type="button" className="button--blue--galeria w-100" data-bs-toggle="modal" data-bs-target="#addRestaurantImage">
         <strong>Agregar imágen</strong>

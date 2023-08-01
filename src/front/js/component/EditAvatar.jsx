@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 import "../../styles/editAvatar.css"
-import { Loader } from "../component/loader.jsx";
 
 const EditAvatar = ({ restaurantId }) => {
   const [image, setImage] = useState(null)
@@ -32,7 +31,6 @@ const EditAvatar = ({ restaurantId }) => {
 
   return (
     <>
-      <loader />
       {/* button */}
       <button type="button" className="button--orange--avatar mt-2" data-bs-toggle="modal" data-bs-target="#editAvatar">
         <strong>Editar avatar</strong>
