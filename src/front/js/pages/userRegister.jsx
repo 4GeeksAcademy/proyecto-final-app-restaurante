@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { onValidateRegister, onValidateUserName } from "../util.js"
+import { Loader } from "../component/loader.jsx";
 
 const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
     username: "",
@@ -42,7 +43,7 @@ export const UserRegister = () => {
             formData.append("role", user.role);
 
             const response = await actions.userRegister(formData);      //FUNCION FLUX
-            
+
             if (response)
                 navigate('/login');
         }
@@ -50,6 +51,7 @@ export const UserRegister = () => {
 
     return (
         <>
+            <Loader />
             {/* FORMULARIO DE REGISTRO */}
             <div className="container mt-5">
                 <div className="row justify-content-center">

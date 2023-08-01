@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { RestaurantCard } from "../component/restaurantCard.jsx";
+import { Loader } from "../component/loader.jsx";
 
 const initialState = [
   {
@@ -35,6 +36,7 @@ export const ControlPanel = () => {
 
   return (
     <>
+      <Loader />
       <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
         <div className="row justify-content-center">
           <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
@@ -42,7 +44,7 @@ export const ControlPanel = () => {
           </h2>
         </div>
         <div className="d-flex justify-content-center px-0 m-0 mt-4">
-					<div className="col-md-11 col-lg-10">
+          <div className="col-md-11 col-lg-10">
             {restaurants.map((restaurant, index) => {
               console.log(restaurant);
               return <RestaurantCard key={index} restaurant={restaurant} />;

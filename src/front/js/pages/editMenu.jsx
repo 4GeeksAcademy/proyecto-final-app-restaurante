@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { DishCard } from "../component/dishCard";
 import { Link } from "react-router-dom";
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = [
   {
@@ -29,6 +31,7 @@ export const EditMenu = () => {
 
   return (
     <>
+      <Loader />
       <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
         <div className="row justify-content-center">
           <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">

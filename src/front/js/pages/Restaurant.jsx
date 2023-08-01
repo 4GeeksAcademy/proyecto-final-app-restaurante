@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import { Loader } from '../component/loader.jsx';
 import EditAvatar from '../component/EditAvatar.jsx';
 import PlaceImage from '../component/PlaceImage.jsx';
 import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
@@ -22,6 +23,8 @@ const Restaurant = () => {
 
   return (
     <>
+      <Loader />
+
       {
         restaurant != null
           ? <div className='container panel mt-4 p-3 bg-white border border-1 rounded-3' >
@@ -102,7 +105,7 @@ const Restaurant = () => {
                     isOwner &&
                     <Link to='/restaurant/menu' className='col-4'>
                       <button className="button--orange--restaurant">
-                        <strong>Editar menu</strong>
+                        <strong>Editar menú</strong>
                       </button>
                     </Link>
                   }

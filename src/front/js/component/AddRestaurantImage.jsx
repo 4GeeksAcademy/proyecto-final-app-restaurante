@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Context } from '../store/appContext';
 
-const AddRestaurantImage = ({restaurantId}) => {
+const AddRestaurantImage = ({ restaurantId }) => {
   const [image, setImage] = useState(null)
   const { actions } = useContext(Context);
   const { addRestaurantImage, getOneRestaurant } = actions;
