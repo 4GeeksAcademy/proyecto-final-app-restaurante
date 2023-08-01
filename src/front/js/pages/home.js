@@ -1,8 +1,10 @@
 import React, { useContext} from "react";
 import { Context } from "../store/appContext.js";
-import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
+import "../../styles/home.css";
+import "../../styles/loader.css";
+
 
 export const Home = () => {
 
@@ -25,15 +27,15 @@ export const Home = () => {
 							results.map(dish => {
 								return (
 									<DishCard
-										key={dish.id}
-										dish={dish} />
-								);
-							})
-						}
+									key={dish.id}
+									dish={dish} />
+									);
+								})
+							}
 					</div>
 				</div>
-				<div className="loader"></div>
 			</div>
+			<div className="loader"></div>
 		</>
 
 	);

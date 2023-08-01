@@ -2,24 +2,40 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vh;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: antiquewhite;
+    background-color: rgba(255, 255, 255, 0.529);
     transition: opacity 0.75s, visibility 0.75s;
 
 }
 
 .loader-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+
+
+.loader::after {
     content: "";
     width: 75px;
     height: 75px;
     border: 15px solid #dddddd;
-    border-top-color: rgb(17, 109, 51);
+    border-top-color: rgb(184, 112, 19);
     border-radius: 50%;
     animation: loading 0.75s ease infinite;
     
 }
 
+@keyframes loading {
+    from{
+        transform: rotate(0turn);
+    }
+    to{
+        transform: rotate(1turn);
+    }
+    
+}
