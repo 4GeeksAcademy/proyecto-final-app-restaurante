@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import "../../styles/restaurantsRequests.css";
 import { RequestCard } from "../component/requestCard.js";
+import { Loader } from "../component/loader.jsx";
+
 
 
 export const RestaurantRequest = () => {
@@ -16,6 +18,7 @@ export const RestaurantRequest = () => {
 
     return (
         <>
+            <Loader />
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
                     <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">

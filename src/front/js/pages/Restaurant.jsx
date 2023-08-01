@@ -26,7 +26,7 @@ const Restaurant = () => {
       <Loader />
 
       {
-        restaurant? != null
+        restaurant != null
           ? <div className='container panel mt-4 p-3 bg-white border border-1 rounded-3' >
             <h2 className='text-center bg-danger p-2 text-white rounded-1 title fs-3'>
               Editar Negocio
@@ -105,7 +105,7 @@ const Restaurant = () => {
                     isOwner &&
                     <Link to='/restaurant/menu' className='col-4'>
                       <button className="button--orange--restaurant">
-                        <strong>Editar menu</strong>
+                        <strong>Editar menú</strong>
                       </button>
                     </Link>
                   }
@@ -173,7 +173,7 @@ const Restaurant = () => {
               </div>
             </div>
           </div >
-          : <h1></h1>
+          : <h1>Restaurant not found</h1>
       }
     </>
   );

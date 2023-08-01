@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { onValidateRegister } from "../util.js"
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
     restaurantName: "",
@@ -50,6 +52,7 @@ export const RegisterRestaurant = () => {
 
     return (
         <>
+            <Loader />
             {/* FORMULARIO DE REGISTRO */}
             <div className="container mt-5">
                 <div className="row justify-content-center">

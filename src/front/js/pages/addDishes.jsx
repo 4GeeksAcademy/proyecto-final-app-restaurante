@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { onValidateDishes } from "../util.js";
 import "../../styles/addDish.css"
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = {                                              //ESTADO INICIAL
     name: "",
@@ -23,7 +25,7 @@ export const AddDishes = () => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = async(e) => {                                 //MANEJA EL ENVIO DEL FORM
+    const handleRegister = async (e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
         console.log('adding');
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
@@ -48,6 +50,8 @@ export const AddDishes = () => {
 
     return (
         <>
+            <Loader />
+
             {/* AGREGAR PLATOS */}
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">

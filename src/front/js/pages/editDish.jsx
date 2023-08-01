@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import { onValidateDishes } from "../util.js";
 import "../../styles/editDish.css"
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = {
     name: "",
@@ -25,7 +27,7 @@ export const EditDish = () => {
 
         arrayDish = arrayDish.filter(dish => dish.id == dishId);
         const currentDish = arrayDish[0]
-        
+
         setDish({
             ...dish,
             name: currentDish.name,
@@ -34,21 +36,21 @@ export const EditDish = () => {
             tags: currentDish.tags,
             image: currentDish.image,
         })
-        
+
     }, []);
-    
+
     const handleChange = (e) => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleEdit = async (e) => {                                 
+    const handleEdit = async (e) => {
         e.preventDefault()
-        const err = onValidateDishes(dish)                  
-        setErrors(err)                                             
+        const err = onValidateDishes(dish)
+        setErrors(err)
 
-        if (Object.keys(err).length === 0) {                
+        if (Object.keys(err).length === 0) {
 
-            const formData = new FormData();                      
+            const formData = new FormData();
 
             formData.append("foodName", dish.name);
             formData.append("foodDescription", dish.description);
@@ -58,7 +60,7 @@ export const EditDish = () => {
 
             const success = await actions.editDish(formData, dishId);
 
-            if(success)
+            if (success)
                 navigate('/restaurant/menu');
         };
     }
@@ -66,6 +68,7 @@ export const EditDish = () => {
 
     return (
         <>
+            <Loader />
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
                     <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
