@@ -6,21 +6,21 @@ import "../../styles/login.css"
 const Login = () => {
     const nav = useNavigate();
     const { actions } = useContext(Context);
-    const [user, setUser] = useState({ email: "", password: "" }); 
+    const [user, setUser] = useState({ email: "", password: "" });
 
     const handleUser = (event) => {
         setUser({ ...user, [event.target.name]: event.target.value })
     };
 
     const redirect = user => {
-        if(user.role=="Restaurant") {
+        if (user.role == "Restaurant") {
             const restaurantId = user.restaurant.id;
             nav(`/restaurant/${restaurantId}`);
         }
-        else if (user.role=='Admin') {
+        else if (user.role == 'Admin') {
             nav('/admin/restaurant');
         }
-        else if (user.role=='User') {
+        else if (user.role == 'User') {
             nav('/');
         }
     }
@@ -28,8 +28,8 @@ const Login = () => {
     const handleLogin = (event) => {
         event.preventDefault();
         actions.handleLogin(user)
-        .then(response => response&&redirect(response.user));
-    } 
+            .then(response => response && redirect(response.user));
+    }
 
     return (
         <div className="container login_page_main_container mt-5">
@@ -45,10 +45,11 @@ const Login = () => {
                         <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={(event) => handleUser(event)} />
                     </div>
                     <div>
-                    <button type="submit" className="w-100 m-0 button--login-register"><strong>Ingresa!</strong></button>
+                        <button type="submit" className="w-100 m-0 button--login-register"><strong>Ingresa!</strong></button>
                     </div>
                 </form>
             </div>
+            <div className="loader"></div>
         </div>
     )
 }

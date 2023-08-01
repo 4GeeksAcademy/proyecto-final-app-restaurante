@@ -1,0 +1,25 @@
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vh;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+    transition: opacity 0.75s, visibility 0.75s;
+
+}
+
+.loader-hidden {
+    content: "";
+    width: 75px;
+    height: 75px;
+    border: 15px solid #dddddd;
+    border-top-color: rgb(17, 109, 51);
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+    
+}
+

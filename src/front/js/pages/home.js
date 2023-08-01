@@ -32,6 +32,7 @@ export const Home = () => {
 						}
 					</div>
 				</div>
+				<div className="loader"></div>
 			</div>
 		</>
 
