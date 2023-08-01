@@ -32,13 +32,17 @@ export const Navbar = () => {
   return (
     <>
       <nav className="navbar p-0">
-        <div className="container-fluid">
-          <Link to="/">
-            <img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px" />
-          </Link>
-          <Link to="/">
-            <img src={ComeconName} alt="comecon-logo" position="fixed" width="270px" />
-          </Link>
+        <div className="container-fluid justify-content-between">
+          <div>
+            <Link to="/">
+              <img className="logo--navbar" src={ComeconLogo} alt="comecon-logo" width="70px" />
+            </Link>
+          </div>
+          <div>
+            <Link to="/">
+              <img className="logo--navbar" src={ComeconName} alt="comecon-name" position="relative" width="270px" />
+            </Link>
+          </div>
 
           <div className="d-flex">
             {

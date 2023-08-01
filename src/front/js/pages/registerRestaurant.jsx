@@ -54,8 +54,8 @@ export const RegisterRestaurant = () => {
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="bg-white panel border border-1 p-5 rounded-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
-                        <h2 className="text-center bg-danger text-white rounded-1">
-                            <strong>Crear una Cuenta</strong>
+                        <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
+                            <strong>Crea una cuenta para tu negocio</strong>
                         </h2>
 
                         <form className="needs-validation" noValidate onSubmit={handleRegister}>
