@@ -68,7 +68,7 @@ export const EditDish = () => {
         <>
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
-                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
                         <strong>Editar Plato</strong>
                     </h2>
                     <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">

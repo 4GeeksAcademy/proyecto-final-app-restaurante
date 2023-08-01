@@ -85,29 +85,29 @@ export const DishCard = ({ dish }) => {
                             )}
                             {location.pathname === '/' && (
 
-                                <div className="d-flex justify-content-between align-items-center fs-1 text-end">
-                                    <div>
+                                <div className="d-flex justify-content-end align-items-center fs-1 text-end">
+                                    {/* <div>
                                         <button className="user-btn" onClick={"like"}>
                                             <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} size="2xs" /></span>
                                         </button>
                                         <button className="user-btn" onClick={"dislike"}>
                                             <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} size="2xs" /></span>
                                         </button>
-                                    </div>
+                                    </div> */}
                                     <strong>{`${price}$`}</strong>
                                 </div>
                             )}
                             {location.pathname === '/favorite' && (
 
-                                <div className="d-flex justify-content-between align-items-center fs-1 text-end">
-                                    <div>
+                                <div className="d-flex justify-content-end align-items-center fs-1 text-end">
+                                    {/* <div>
                                         <button className="user-btn" onClick={"like"}>
                                             <span className="like-btn"><FontAwesomeIcon icon={faThumbsUp} size="2xs" /></span>
                                         </button>
                                         <button className="user-btn" onClick={"dislike"}>
                                             <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} size="2xs" /></span>
                                         </button>
-                                    </div>
+                                    </div> */}
                                     <strong>{`${price}$`}</strong>
                                 </div>
                             )}

@@ -42,7 +42,7 @@ export const RequestCard = ({ key, user }) => {
                     >
                         Validar
                     </button>
-                    <button className="button--red--edit-dish w-50 ms-1"
+                    <button className="button--red--edit-dish w-50 ms-1 text-white"
                         name="reject"
                         onClick={(e) => sendRequest('invalid')}
                     >

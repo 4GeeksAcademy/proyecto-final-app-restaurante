@@ -33,8 +33,8 @@ const Login = () => {
 
     return (
         <div className="container login_page_main_container mt-5">
-            <div className="bg-white border border-1 p-5 rounded-3 login_form_container col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5">
-                <div className="bg-danger login_title rounded-1"><strong>Login</strong></div>
+            <div className="bg-white border border-1 p-5 rounded-3 login_form_container">
+                <div className="text-center bg-danger p-2 text-white rounded-1 title fs-3"><strong>Login</strong></div>
                 <form className="login_form" onSubmit={handleLogin}>
                     <div className="mt-4">
                         <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
@@ -45,7 +45,7 @@ const Login = () => {
                         <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={user.password} onChange={(event) => handleUser(event)} />
                     </div>
                     <div>
-                    <button type="submit" className="w-100 m-0 button--login-register"><strong>Submit</strong></button>
+                    <button type="submit" className="w-100 m-0 button--login-register"><strong>Ingresa!</strong></button>
                     </div>
                 </form>
             </div>

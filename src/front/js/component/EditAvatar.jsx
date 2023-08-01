@@ -32,7 +32,7 @@ const EditAvatar = ({ restaurantId }) => {
   return (
     <>
       {/* button */}
-      <button type="button" className="button--orange--avatar" data-bs-toggle="modal" data-bs-target="#editAvatar">
+      <button type="button" className="button--orange--avatar mt-2" data-bs-toggle="modal" data-bs-target="#editAvatar">
         <strong>Editar avatar</strong>
       </button>
       {/* modal */}

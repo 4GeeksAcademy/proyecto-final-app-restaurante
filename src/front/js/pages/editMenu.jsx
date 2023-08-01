@@ -31,7 +31,7 @@ export const EditMenu = () => {
     <>
       <div className="panel container mt-4 p-4 bg-white border border-1 rounded-3">
         <div className="row justify-content-center">
-          <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+          <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
             <strong>Editar Menú</strong>
           </h2>
           <div className="d-grid gap-2 d-md-flex justify-content-end">

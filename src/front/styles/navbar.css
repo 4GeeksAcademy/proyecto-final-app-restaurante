@@ -1,20 +1,23 @@
+.navbar {
+  position: relative;
+}
 
 /*PRUEBA ICONO*/
 .logo--navbar {
-    width: 60px;
-    height: 40px;
-    padding: 0px 0px;
+    /* width: 60px;
+    height: 40px; */
+    /* padding: 0px 0px; */
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     display: inline-block;
     outline: none;
-    border-radius: 5px;
-    border: none;
-    box-shadow: 1px 3px grey;
+    /* border-radius: 5px; */
+    /* border: none; */
+    /* box-shadow: 1px 3px grey; */
   }
   .logo--navbar:hover {
-    box-shadow: 0 3px #ff9900;
+    /* box-shadow: 0 3px #ff9900; */
     top: 1px;
   }
   .logo--navbar:active {
