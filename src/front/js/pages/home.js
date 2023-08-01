@@ -1,7 +1,8 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
+import { Loader } from "../component/loader.jsx";
 import "../../styles/home.css";
 import "../../styles/loader.css";
 
@@ -13,6 +14,7 @@ export const Home = () => {
 
 	return (
 		<>
+			<Loader />
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}
@@ -27,15 +29,14 @@ export const Home = () => {
 							results.map(dish => {
 								return (
 									<DishCard
-									key={dish.id}
-									dish={dish} />
-									);
-								})
-							}
+										key={dish.id}
+										dish={dish} />
+								);
+							})
+						}
 					</div>
 				</div>
 			</div>
-			<div className="loader"></div>
 		</>
 
 	);

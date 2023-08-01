@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import { Loader } from '../component/loader.jsx';
 import EditAvatar from '../component/EditAvatar.jsx';
 import PlaceImage from '../component/PlaceImage.jsx';
 import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
@@ -22,8 +23,10 @@ const Restaurant = () => {
 
   return (
     <>
+      <Loader />
+
       {
-        restaurant != null
+        restaurant? != null
           ? <div className='container panel mt-4 p-3 bg-white border border-1 rounded-3' >
             <h2 className='text-center bg-danger p-2 text-white rounded-1 title fs-3'>
               Editar Negocio
@@ -170,7 +173,7 @@ const Restaurant = () => {
               </div>
             </div>
           </div >
-          : <h1>Restaurant not found</h1>
+          : <h1></h1>
       }
     </>
   );
