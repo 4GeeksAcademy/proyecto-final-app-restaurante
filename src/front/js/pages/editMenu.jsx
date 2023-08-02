@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
-import { DishCard } from "../component/dishCard";
+import { DishCard } from "../component/dishCard.js";
 import { Link } from "react-router-dom";
 import { Loader } from "../component/loader.jsx";
 

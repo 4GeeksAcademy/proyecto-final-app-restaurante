@@ -64,6 +64,13 @@ export const Navbar = () => {
               (user?.role == 'User' || (user?.role == 'Restaurant' && user?.status == 'invalid')) &&
               <>
                 <div className="d-flex justify-content-beetwen">
+                  <Link to={`/favorite/${user?.id}`} className="">
+                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
+                    <button className="button--favorito m-1">
+                      <span id="tooltipText">Favoritos</span>
+                      <FontAwesomeIcon icon={faHeart} size="lg" />
+                    </button>
+                  </Link>
                   <Link to={`/register-restaurant`} className="">
                     <button className="button--perfil m-1">
                       <span id="tooltipText">Quiero vender!</span>
@@ -88,13 +95,13 @@ export const Navbar = () => {
                       <FontAwesomeIcon icon={faUser} size="lg" />
                     </button>
                   </Link>
-                  <Link to={`/favorite/${user?.restaurant?.id}`} className="">
-                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
+                  {/* <Link to={`/favorite/${user?.restaurant?.id}`} className="">
+                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> 
                     <button className="button--favorito m-1">
                       <span id="tooltipText">Favoritos</span>
                       <FontAwesomeIcon icon={faHeart} size="lg" />
                     </button>
-                  </Link>
+                  </Link> */}
                   <Link to="/restaurant/menu">
                     <button className="button--menu m-1">
                       <span id="tooltipText">Menú</span>

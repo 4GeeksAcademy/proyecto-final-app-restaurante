@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import "../../styles/dishcard.css"
 
-export const DishCard = ({ dish }) => {
+export const DishCardFavorite = ({ dish }) => {
     const { actions, store } = useContext(Context);
-    const { favorites, restaurant } = store
-    const { id, tags, description, name, price, restaurant_name, image_url } = dish
+    const { favorites } = store
+    const { id, tags, food } = dish
     const navigate = useNavigate();
 
     //CAMBIO DE COLOR EN FAVORITO
@@ -18,8 +18,8 @@ export const DishCard = ({ dish }) => {
 
     const icon = isFavorite ? <FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} size="xl" />
         : <FontAwesomeIcon icon={faHeart} size="xl" />
-
-    console.log(dish)
+    
+        console.log(dish)
 
     const handleDelete = async () => {
         const response = await actions.deleteDish(dish.id);
@@ -32,31 +32,25 @@ export const DishCard = ({ dish }) => {
         const response = await actions.addFavorite({ "foodId": dish.id });
     }
 
-
-
     return (
         <div className="d-flex m-3 justify-content-center">
             <div className="card col-11 p-0 m-0" key={id}>
                 <div className="row m-2">
                     <div className="col-md-4">
-                        <img src={image_url} className="img img-fluid rounded-1 border border-1" alt={`${name} image`} />
+                        <img src={food?.image_url} className="img img-fluid rounded-1 border border-1" alt={`${food?.name} image`} />
                     </div>
                     <div className="d-flex col-md-8 p-0 align-items-center">
                         <div className="card-body p-2">
                             <div className="d-flex justify-content-end">
-                                {
-                                    !restaurant &&
-                                    <button className="user-btn" onClick={handleFav}>
-                                        <span className="fav-btn">{icon}</span>
-                                    </button>
-                                }
-
+                                <button className="user-btn" onClick={handleFav}>
+                                    <span className="fav-btn">{icon}</span>
+                                </button>
                             </div>
                             <div>
-                                <h5 className="card-title fs-2 m-0"><strong>{name}</strong></h5>
+                                <h5 className="card-title fs-2 m-0"><strong>{food?.name}</strong></h5>
                                 <div className='dishCard__tags-group'>
                                     {
-                                        tags?.split(',').map((tag, index) => {
+                                        food?.tags?.split(',').map((tag, index) => {
                                             return (
                                                 <span className="badge bg-info dishCard__tag ms-0 mx-1" key={index}>
                                                     {tag.trim()}
@@ -65,8 +59,8 @@ export const DishCard = ({ dish }) => {
                                         })
                                     }
                                 </div>
-                                <Link to={`/restaurant/${dish?.restaurant_id}`} className="">{dish?.restaurant_name}</Link>
-                                <p className="card-text">{description}</p>
+                                <Link to={`/restaurant/${dish?.restaurant_id}`} className="">{food?.restaurant_name}</Link>
+                                <p className="card-text">{food?.description}</p>
                             </div>
 
                             {location?.pathname === '/restaurant/menu' && (
@@ -82,7 +76,7 @@ export const DishCard = ({ dish }) => {
                                     <div className="d-flex align-items-center fs-1 text-end">
 
                                         <div>
-                                            <strong>{`${price}$`}</strong>
+                                            <strong>{`${food?.price}$`}</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +92,7 @@ export const DishCard = ({ dish }) => {
                                             <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} size="2xs" /></span>
                                         </button>
                                     </div> */}
-                                    <strong>{`${price}$`}</strong>
+                                    <strong>{`${food?.price}$`}</strong>
                                 </div>
                             )}
                             {location?.pathname === '/favorite' && (
@@ -112,7 +106,7 @@ export const DishCard = ({ dish }) => {
                                             <span className="dlike-btn"><FontAwesomeIcon icon={faThumbsDown} size="2xs" /></span>
                                         </button>
                                     </div> */}
-                                    <strong>{`${price}$`}</strong>
+                                    <strong>{`${food?.price}$`}</strong>
                                 </div>
                             )}
                         </div>

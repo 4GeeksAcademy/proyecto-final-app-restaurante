@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
-import { DishCard } from "../component/dishCard";
+import { DishCardFavorite } from "../component/dishCardFavorite.js";
 import { Link } from "react-router-dom";
 import { Loader } from "../component/loader.jsx";
 
@@ -18,10 +18,10 @@ const initialState = [
 export const Favorites = () => {
     const { store, actions } = useContext(Context);
     const { user, favorites } = store;
-
+    console.log(user)
     useEffect(() => {
-        if (user != undefined && user.restaurant != undefined) {
-            actions.getAllDishes(user.dish.id);
+        if (user != undefined && user?.restaurant != undefined) {
+            actions.getAllDishes(user?.dish.id);
         }
     }, []);
 
@@ -37,9 +37,9 @@ export const Favorites = () => {
                 </div>
                 <div className="d-flex justify-content-center col-12 px-0 m-0 mt-3">
                     <div className="col-md-12 col-lg-10 justify-content-center">
-                        {restaurant.foods.map((dish, index) => {
+                        {favorites.map((dish, index) => {
                             console.log(dish);
-                            return <DishCard
+                            return <DishCardFavorite
                                 key={index}
                                 dish={dish} />;
                         })}
