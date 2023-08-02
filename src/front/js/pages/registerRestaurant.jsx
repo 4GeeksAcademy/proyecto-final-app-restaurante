@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
@@ -15,7 +15,7 @@ const initialState = {                                              //ESTADO INI
 }
 
 export const RegisterRestaurant = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -49,6 +49,12 @@ export const RegisterRestaurant = () => {
                 navigate('/');
         }
     }
+
+    useEffect(()=>{
+        if (store.user == null) {
+            navigate("/access-denied")
+        }
+    })
 
     return (
         <>

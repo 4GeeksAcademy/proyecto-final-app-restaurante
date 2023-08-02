@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Loader } from "../component/loader.jsx";
 
 
-const accessDeniedPage = () => {
+export const AccessDeniedPage = () => {
     return(
         <>
         <Loader />
@@ -19,6 +19,3 @@ const accessDeniedPage = () => {
         </>
     )
 }
-
-
-export default accessDeniedPage;

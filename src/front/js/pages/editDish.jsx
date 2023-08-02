@@ -21,24 +21,6 @@ export const EditDish = () => {
     const navigate = useNavigate();
     const { dishId } = useParams();
 
-
-    useEffect(() => {
-        let arrayDish = store.restaurant.foods;
-
-        arrayDish = arrayDish.filter(dish => dish.id == dishId);
-        const currentDish = arrayDish[0]
-
-        setDish({
-            ...dish,
-            name: currentDish.name,
-            description: currentDish.description,
-            price: currentDish.price + '',
-            tags: currentDish.tags,
-            image: currentDish.image,
-        })
-
-    }, []);
-
     const handleChange = (e) => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
@@ -65,6 +47,26 @@ export const EditDish = () => {
         };
     }
 
+    useEffect(() => {
+
+        if (store.user == null || store.user.role == "User") {
+            navigate("/access-denied")
+        } else {
+            let arrayDish = store.restaurant.foods;
+
+            arrayDish = arrayDish.filter(dish => dish.id == dishId);
+            const currentDish = arrayDish[0]
+
+            setDish({
+                ...dish,
+                name: currentDish.name,
+                description: currentDish.description,
+                price: currentDish.price + '',
+                tags: currentDish.tags,
+                image: currentDish.image,
+            })
+        }
+    }, []);
 
     return (
         <>

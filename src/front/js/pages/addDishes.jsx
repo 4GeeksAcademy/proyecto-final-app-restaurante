@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { onValidateDishes } from "../util.js";
@@ -15,7 +15,7 @@ const initialState = {                                              //ESTADO INI
 };
 
 export const AddDishes = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -47,6 +47,12 @@ export const AddDishes = () => {
                 navigate('/restaurant/menu');
         };
     }
+
+    useEffect(()=>{
+        if (store.user == null || store.user.role == "User") {
+            navigate("/access-denied")
+        }
+    })
 
     return (
         <>
