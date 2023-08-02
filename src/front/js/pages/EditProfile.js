@@ -23,20 +23,6 @@ const EditProfile = () => {
     const { restaurantId } = useParams();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const currentRestaurant = store.restaurant;
-        setRestaurant({
-            ...restaurant,
-            name: currentRestaurant.name,
-            phone: currentRestaurant.phone,
-            location: currentRestaurant.location,
-            description: currentRestaurant.description,
-            facebook: currentRestaurant.facebook_url,
-            instagram: currentRestaurant.instagram_url,
-            twitter: currentRestaurant.twitter_url
-        })
-    }, []);
-
     const handleEdit = async (e) => {
         e.preventDefault();
 
@@ -63,6 +49,25 @@ const EditProfile = () => {
     const handleChange = (event) => {
         setRestaurant({ ...restaurant, [event.target.name]: event.target.value });
     }
+
+    useEffect(() => {
+
+        if (store.user == null || store.user.role == "User") {
+            navigate("/access-denied")
+        } else {
+            const currentRestaurant = store.restaurant;
+            setRestaurant({
+                ...restaurant,
+                name: currentRestaurant.name,
+                phone: currentRestaurant.phone,
+                location: currentRestaurant.location,
+                description: currentRestaurant.description,
+                facebook: currentRestaurant.facebook_url,
+                instagram: currentRestaurant.instagram_url,
+                twitter: currentRestaurant.twitter_url
+            })
+        }
+    }, []);
 
     return (
         <>

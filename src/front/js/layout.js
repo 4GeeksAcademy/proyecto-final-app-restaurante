@@ -26,6 +26,8 @@ import { ControlPanel } from "./pages/controlPanel.jsx";
 import { EditMenu } from "./pages/editMenu.jsx";
 import { EditDish } from "./pages/editDish.jsx";
 import { Favorites } from "./pages/favorites.jsx";
+import { Loader } from "./component/loader.jsx";
+import { AccessDeniedPage } from "./pages/accessDeniedPage.jsx"
 
 
 
@@ -58,6 +60,7 @@ const Layout = () => {
                         <Route element={<ControlPanel />} path="/admin/restaurant" />
                         <Route element={<EditMenu />} path="/restaurant/menu" />
                         <Route element={<RegisterAdmin/>} path='/register-admin/:token' />
+                        <Route element={<AccessDeniedPage/>} path="/access-denied" />
                         <Route element={<h1 className="text-center mt-4"><strong>Not found!</strong></h1>} path="*" />
                         <Route path="*" element={<div>Not found</div>} />
                     </Routes>

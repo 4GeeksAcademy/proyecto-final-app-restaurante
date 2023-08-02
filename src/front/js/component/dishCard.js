@@ -22,6 +22,7 @@ export const DishCard = ({ dish }) => {
     console.log(dish)
 
     const handleDelete = async () => {
+        console.log(dish.id)
         const response = await actions.deleteDish(dish.id);
 
         if (response)

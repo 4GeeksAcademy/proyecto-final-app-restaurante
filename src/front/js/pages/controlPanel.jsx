@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { RestaurantCard } from "../component/restaurantCard.jsx";
 import { Loader } from "../component/loader.jsx";
@@ -15,6 +16,8 @@ const initialState = [
 
 export const ControlPanel = () => {
   const [restaurants, setRestaurants] = useState([]);
+  const { store } = useContext(Context);
+  const navigate = useNavigate();
 
   //TRAER TODOS LOS RESTAURANTS
   const getAllRestaurants = async () => {
@@ -30,6 +33,9 @@ export const ControlPanel = () => {
   };
 
   useEffect(() => {
+    if (store.user == null || store.user.role == "User" || store.user.role == "Restaurant") {
+      navigate("/access-denied")
+  }
     getAllRestaurants();
   }, []);
 
