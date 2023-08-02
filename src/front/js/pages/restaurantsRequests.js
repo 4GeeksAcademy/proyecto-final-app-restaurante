@@ -13,7 +13,11 @@ export const RestaurantRequest = () => {
     const { requests } = store;
 
     useEffect(() => {
-        actions.getRequests();
+        if (store.user == null || store.user.role == "User" || store.user.role == "Restaurant") {
+            navigate("/access-denied")
+        }else{
+            actions.getRequests();
+        }
     }, []);
 
     return (

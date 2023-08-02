@@ -74,7 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           let data = await response.json();
 
           if (response.ok) {
-            successAlert('Registed successful');
+            successAlert('Registro exitoso');
             return true;
           }
           else {
@@ -84,13 +84,11 @@ const getState = ({ getStore, getActions, setStore }) => {
           // return data;
 
         } catch (error) {
-          errorAlert('Some error ocurred');
+          errorAlert('Algo salio mal');
           console.log(error);
         }
 
         return false;
-
-        // return { 'message': 'Some error ocurred' };
       },
 
       //PARA REGISTRO DE DISHES:
@@ -111,7 +109,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.ok) {
-            successAlert('Dish added');
+            successAlert('Plato agregado');
             await getOneRestaurant(store.restaurant.id);
             return true;
           }
@@ -120,7 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
 
         } catch (error) {
-          errorAlert('Some error ocurred');
+          errorAlert('Algo salio mal');
           console.log(error);
         }
 
@@ -200,7 +198,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.ok) {
-            successAlert('Avatar changed successful');
+            successAlert('Avatar cambiado exitosamente');
           }
           else {
             errorAlert(data.message);
@@ -208,7 +206,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         }
         catch (error) {
-          errorAlert('Some error ocurred');
+          errorAlert('Algo salio mal');
           return false;
         }
 
@@ -229,7 +227,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.ok) {
-            successAlert('Restaurant image added');
+            successAlert('Imagen agregada exitosamente');
           }
           else {
             errorAlert(data.message);
@@ -237,7 +235,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         }
         catch (error) {
-          errorAlert('Some error ocurred');
+          errorAlert('Algo salio mal');
           console.log(error);
           return false;
         }
@@ -255,7 +253,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           console.error(err);
         }
-        console.log("showing restaurants...")
       },
 
 
@@ -273,7 +270,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.ok) {
-            successAlert('Restaurant deleted');
+            successAlert('Restaurante eliminado exitosamente');
           }
           else {
             errorAlert(data.message);
@@ -281,8 +278,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return data;
 
         } catch (error) {
-          errorAlert('Some error ocurred.');
-          console.log("deleting restaurant...");
+          errorAlert('Algo salio mal');
           console.log(error);
         }
       },
@@ -321,7 +317,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             errorAlert(data.message);
           }
           else {
-            successAlert('Restaurant edited');
+            successAlert('Restaurante modificado exitosamente');
             return true;
           }
         } catch (error) {
@@ -347,7 +343,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
 
           if (response.ok) {
-            successAlert('Place image deleted');
+            successAlert('Imagen eliminada exitosamente');
           }
           else {
             errorAlert(data.message);
@@ -355,7 +351,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         }
         catch (error) {
-          errorAlert('some error ocurred');
+          errorAlert('Algo salio mal');
           console.log(error);
           return false;
         }
@@ -377,7 +373,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const data = await response.json();
 
         if (response.ok) {
-          successAlert('You have validated your account successful')
+          successAlert('Restaurante validado exitosamente')
           console.log(data.message);
           return true;
         }
@@ -405,7 +401,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log("No se pudo editar el plato")
           }
           else {
-            successAlert('Plato editado correctamente');
+            successAlert('Plato editado exitosamente');
             await getOneRestaurant(store.restaurant.id);
             return true;
           }
@@ -423,7 +419,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { getOneRestaurant } = actions;
         const { restaurant } = store;
 
-        try {
+        try { 
           const response = await fetch(`${process.env.BACKEND_URL}/restaurant/food/${id}`, {
             method: 'DELETE',
             headers: {
@@ -431,9 +427,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
           });
           const data = await response.json();
-
+          
           if (response.ok) {
-            successAlert('Tu plato ha sido eliminado');
+            successAlert('Plato eliminado exitosamente');
             await getOneRestaurant(restaurant.id);
           }
           else {
@@ -442,7 +438,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           return data;
 
         } catch (error) {
-          errorAlert('Un error ha ocurrido!');
+          errorAlert('Algo salio mal');
           console.log(error)
         }
       },
@@ -503,7 +499,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (err) {
           console.error(err);
         }
-        console.log("showing dishes...")
       },
 
       //PARA REGISTRO DE USUARIO:
@@ -527,7 +522,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           // return data;
 
         } catch (error) {
-          errorAlert('Some error ocurred');
+          errorAlert('Algo salio mal');
           console.log(error);
         }
 
@@ -566,7 +561,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         }
         catch (error) {
-          errorAlert('Some error ocurred');
+          errorAlert('Algo salio mal');
           console.log(error);
           return false;
         }
