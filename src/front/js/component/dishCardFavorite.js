@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from '../store/appContext.js';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +12,22 @@ export const DishCardFavorite = ({ dish }) => {
     const { favorites } = store
     const { id, tags, food } = dish
     const navigate = useNavigate();
+    const [favorite, setFavorite] = useState(favorites.some(fav => fav.food.id == dish.id))
+    
 
     //CAMBIO DE COLOR EN FAVORITO
-    const isFavorite = favorites.some(fav => fav.food.id == dish.id);
+    
+    
+    const searchFavorite = () => {
+        const isFavorite = favorites.some(fav => fav.food.id == dish.id);
+        setFavorite(isFavorite)
+    }
 
-    const icon = isFavorite ? <FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} size="xl" />
+    const icon = favorite ? <FontAwesomeIcon icon={faHeart} style={{ color: "#ff0000", }} size="xl" />
         : <FontAwesomeIcon icon={faHeart} size="xl" />
     
-        console.log(dish)
+        //console.log(dish.id, isFavorite)
+        
 
     const handleDelete = async () => {
         const response = await actions.deleteDish(dish.id);
@@ -32,6 +40,12 @@ export const DishCardFavorite = ({ dish }) => {
         const response = await actions.addFavorite({ "foodId": dish.id });
     }
 
+    console.log(favorite)
+
+    // useEffect(() => {
+    //     searchFavorite()
+    // }, [])
+
     return (
         <div className="d-flex m-3 justify-content-center">
             <div className="card col-11 p-0 m-0" key={id}>
@@ -41,11 +55,11 @@ export const DishCardFavorite = ({ dish }) => {
                     </div>
                     <div className="d-flex col-md-8 p-0 align-items-center">
                         <div className="card-body p-2">
-                            <div className="d-flex justify-content-end">
+                            {/* <div className="d-flex justify-content-end">
                                 <button className="user-btn" onClick={handleFav}>
                                     <span className="fav-btn">{icon}</span>
                                 </button>
-                            </div>
+                            </div> */}
                             <div>
                                 <h5 className="card-title fs-2 m-0"><strong>{food?.name}</strong></h5>
                                 <div className='dishCard__tags-group'>

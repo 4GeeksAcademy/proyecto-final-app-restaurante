@@ -551,7 +551,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             await getUserFavorites();
           }
           else if (response.status==208) {
-            console.log('delete');
             deleteFavorite(dish);
           }
           else {
