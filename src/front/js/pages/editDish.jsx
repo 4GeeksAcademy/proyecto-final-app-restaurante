@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import { onValidateDishes } from "../util.js";
 import "../../styles/editDish.css"
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = {
     name: "",
@@ -19,36 +21,18 @@ export const EditDish = () => {
     const navigate = useNavigate();
     const { dishId } = useParams();
 
-
-    useEffect(() => {
-        let arrayDish = store.restaurant.foods;
-
-        arrayDish = arrayDish.filter(dish => dish.id == dishId);
-        const currentDish = arrayDish[0]
-        
-        setDish({
-            ...dish,
-            name: currentDish.name,
-            description: currentDish.description,
-            price: currentDish.price + '',
-            tags: currentDish.tags,
-            image: currentDish.image,
-        })
-        
-    }, []);
-    
     const handleChange = (e) => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleEdit = async (e) => {                                 
+    const handleEdit = async (e) => {
         e.preventDefault()
-        const err = onValidateDishes(dish)                  
-        setErrors(err)                                             
+        const err = onValidateDishes(dish)
+        setErrors(err)
 
-        if (Object.keys(err).length === 0) {                
+        if (Object.keys(err).length === 0) {
 
-            const formData = new FormData();                      
+            const formData = new FormData();
 
             formData.append("foodName", dish.name);
             formData.append("foodDescription", dish.description);
@@ -58,17 +42,38 @@ export const EditDish = () => {
 
             const success = await actions.editDish(formData, dishId);
 
-            if(success)
+            if (success)
                 navigate('/restaurant/menu');
         };
     }
 
+    useEffect(() => {
+
+        if (store.user == null || store.user.role == "User") {
+            navigate("/access-denied")
+        } else {
+            let arrayDish = store.restaurant.foods;
+
+            arrayDish = arrayDish.filter(dish => dish.id == dishId);
+            const currentDish = arrayDish[0]
+
+            setDish({
+                ...dish,
+                name: currentDish.name,
+                description: currentDish.description,
+                price: currentDish.price + '',
+                tags: currentDish.tags,
+                image: currentDish.image,
+            })
+        }
+    }, []);
 
     return (
         <>
+            <Loader />
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
-                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
                         <strong>Editar Plato</strong>
                     </h2>
                     <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">

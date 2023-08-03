@@ -142,7 +142,7 @@ class Food(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     # relationship
-    favorite = db.relationship('Favorite', backref='food', uselist=False)
+    favorite = db.relationship('Favorite', backref='food', uselist=False, cascade="all, delete-orphan")
     like = db.relationship('Like', backref='food', uselist=False)
 
     def __repr__(self):

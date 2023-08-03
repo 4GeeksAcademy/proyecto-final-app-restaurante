@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext.js";
 import "../../styles/home.css";
 import { onValidateRegister } from "../util.js"
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = {                                              //ESTADO INICIAL DEL FORM REGISTER
     restaurantName: "",
@@ -13,7 +15,7 @@ const initialState = {                                              //ESTADO INI
 }
 
 export const RegisterRestaurant = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [user, setUser] = useState(initialState);                 //GUARDA ESTADO INICIAL DEL FORM REGISTER
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -48,14 +50,21 @@ export const RegisterRestaurant = () => {
         }
     }
 
+    useEffect(()=>{
+        if (store.user == null) {
+            navigate("/access-denied")
+        }
+    })
+
     return (
         <>
+            <Loader />
             {/* FORMULARIO DE REGISTRO */}
             <div className="container mt-5">
                 <div className="row justify-content-center">
                     <div className="bg-white panel border border-1 p-5 rounded-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
-                        <h2 className="text-center bg-danger text-white rounded-1">
-                            <strong>Crear una Cuenta</strong>
+                        <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
+                            Crea una cuenta para tu negocio
                         </h2>
 
                         <form className="needs-validation" noValidate onSubmit={handleRegister}>

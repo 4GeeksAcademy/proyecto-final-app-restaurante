@@ -1,8 +1,11 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext.js";
-import "../../styles/home.css";
 import { SearchBar } from "../component/searchBar.js";
 import { DishCard } from "../component/dishCard.js";
+import { Loader } from "../component/loader.jsx";
+import "../../styles/home.css";
+import "../../styles/loader.css";
+
 
 export const Home = () => {
 
@@ -11,6 +14,7 @@ export const Home = () => {
 
 	return (
 		<>
+			<Loader />
 			<div className="container-fluid">
 
 				{/* BARRA DE BUSQUEDA: */}

@@ -32,13 +32,17 @@ export const Navbar = () => {
   return (
     <>
       <nav className="navbar p-0">
-        <div className="container-fluid">
-          <Link to="/">
-            <img src={ComeconLogo} alt="comecon-logo" position="fixed" width="100px" />
-          </Link>
-          <Link to="/">
-            <img src={ComeconName} alt="comecon-logo" position="fixed" width="270px" />
-          </Link>
+        <div className="container-fluid justify-content-between">
+          <div>
+            <Link to="/">
+              <img className="logo--navbar" src={ComeconLogo} alt="comecon-logo" width="70px" />
+            </Link>
+          </div>
+          <div>
+            <Link to="/">
+              <img className="logo--navbar" src={ComeconName} alt="comecon-name" position="relative" width="270px" />
+            </Link>
+          </div>
 
           <div className="d-flex">
             {
@@ -60,6 +64,13 @@ export const Navbar = () => {
               (user?.role == 'User' || (user?.role == 'Restaurant' && user?.status == 'invalid')) &&
               <>
                 <div className="d-flex justify-content-beetwen">
+                  <Link to={`/favorite/${user?.id}`} className="">
+                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
+                    <button className="button--favorito m-1">
+                      <span id="tooltipText">Favoritos</span>
+                      <FontAwesomeIcon icon={faHeart} size="lg" />
+                    </button>
+                  </Link>
                   <Link to={`/register-restaurant`} className="">
                     <button className="button--perfil m-1">
                       <span id="tooltipText">Quiero vender!</span>
@@ -84,13 +95,13 @@ export const Navbar = () => {
                       <FontAwesomeIcon icon={faUser} size="lg" />
                     </button>
                   </Link>
-                  <Link to={`/favorite/${user?.restaurant?.id}`} className="">
-                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> */}
+                  {/* <Link to={`/favorite/${user?.restaurant?.id}`} className="">
+                    {/* <img src={user?.avatar_url} alt="MDN" className="logo--navbar" /> 
                     <button className="button--favorito m-1">
                       <span id="tooltipText">Favoritos</span>
                       <FontAwesomeIcon icon={faHeart} size="lg" />
                     </button>
-                  </Link>
+                  </Link> */}
                   <Link to="/restaurant/menu">
                     <button className="button--menu m-1">
                       <span id="tooltipText">Menú</span>

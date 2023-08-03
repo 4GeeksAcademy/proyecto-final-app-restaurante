@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import { onValidateDishes } from "../util.js";
 import "../../styles/addDish.css"
+import { Loader } from "../component/loader.jsx";
+
 
 const initialState = {                                              //ESTADO INICIAL
     name: "",
@@ -13,7 +15,7 @@ const initialState = {                                              //ESTADO INI
 };
 
 export const AddDishes = () => {
-    const { actions } = useContext(Context);
+    const { actions, store } = useContext(Context);
     const [dish, setDish] = useState(initialState);                 //GUARDA ESTADO INICIAL
     const [errors, setErrors] = useState({});                       //GUARDA ERRORES DE VALIDACION
     const navigate = useNavigate();
@@ -23,7 +25,7 @@ export const AddDishes = () => {
         setDish({ ...dish, [e.target.name]: e.target.value });
     };
 
-    const handleRegister = async(e) => {                                 //MANEJA EL ENVIO DEL FORM
+    const handleRegister = async (e) => {                                 //MANEJA EL ENVIO DEL FORM
         e.preventDefault()
         console.log('adding');
         const err = onValidateDishes(dish)                          //MANEJA LOS ERRORS DE LAS VALIDACIONES
@@ -46,12 +48,20 @@ export const AddDishes = () => {
         };
     }
 
+    useEffect(()=>{
+        if (store.user == null || store.user.role == "User") {
+            navigate("/access-denied")
+        }
+    })
+
     return (
         <>
+            <Loader />
+
             {/* AGREGAR PLATOS */}
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
-                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
+                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
                         <strong>Agregar Plato</strong>
                     </h2>
                     <div className="mt-3 col-12 col-sm-9 col-md-7 col-lg-6 col-lx-5 login_container">
@@ -156,7 +166,7 @@ export const AddDishes = () => {
                                 </button>
                                 <button
                                     type="button"
-                                    className="button--cancel-dish mt-3 col-4"
+                                    className="button--cancel-dish mt-3 col-4 text-white"
                                     onClick={() => navigate("/restaurant/menu")}>
                                     Cancelar
                                 </button>

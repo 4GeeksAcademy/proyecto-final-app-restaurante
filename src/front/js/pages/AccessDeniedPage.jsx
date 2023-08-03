@@ -1,10 +1,14 @@
 import React from "react";
 import "../../styles/accessDeniedPage.css"
 import { Link } from "react-router-dom";
+import { Loader } from "../component/loader.jsx";
 
 
-const accessDeniedPage = () => {
+export const AccessDeniedPage = () => {
     return(
+        <>
+        <Loader />
+
         <div className="main_container container-fluid vh-100">
             <div className="message_container mt-5 text-center"> 
                 <h1 className="mt-3">Acceso denegado</h1>
@@ -12,8 +16,6 @@ const accessDeniedPage = () => {
                 <Link className="btn btn-link" to={"/"}>Volver al inicio</Link>
             </div>
         </div>
+        </>
     )
 }
-
-
-export default accessDeniedPage;

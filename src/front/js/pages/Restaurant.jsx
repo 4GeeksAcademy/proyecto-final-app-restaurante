@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import { Loader } from '../component/loader.jsx';
 import EditAvatar from '../component/EditAvatar.jsx';
 import PlaceImage from '../component/PlaceImage.jsx';
 import AddRestaurantImage from '../component/AddRestaurantImage.jsx';
@@ -22,11 +23,13 @@ const Restaurant = () => {
 
   return (
     <>
+      <Loader />
+
       {
         restaurant != null
           ? <div className='container panel mt-4 p-3 bg-white border border-1 rounded-3' >
-            <h2 className='text-center bg-danger p-2 text-white rounded-1 title'>
-              Panel de Control
+            <h2 className='text-center bg-danger p-2 text-white rounded-1 title fs-3'>
+              Editar Negocio
             </h2>
             <div className='row border border-1 m-4 restaurant__content'>
               <div className='restaurant__image col-12 col-sm-3 order-sm-0'>
@@ -50,13 +53,18 @@ const Restaurant = () => {
                 }
               </div>
               <div className='restaurant__information col-12 col-sm-9 order-sm-1'>
-                <h2 className='restaurant__name'>
+                <h2 className='restaurant__name m-0 p-0'>
                   <strong>
                     {
                       restaurant.name
                     }
                   </strong>
                 </h2>
+                <p className="restaurant__description fst-italic">
+                  {
+                    restaurant.description
+                  }
+                </p>
                 <div className='information-group'>
                   <a className='restaurant__social' href={restaurant.facebook_url} target='_blank'><i className="bi bi-facebook"></i></a>
                   <a className='restaurant__social' href={restaurant.twitter_url} target='_blank'><i className="bi bi-twitter"></i></a>
@@ -84,11 +92,6 @@ const Restaurant = () => {
                   </span>
                   <a href={restaurant.location} target="_blank">Click here!</a>
                 </p>
-                <p className="restaurant__description">
-                  {
-                    restaurant.description
-                  }
-                </p>
                 <div className='d-flex mt-3 justify-content-end'>
                   {
                     isOwner &&
@@ -102,7 +105,7 @@ const Restaurant = () => {
                     isOwner &&
                     <Link to='/restaurant/menu' className='col-4'>
                       <button className="button--orange--restaurant">
-                        <strong>Editar menu</strong>
+                        <strong>Editar menú</strong>
                       </button>
                     </Link>
                   }

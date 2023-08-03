@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import "../../styles/home.css";
 import "../../styles/restaurantsRequests.css";
 import { RequestCard } from "../component/requestCard.js";
+import { Loader } from "../component/loader.jsx";
+
 
 
 export const RestaurantRequest = () => {
@@ -11,15 +13,20 @@ export const RestaurantRequest = () => {
     const { requests } = store;
 
     useEffect(() => {
-        actions.getRequests();
+        if (store.user == null || store.user.role == "User" || store.user.role == "Restaurant") {
+            navigate("/access-denied")
+        }else{
+            actions.getRequests();
+        }
     }, []);
 
     return (
         <>
+            <Loader />
             <div className="container panel mt-4 p-4 bg-white border border-1 rounded-3">
                 <div className="row justify-content-center">
-                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title">
-                        <strong>Solicitud de Restaurants</strong>
+                    <h2 className="text-center bg-danger p-2 text-white rounded-1 title fs-3">
+                        Solicitud de Restaurants
                     </h2>
                 </div>
                 <div className="d-flex justify-content-center px-0 m-0 mt-4">
