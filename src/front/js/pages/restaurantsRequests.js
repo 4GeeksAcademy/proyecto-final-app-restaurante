@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "../../styles/home.css";
 import "../../styles/restaurantsRequests.css";
 import { RequestCard } from "../component/requestCard.js";
@@ -11,7 +11,7 @@ import { Loader } from "../component/loader.jsx";
 export const RestaurantRequest = () => {
     const { store, actions } = useContext(Context)
     const { requests } = store;
-
+    const navigate  = useNavigate()
     useEffect(() => {
         if (store.user == null || store.user.role == "User" || store.user.role == "Restaurant") {
             navigate("/access-denied")
