@@ -27,7 +27,7 @@ import { EditMenu } from "./pages/editMenu.jsx";
 import { EditDish } from "./pages/editDish.jsx";
 import { Favorites } from "./pages/favorites.jsx";
 import { Loader } from "./component/loader.jsx";
-import { AccessDeniedPage } from "./pages/accessDeniedPage.jsx";
+import { AccessDeniedPage } from "./pages/AccessDeniedPage.jsx";
 
 
 

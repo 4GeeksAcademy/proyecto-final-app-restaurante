@@ -5,7 +5,6 @@ import { DishCard } from "../component/dishCard.js";
 import { Link } from "react-router-dom";
 import { Loader } from "../component/loader.jsx";
 
-
 const initialState = [
   {
     // id: number,
